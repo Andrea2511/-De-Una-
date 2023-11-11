@@ -1,0 +1,4 @@
+INSERT INTO sys.`user` (user_id, first_name, last_name, password, `role`, username)
+VALUES
+(0, '', '', 'caro', 'ADMINISTRADOR', 'caro'),
+(1, '', '', 'ser', 'CLIENTE', 'ser');
