@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "USER")
-public class User {
+public abstract class User implements Rol{
 
     @Id
     @Column(name = "username")
@@ -14,24 +14,21 @@ public class User {
     private String firstName;
     @Column(name = "lastName")
     private String lastName;
-
     @Column(name = "email")
     private String email;
     @Column(name = "password")
     private String password;
-    @Column(name = "role")
+    @Column(name = "rol")
     private String rol;
 
-    public User() {
+    public User(){
     }
-
-    public User(String firstName, String lastName, String email, String username, String password, String rol) {
+    public User(String firstName, String lastName, String username, String password, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
         this.password = password;
         this.email = email;
-        this.rol = rol;
     }
 
     public String getFirstName() {
@@ -74,11 +71,4 @@ public class User {
         this.email = email;
     }
 
-    public String getRol() {
-        return rol;
-    }
-
-    public void setRol(String rol) {
-        this.rol = rol;
-    }
 }

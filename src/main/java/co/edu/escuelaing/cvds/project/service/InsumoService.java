@@ -37,5 +37,4 @@ public class InsumoService {
         insumoRepository.deleteById(insumoId);
     }
 
-    // Puedes agregar métodos adicionales según tus necesidades.
 }

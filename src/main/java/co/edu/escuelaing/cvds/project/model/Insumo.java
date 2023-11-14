@@ -24,6 +24,9 @@ public class Insumo {
     private int cantidad;
     @Column(name = "precio")
     private double precio;
+    @ManyToOne
+    @JoinColumn(name = "restaurante")
+    private Restaurante restaurante;
 
 
     public Insumo() {

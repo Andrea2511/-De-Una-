@@ -1,4 +1,5 @@
 package co.edu.escuelaing.cvds.project.service;
+import co.edu.escuelaing.cvds.project.model.Cliente;
 import co.edu.escuelaing.cvds.project.model.User;
 import co.edu.escuelaing.cvds.project.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Service
 public class UserService {
+
     @Autowired
     private UserRepository userRepository;
 
@@ -38,7 +40,7 @@ public class UserService {
 
 
     public void crearUsuario(String firstName, String lastName, String email, String username, String password){
-        User user = new User(firstName, lastName, email, username, password, "CLIENTE");
+        User user = new Cliente(firstName, lastName, email, username, password);
         userRepository.save(user);
 
     }
