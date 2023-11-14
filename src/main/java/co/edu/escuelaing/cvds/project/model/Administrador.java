@@ -1,11 +1,12 @@
 package co.edu.escuelaing.cvds.project.model;
 
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "ADMINISTRADOR")
+@DiscriminatorValue("ADMIN")
 public class Administrador extends User{
 
     //Relaciones

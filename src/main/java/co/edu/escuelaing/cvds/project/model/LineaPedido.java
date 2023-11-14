@@ -14,17 +14,15 @@ public class LineaPedido {
     private Long id;
     @Column(name = "cantidad")
     private int cantidad;
-    @ManyToOne
-    @JoinColumn(name = "comida_id")
-    private Comida comida;
     @Column(name = "subtotal")
     private double subtotal;
     @Column(name = "total")
     private double total;
 
     //Relaciones
-    @OneToMany(mappedBy = "lineaPedido")
-    private ArrayList<Comida> comidas;
+    @ManyToOne
+    @JoinColumn(name = "comida_id")
+    private Comida comida;
     @ManyToOne
     @JoinColumn(name = "pedido_id")
     private Pedido pedido;
@@ -37,7 +35,6 @@ public class LineaPedido {
 
     public LineaPedido(int cantidad, Comida comida, double subtotal, double total) {
         this.cantidad = cantidad;
-        this.comida = comida;
         this.subtotal = subtotal;
         this.total = total;
     }
@@ -48,14 +45,6 @@ public class LineaPedido {
 
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
-    }
-
-    public Comida getComida() {
-        return comida;
-    }
-
-    public void setComida(Comida comida) {
-        this.comida = comida;
     }
 
     public double getSubtotal() {
@@ -74,12 +63,12 @@ public class LineaPedido {
         this.total = total;
     }
 
-    public ArrayList<Comida> getComidas() {
-        return comidas;
+    public Comida getComida() {
+        return comida;
     }
 
-    public void setComidas(ArrayList<Comida> comidas) {
-        this.comidas = comidas;
+    public void setComidas(Comida comidas) {
+        this.comida = comidas;
     }
 
     public Pedido getPedido() {
@@ -103,12 +92,12 @@ public class LineaPedido {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         LineaPedido that = (LineaPedido) o;
-        return cantidad == that.cantidad && Double.compare(subtotal, that.subtotal) == 0 && Double.compare(total, that.total) == 0 && Objects.equals(id, that.id) && Objects.equals(comida, that.comida) && Objects.equals(comidas, that.comidas) && Objects.equals(pedido, that.pedido) && Objects.equals(promocion, that.promocion);
+        return cantidad == that.cantidad && Double.compare(subtotal, that.subtotal) == 0 && Double.compare(total, that.total) == 0 && Objects.equals(id, that.id) && Objects.equals(comida, that.comida) && Objects.equals(pedido, that.pedido) && Objects.equals(promocion, that.promocion);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, cantidad, comida, subtotal, total, comidas, pedido, promocion);
+        return Objects.hash(id, cantidad, subtotal, total, comida, pedido, promocion);
     }
 
     @Override
@@ -116,10 +105,9 @@ public class LineaPedido {
         return "LineaPedido{" +
                 "id=" + id +
                 ", cantidad=" + cantidad +
-                ", comida=" + comida +
                 ", subtotal=" + subtotal +
                 ", total=" + total +
-                ", comidas=" + comidas +
+                ", comidas=" + comida +
                 ", pedido=" + pedido +
                 ", promocion=" + promocion +
                 '}';

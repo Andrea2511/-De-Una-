@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 
 
 @Entity
-@Table(name = "USER")
+@Table(name = "usuarios") // Tabla principal para SINGLE_TABLE
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "tipo_usuario", discriminatorType = DiscriminatorType.STRING)
 public abstract class User implements Rol{
 
     @Id

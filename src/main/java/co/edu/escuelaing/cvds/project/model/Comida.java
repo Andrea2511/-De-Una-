@@ -16,7 +16,7 @@ public class Comida {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "comidaId")
-    private Long insumoId;
+    private Long comidaId;
     @Column(name = "nombre")
     private String nombre;
     @Column(name = "calificacion")
@@ -27,6 +27,7 @@ public class Comida {
     private double precio;
     @OneToMany(mappedBy = "comida")
     private ArrayList<DetalleComidaInsumo> detalleInsumos;
+
     @OneToMany(mappedBy = "comida")
     private ArrayList<LineaPedido> lineasPedidos;
 
@@ -37,21 +38,21 @@ public class Comida {
     public Comida() {
     }
 
-    public Comida(Long insumoId, String nombre, double calificacion, ImageIcon foto, double precio, ArrayList<DetalleComidaInsumo> detalleInsumos) {
-        this.insumoId = insumoId;
+    public Comida(Long comidaId, String nombre, double calificacion, ImageIcon foto, double precio, ArrayList<DetalleComidaInsumo> insumos) {
+        this.comidaId = comidaId;
         this.nombre = nombre;
         this.calificacion = calificacion;
         this.foto = foto;
         this.precio = precio;
-        this.detalleInsumos = detalleInsumos;
+        this.detalleInsumos = insumos;
     }
 
-    public Long getInsumoId() {
-        return insumoId;
+    public Long getComidaId() {
+        return comidaId;
     }
 
-    public void setInsumoId(Long insumoId) {
-        this.insumoId = insumoId;
+    public void setComidaId(Long insumoId) {
+        this.comidaId = insumoId;
     }
 
     public String getNombre() {
@@ -99,18 +100,18 @@ public class Comida {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Comida comida = (Comida) o;
-        return Double.compare(calificacion, comida.calificacion) == 0 && Double.compare(precio, comida.precio) == 0 && Objects.equals(insumoId, comida.insumoId) && Objects.equals(nombre, comida.nombre) && Objects.equals(foto, comida.foto) && Objects.equals(detalleInsumos, comida.detalleInsumos);
+        return Double.compare(calificacion, comida.calificacion) == 0 && Double.compare(precio, comida.precio) == 0 && Objects.equals(comidaId, comida.comidaId) && Objects.equals(nombre, comida.nombre) && Objects.equals(foto, comida.foto) && Objects.equals(detalleInsumos, comida.detalleInsumos);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(insumoId, nombre, calificacion, foto, precio, detalleInsumos);
+        return Objects.hash(comidaId, nombre, calificacion, foto, precio, detalleInsumos);
     }
 
     @Override
     public String toString() {
         return "Comida{" +
-                "insumoId=" + insumoId +
+                "insumoId=" + comidaId +
                 ", nombre='" + nombre + '\'' +
                 ", calificacion=" + calificacion +
                 ", foto=" + foto +
@@ -118,4 +119,5 @@ public class Comida {
                 ", detalleInsumos=" + detalleInsumos +
                 '}';
     }
+
 }

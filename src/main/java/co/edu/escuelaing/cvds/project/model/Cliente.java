@@ -1,11 +1,8 @@
 package co.edu.escuelaing.cvds.project.model;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
-@Table(name = "CLIENTE")
+@DiscriminatorValue("CLIENTE")
 public class Cliente extends User{
     @Column(name = "telefono")
     private String telefono;

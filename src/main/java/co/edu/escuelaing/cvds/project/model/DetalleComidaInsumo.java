@@ -1,32 +1,44 @@
 package co.edu.escuelaing.cvds.project.model;
 
-import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 @Entity
+@Table(name = "DETALLE_COMIDA_INSUMO")
 public class DetalleComidaInsumo {
 
-    @EmbeddedId
-    private DetalleComidaInsumoId id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "detalleInsumoId")
+    private Long detalleInsumoId;
 
+    @ManyToOne
+    @JoinColumn(name = "comida_id")
+    private Comida comida;
+
+    @ManyToOne
+    @JoinColumn(name = "insumo_id")
+    private Insumo insumo;
+
+    @Column(name = "cantidad")
     private int cantidad;
 
     public DetalleComidaInsumo() {
     }
 
-    public DetalleComidaInsumo(DetalleComidaInsumoId id, int cantidad) {
-        this.id = id;
+    public DetalleComidaInsumo( Long id, int cantidad) {
+        this.detalleInsumoId = id;
         this.cantidad = cantidad;
     }
 
-    public DetalleComidaInsumoId getId() {
-        return id;
+    public Long getId() {
+        return detalleInsumoId;
     }
 
-    public void setId(DetalleComidaInsumoId id) {
-        this.id = id;
+    public void setId(Long id) {
+        this.detalleInsumoId = id;
     }
 
     public int getCantidad() {
@@ -42,18 +54,18 @@ public class DetalleComidaInsumo {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         DetalleComidaInsumo that = (DetalleComidaInsumo) o;
-        return cantidad == that.cantidad && Objects.equals(id, that.id);
+        return cantidad == that.cantidad && Objects.equals(detalleInsumoId, that.detalleInsumoId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, cantidad);
+        return Objects.hash(detalleInsumoId, cantidad);
     }
 
     @Override
     public String toString() {
         return "DetalleComidaInsumo{" +
-                "id=" + id +
+                "id=" + detalleInsumoId +
                 ", cantidad=" + cantidad +
                 '}';
     }

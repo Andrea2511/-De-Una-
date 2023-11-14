@@ -19,10 +19,10 @@ public class Restaurante {
     @JoinColumn(name = "inventario")
     private ArrayList<Insumo> inventario;
     @OneToOne
-    @JoinColumn(name = "administrador")
-    private Administrador admin;
+    @JoinColumn(name = "administrador_id")
+    private Administrador administrador;
     @OneToOne
-    @JoinColumn(name = "supervisor")
+    @JoinColumn(name = "supervisor_id")
     private Administrador supervisor;
 
     public Restaurante(){
