@@ -9,7 +9,6 @@ import java.util.Objects;
 @Entity
 @Table(name = "INSUMO")
 public class Insumo {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "insumoId")
@@ -21,24 +20,22 @@ public class Insumo {
     @Column(name = "fechaVencimiento")
     private Date fechaVencimiento;
     @Column(name = "cantidad")
-    private int cantidad;
+    private String cantidad;
     @Column(name = "precio")
-    private double precio;
-    @ManyToOne
-    @JoinColumn(name = "restaurante")
-    private Restaurante restaurante;
+    private String precio;
 
 
     public Insumo() {
     }
 
-    public Insumo(String nombre, String tipo, int cantidad, double precio, Date fechaVencimiento) {
+    public Insumo(String nombre, String tipo, String cantidad, String precio, Date fechaVencimiento) {
         this.nombre = nombre;
         this.tipo = tipo;
         this.cantidad = cantidad;
         this.precio = precio;
         this.fechaVencimiento = fechaVencimiento;
     }
+
 
     public Date getFechaVencimiento() {
         return fechaVencimiento;
@@ -72,19 +69,19 @@ public class Insumo {
         this.tipo = tipo;
     }
 
-    public int getCantidad() {
+    public String getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(int cantidad) {
+    public void setCantidad(String cantidad) {
         this.cantidad = cantidad;
     }
 
-    public double getPrecio() {
+    public String getPrecio() {
         return precio;
     }
 
-    public void setPrecio(double precio) {
+    public void setPrecio(String precio) {
         this.precio = precio;
     }
 
@@ -93,7 +90,12 @@ public class Insumo {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Insumo insumo = (Insumo) o;
-        return cantidad == insumo.cantidad && Double.compare(precio, insumo.precio) == 0 && Objects.equals(insumoId, insumo.insumoId) && Objects.equals(nombre, insumo.nombre) && Objects.equals(tipo, insumo.tipo) && Objects.equals(fechaVencimiento, insumo.fechaVencimiento);
+        return Objects.equals(insumoId, insumo.insumoId) && Objects.equals(nombre, insumo.nombre) && Objects.equals(tipo, insumo.tipo) && Objects.equals(fechaVencimiento, insumo.fechaVencimiento) && Objects.equals(cantidad, insumo.cantidad) && Objects.equals(precio, insumo.precio);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(insumoId, nombre, tipo, fechaVencimiento, cantidad, precio);
     }
 
     @Override
@@ -106,11 +108,6 @@ public class Insumo {
                 ", precio=" + precio +
                 ", fechaVencimiento=" + fechaVencimiento +
                 '}';
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(insumoId, nombre, tipo, cantidad, precio, fechaVencimiento);
     }
 
 }
