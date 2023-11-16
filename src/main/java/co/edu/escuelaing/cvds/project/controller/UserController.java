@@ -1,4 +1,5 @@
 package co.edu.escuelaing.cvds.project.controller;
+import co.edu.escuelaing.cvds.project.service.EncriptarService;
 import co.edu.escuelaing.cvds.project.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletResponse;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 //import javax.servlet.http.HttpSession; importante
@@ -20,13 +22,16 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    private EncriptarService encriptarService;
+
     @GetMapping("/login")
     public ModelAndView loginPage() {
         return new ModelAndView("login"); // Esta es la página de inicio de sesión
     }
 
     @PostMapping("/verificar-usuario")
-    public void verificarUsuario(@RequestBody Map<String, String> credentials, HttpServletResponse response) throws IOException {
+    public void verificarUsuario(@RequestBody Map<String, String> credentials, HttpServletResponse response) throws IOException, NoSuchAlgorithmException {
         // Obtiene el usuario y la contraseña del cuerpo de la solicitud
         String username = credentials.get("username");
         String password = credentials.get("password");
@@ -72,7 +77,7 @@ public class UserController {
 
             if (!isUserValid) {
                 if (!userService.verificarEmail(email)) {
-                    userService.crearUsuario(firstName, lastName, email, username, password);
+                    userService.crearUsuario(firstName, lastName, username,encriptarService.encriptar(password) ,email );
                     responseBody.put("success", true);
                     responseBody.put("message", "Registro exitoso");
                     responseBody.put("redirect", "/login");
