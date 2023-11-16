@@ -5,6 +5,30 @@
     <title>Title</title>
 </head>
 <body>
+    <h2>Formulario de Producto</h2>
 
+    <form action="/admin/guardarProducto" method="post" enctype="multipart/form-data">
+
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required><br>
+
+        <label for="nombre">Precio: </label>
+        <input type="text" id="precio" name="precio" required><br>
+
+        <label for="nombre">Cantidad: </label>
+        <input type="text" id="cantidad" name="cantidad" required><br>
+
+        <label for="tipoComida">Tipo de Comida:</label>
+        <select id="tipoComida" name="tipoComida" required>
+            <option value="POSTRE">Postre</option>
+            <option value="PLATO_PRINCIPAL">Plato Principal</option>
+            <option value="FAST_FOOD">Fast Food</option>
+        </select>
+
+        <label for="imagen">Seleccionar Imagen:</label>
+        <input type="file" id="imagen" name="imagen" accept="image/*" required><br>
+
+        <input type="submit" value="Guardar">
+    </form>
 </body>
 </html>
