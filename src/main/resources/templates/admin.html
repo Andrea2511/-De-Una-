@@ -2,33 +2,284 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/admin.css">
 </head>
 <body>
-    <h2>Formulario de Producto</h2>
+    <div class="container">
+        <aside>
+            <div class="top">
+                <div class="logo">
+                <img src="../static/images/logo.png" alt="">
+                </div>
+                <div class="close" id="close-btn">
+                    <span class="material-icons-sharp">close</span>
+                </div>
+            </div>
 
-    <form action="/admin/guardarProducto" method="post" enctype="multipart/form-data">
+            <div class="sidebar">
+                <a href="#" class="active">
+                    <span class="material-icons-sharp">insights</span>
+                    <h3>Reporte</h3>
+                </a>
+                <a href="#">
+                    <span class="material-icons-sharp">mail_outline</span>
+                    <h3>PQRS</h3>
+                    <span class="message-count">26</span>
+                </a>
+                <a href="#">
+                    <span class="material-icons-sharp">receipt_long</span>
+                    <h3>Inventario</h3>
+                </a>
+                <a href="#">
+                    <span class="material-icons-sharp">inventory</span>
+                    <h3>Menú</h3>
+                </a>
+                <a href="#">
+                    <span class="material-icons-sharp">add</span>
+                    <h3>Añadir productos</h3>
+                </a>
+                <a href="#">
+                    <span class="material-icons-sharp">add</span>
+                    <h3>Añadir insumos</h3>
+                </a>
+                <a href="/login">
+                    <span class="material-icons-sharp">logout</span>
+                    <h3>Salir</h3>
+                </a>
+            </div>
+        </aside>
 
-        <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" name="nombre" required><br>
+        <main>
+            <h1>Reporte</h1>
 
-        <label for="nombre">Precio: </label>
-        <input type="text" id="precio" name="precio" required><br>
+            <div class="date">
+                <input type="date">
+            </div>
 
-        <label for="nombre">Cantidad: </label>
-        <input type="text" id="cantidad" name="cantidad" required><br>
+            <div class="insights">
+                <div class="sales">
+                    <span class="material-icons-sharp">analytics</span>
+                    <div class="middle">
+                        <div class="left">
+                            <h3>Ventas Totales</h3>
+                            <h1>$25,024</h1>
+                        </div>
+                        <div class="progress">
+                            <svg>
+                                <circle cx="38" cy="38" r="36"></circle>
+                            </svg>
+                            <div class="number">
+                                <p>81%</p>
+                            </div>
+                        </div>
+                    </div>
+                    <small class="text-muted">Últimas 24 Horas</small>
+                </div>
 
-        <label for="tipoComida">Tipo de Comida:</label>
-        <select id="tipoComida" name="tipoComida" required>
-            <option value="POSTRE">Postre</option>
-            <option value="PLATO_PRINCIPAL">Plato Principal</option>
-            <option value="FAST_FOOD">Fast Food</option>
-        </select>
+                <div class="expenses">
+                    <span class="material-icons-sharp">bar_chart</span>
+                    <div class="middle">
+                        <div class="left">
+                            <h3>Gastos Totales</h3>
+                            <h1>$25,024</h1>
+                        </div>
+                        <div class="progress">
+                            <svg>
+                                <circle cx="38" cy="38" r="36"></circle>
+                            </svg>
+                            <div class="number">
+                                <p>81%</p>
+                            </div>
+                        </div>
+                    </div>
+                    <small class="text-muted">Últimas 24 Horas</small>
+                </div>
 
-        <label for="imagen">Seleccionar Imagen:</label>
-        <input type="file" id="imagen" name="imagen" accept="image/*" required><br>
+                <div class="income">
+                    <span class="material-icons-sharp">stacked_line_chart</span>
+                    <div class="middle">
+                        <div class="left">
+                            <h3>Ingresos Recibidos</h3>
+                            <h1>$25,024</h1>
+                        </div>
+                        <div class="progress">
+                            <svg>
+                                <circle cx="38" cy="38" r="36"></circle>
+                            </svg>
+                            <div class="number">
+                                <p>81%</p>
+                            </div>
+                        </div>
+                    </div>
+                    <small class="text-muted">Últimas 24 Horas</small>
+                </div>
+            </div>
 
-        <input type="submit" value="Guardar">
-    </form>
+            <div class="menu-opinions">
+                <h2>Menu del día</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Cantidad</th>
+                            <th>Valor</th>
+                            <th>Calificaciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Pan con queso</td>
+                            <td>20</td>
+                            <td>2000</td>
+                            <td class="danger">2.0</td>
+                            <td class="primary">Opiniones</td>
+                        </tr>
+                        <tr>
+                            <td>Pan con queso</td>
+                            <td>20</td>
+                            <td>2000</td>
+                            <td class="danger">2.0</td>
+                            <td class="primary">Opiniones</td>
+                        </tr>
+                        <tr>
+                            <td>Pan con queso</td>
+                            <td>20</td>
+                            <td>2000</td>
+                            <td class="danger">2.0</td>
+                            <td class="primary">Opiniones</td>
+                        </tr>
+                        <tr>
+                            <td>Pan con queso</td>
+                            <td>20</td>
+                            <td>2000</td>
+                            <td class="danger">2.0</td>
+                            <td class="primary">Opiniones</td>
+                        </tr>
+                        <tr>
+                            <td>Pan con queso</td>
+                            <td>20</td>
+                            <td>2000</td>
+                            <td class="danger">2.0</td>
+                            <td class="primary">Opiniones</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <a href="#">Mostrar Todo</a>
+            </div>
+        </main>
+
+        <div class="right">
+            <div class="top">
+                <button id="menu-btn">
+                    <span class="material-icons-sharp">menu</span>
+                </button>
+                <div class="theme-toggler">
+                    <span class="material-icons-sharp active">light_mode</span>
+                    <span class="material-icons-sharp">dark_mode</span>
+                </div>
+                <div class="profile">
+                    <div class="info">
+                        <p>Hey, <b> Daniel</b></p>
+                        <small class="text-muted">Admin</small>
+                    </div>
+                    <div class="profile-photo">
+                        <img src="../static/images/menu-1.png">
+                    </div>
+                </div>
+            </div>
+
+            <div class="recent-updates">
+                <h2>Actualizaciones recientes</h2>
+                <div class="updates">
+                    <div class="update">
+                        <div class="profile-photo">
+                            <img src="../static/images/menu-1.png">
+                        </div>
+                        <div class="message">
+                            <p><b>Carolina Medina</b> El domiciliario se comió
+                            mi pechuga y me entregó los huesos</p>
+                            <small class="text-muted">2 minutos</small>
+                        </div>
+                    </div>
+                    <div class="update">
+                        <div class="profile-photo">
+                            <img src="../static/images/menu-1.png">
+                        </div>
+                        <div class="message">
+                            <p><b>Carolina Medina</b> Habia un pelo en mi sopa
+                            y mi jugo.</p>
+                            <small class="text-muted">2 minutos</small>
+                        </div>
+                    </div>
+                    <div class="update">
+                        <div class="profile-photo">
+                            <img src="../static/images/menu-1.png">
+                        </div>
+                        <div class="message">
+                            <p><b>Carolina Medina</b> Estaba rico, pero podria
+                            estar mejor.</p>
+                            <small class="text-muted">2 minutos</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sales-analytics">
+                <h2>Anáslisis de ventas</h2>
+                <div class="item online">
+                    <div class="icon">
+                        <span class="material-icons-sharp active">shopping_cart</span>
+                    </div>
+                    <div class="info">
+                        <h3>PEDIDOS EXITOSOS</h3>
+                        <small class="text-muted">Últimas 24 Horas</small>
+                    </div>
+                    <h5 class="success">+39%</h5>
+                    <h3>3999</h3>
+                </div>
+                <div class="item failed">
+                    <div class="icon">
+                        <span class="material-icons-sharp active">money_off</span>
+                    </div>
+                    <div class="info">
+                        <h3>PEDIDOS FALLIDOS</h3>
+                        <small class="text-muted">Últimas 24 Horas</small>
+                    </div>
+                    <h5 class="danger">+39%</h5>
+                    <h3>3999</h3>
+                </div>
+                <div class="item customers">
+                    <div class="icon">
+                        <span class="material-icons-sharp active">person</span>
+                    </div>
+                    <div class="info">
+                        <h3>NUEVOS CLIENTES</h3>
+                        <small class="text-muted">Últimas 24 Horas</small>
+                    </div>
+                    <h5 class="success">+39%</h5>
+                    <h3>399</h3>
+                </div>
+                <div class="item add-product">
+                    <div>
+                        <span class="material-icons-sharp active">add</span>
+                        <h3>Añadir Producto</h3>
+                    </div>
+                </div>
+                <div class="item add-product">
+                    <div>
+                        <span class="material-icons-sharp active">add</span>
+                        <h3>Añadir Insumo</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../static/js/admin.js"></script>
 </body>
 </html>

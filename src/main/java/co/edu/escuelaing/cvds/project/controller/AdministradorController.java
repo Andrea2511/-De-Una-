@@ -46,8 +46,7 @@ public class AdministradorController {
 
     @PostMapping("/guardarProducto")
     public String guardarProducto(@RequestParam("nombre") String nombre, @RequestParam("precio") double precio, @RequestParam("cantidad") int cantidad, @RequestParam("tipoComida") Categoria tipoComida, @RequestParam("imagen") MultipartFile imagen) throws IOException {
-
-
+        
         Comida comida = comidaService.crearComida(nombre, 0.0, precio, cantidad, tipoComida);
 
         if (imagen != null && !imagen.isEmpty()) {

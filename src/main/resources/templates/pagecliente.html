@@ -1,62 +1,78 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/css/cliente.css">
-
-    <script src=" https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="../static/js/cliente.js"></script>
-
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=true" rel="stylesheet">
-    <link rel="stylesheet" href= " https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <title>Cliente</title>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/cliente.css">
 </head>
 <body>
+<div class="container">
+    <aside>
+        <div class="top">
+            <button id="menu-btn">
+                <span class="material-icons-sharp">menu</span>
+            </button>
+            <div class="close" id="close-btn">
+                <span class="material-icons-sharp">close</span>
+            </div>
+            <div class="profile">
+                <div class="profile-photo">
+                    <img src="../static/images/menu-1.png">
+                </div>
+                <div class="info">
+                    <p>Hey, <b> Daniel</b></p>
+                    <small class="text-muted">Cliente</small>
+                </div>
+            </div>
+            <div class="cart" id="shop-btn">
+                <span class="material-icons-sharp">shopping_cart</span>
+            </div>
+        </div>
 
-    <!-- header -->
-    <input type="checkbox" id="cart">
-    <label for="cart" class="label-cart"><span class="fas fa-shopping-cart"></span></label>
-    <h3 class="logo">¡De una!</h3>
+        <div class="sidebar">
 
-    <!-- sidebar -->
-    <div class="sidebar">
-        <div class="sidebar-menu">
-            <span class="fa fa-search"></span>
-            <a href="#">Buscar</a>
+            <div class="theme-toggler">
+                <span class="material-icons-sharp active">light_mode</span>
+                <span class="material-icons-sharp">dark_mode</span>
+            </div>
+            <a href="#" class="active">
+                <span class="material-icons-sharp">search</span>
+                <h3>Buscar</h3>
+            </a>
+            <a href="#">
+                <span class="material-icons-sharp">home</span>
+                <h3>Inicio</h3>
+            </a>
+            <a href="#">
+                <span class="material-icons-sharp">favorite</span>
+                <h3>Preferencias</h3>
+            </a>
+            <a href="#">
+                <span class="material-icons-sharp">account_circle</span>
+                <h3>Cuenta</h3>
+            </a>
+            <a href="#">
+                <span class="material-icons-sharp">flag</span>
+                <h3>PQRS</h3>
+            </a>
+            <a href="/login">
+                <span class="material-icons-sharp">logout</span>
+                <h3>Salir</h3>
+            </a>
         </div>
-        <div class="sidebar-menu">
-            <span class="fa fa-home"></span>
-            <a href="" class="sidebar-menu-inicio">Inicio</a>
-        </div>
-        <div class="sidebar-menu">
-            <span class="fa fa-heart"></span>
-            <a href="#" >Gustos</a>
-        </div>
-        <div class="sidebar-menu">
-            <span class="fa fa-user"></span>
-            <a href="#" class="sidebar-menu-profile">Perfil</a>
-        </div>
-        <div class="sidebar-menu">
-            <span class="fa fa-phone"></span>
-            <a href="#">PQRS</a>
-        </div>
-        <div class="sidebar-menu">
-            <span class="fa fa-sign-out-alt"></span>
-            <a href="/login">Salir</a>
-        </div>
-    </div>
+    </aside>
 
-    <!-- main dashboard -->
+    <main>
 
-    <div id="dashboard" class="dashboard">
         <div class="dashboard-banner">
             <img src="../static/images/banner.png">
         </div>
 
-        <h3 class="dashboard-title"> Tenemos esto para ti</h3>
+        <h1> Tenemos esto para ti</h1>
         <div class="dashboard-menu">
             <a th:href="@{/cliente/fastFood}">Fast Food</a>
             <a th:href="@{/cliente/platoPrincipal}">Principal</a>
@@ -67,75 +83,85 @@
         </div>
 
         <div class="dashboard-content">
-            <div th:each="comida : ${comidas}" class="dashboard-card">
-                <a href="#" class="card-link">
-                    <img class="card-image" th:src="@{/provicional/{nombreImagen}(nombreImagen=${comida.ruta})}" alt="Comida Imagen">
-                    <div class="card-detail">
-                        <h4 th:text="${comida.nombre}"></h4>
-                        <p th:text="${'$ ' + comida.precio}" class="precio"></p>
-                        <p class="card-time"><span class="fas fa-star"></span>
-                            <span th:text="${comida.calificacion}"></span></p>
-
-                    </div>
-                </a>
-                <div class="additional-info" style="display: none;">
+            <div th:each="comida : ${comidas}" class="dashboard-card comida-card">
+                <img class="card-image" th:src="@{/provicional/{nombreImagen}(nombreImagen=${comida.ruta})}" alt="Comida Imagen">
+                <div class="card-detail">
                     <h4 th:text="${comida.nombre}"></h4>
                     <p th:text="${'$ ' + comida.precio}" class="precio"></p>
                     <p class="card-time"><span class="fas fa-star"></span>
                         <span th:text="${comida.calificacion}"></span></p>
-                    <!-- Agrega campos del formulario según tus necesidades -->
-                    <label for="bebida">Seleccione una bebida:</label>
-                    <select name="bebida" id="bebida">
-                        <option value="agua">Agua</option>
-                        <option value="gaseosa">Gaseosa</option>
-                        <!-- Agrega más opciones según sea necesario -->
-                    </select>
-                    <!-- Agrega otros campos del formulario según tus necesidades -->
-                    <button type="submit">Ordenar</button>
                 </div>
             </div>
         </div>
-    </div>
+    </main>
 
-    <!-- order dashboard -->
+    <div class="right">
+        <div class="top">
+            <div class="close" id="closeShop-btn">
+                <span class="material-icons-sharp">close</span>
+            </div>
+            <h3>Mi carrito</h3>
+        </div>
 
-    <div class="dashboard-order">
-        <h3>Mi carrito</h3>
         <div class="order-address">
             <p>Dirección de entrega</p>
             <h4>lorem ipsum dolor sit amet</h4>
         </div>
         <div class="order-time">
-            <span class="fas fa-clock"></span> 30 mins <span class="fas fa-map-marked-alt"></span> 2 km
+            <small class="text-muted">30 mins</small>
+            <small class="text-muted">2 km</small>
         </div>
 
         <div class="order-wrapper">
             <div class="order-card">
                 <img class="order-image" src="../static/images/main-b.jpg">
                 <div class="order-detail">
-                    <p>lorem ipsum dolor sit amet</p>
-                    <i class="fas fa-times"></i><input type="text" value="1">
+                    <span class="car-item-detail">Papas con arroz</span>
+                    <h3>$35</h3>
+                    <div class="amount">
+                        <span class="material-icons-sharp">add</span>
+                        <input type="text" value="2" class="amount" disabled>
+                        <span class="material-icons-sharp">remove</span>
+                    </div>
                 </div>
+                <span class="btn-delete">
+                    <span class="material-icons-sharp">delete</span>
+                </span>
             </div>
-            <h4 class="order-price">$35</h4>
 
             <div class="order-card">
                 <img class="order-image" src="../static/images/main-b.jpg">
                 <div class="order-detail">
-                    <p>lorem ipsum dolor sit amet</p>
-                    <i class="fas fa-times"></i><input type="text" value="1">
+                    <span class="car-item-detail">Papas con arroz</span>
+                    <h3>$35</h3>
+                    <div class="amount">
+                        <span class="material-icons-sharp">add</span>
+                        <input type="text" value="2" class="amount" disabled>
+                        <span class="material-icons-sharp">remove</span>
+                    </div>
+
                 </div>
+                <span class="btn-delete">
+                    <span class="material-icons-sharp">delete</span>
+                </span>
             </div>
-            <h4 class="order-price">$40</h4>
 
             <div class="order-card">
                 <img class="order-image" src="../static/images/main-b.jpg">
                 <div class="order-detail">
-                    <p>lorem ipsum dolor sit amet</p>
-                    <i class="fas fa-times"></i><input type="text" value="1">
+                    <span class="car-item-detail">Papas con arroz</span>
+                    <h3>$35</h3>
+                    <div class="amount">
+                        <span class="material-icons-sharp">add</span>
+                        <input type="text" value="2" class="amount" disabled>
+                        <span class="material-icons-sharp">remove</span>
+                    </div>
+
                 </div>
+                <span class="btn-delete">
+                    <span class="material-icons-sharp">delete</span>
+                </span>
             </div>
-            <h4 class="order-price">$25</h4>
         </div>
 
         <hr class="divider">
@@ -155,13 +181,10 @@
         <button class="checkout">
             Pagar
         </button>
-
     </div>
+</div>
 
-    <!-- perfil -->
-
-
-
-
+<script src="../static/js/cliente.js"></script>
+<script src=" https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </body>
 </html>

@@ -1,44 +1,34 @@
-document.addEventListener('DOMContentLoaded', function() {
-    var btnProfile = document.querySelector('.sidebar-menu-profile');
-    var perfilFormulario = document.getElementById('perfilFormulario');
-    var dashboard = document.getElementById('dashboard');
-    var btnInicio = document.querySelector('.sidebar-menu-inicio');
+const sideMenu = document.querySelector(".sidebar");
+const shoppingCart = document.querySelector(".right");
+const menuBtn = document.querySelector("#menu-btn");
+const closeBtn = document.querySelector("#close-btn");
+const closeShopBtn = document.querySelector("#closeShop-btn");
+const shopBtn = document.querySelector("#shop-btn");
+const themeToggler= document.querySelector(".theme-toggler");
 
-    // Verificar si el botón de perfil y el formulario existen
-    if ( dashboard && btnInicio) {
-       /** btnProfile.addEventListener('click', function() {
-            dashboard.classList.add('hidden');
-            // Mostrar el formulario eliminando la clase 'hidden'
-            if (perfilFormulario.style.display === 'none' || perfilFormulario.style.display === '') {
-                perfilFormulario.style.display = 'block';
-            } else {
-                perfilFormulario.style.display = 'none';
-            }
-        });**/
-
-        btnInicio.addEventListener('click', function() {
-            // Ocultar el formulario y mostrar el dashboard nuevamente
-            perfilFormulario.classList.add('hidden');
-            dashboard.classList.remove('hidden');
-        });
-    } else {
-        console.error('No se encontró el botón de perfil o el formulario');
-    }
+menuBtn.addEventListener('click', () => {
+    sideMenu.style.display = 'block';
+    menuBtn.style.display = 'none';
+    closeBtn.style.display = 'block'; // Mostrar el botón de cerrar al abrir el menú
 });
 
-$(document).ready(function() {
-    $('.card-link').click(function(e) {
-        e.preventDefault(); // Evita la acción predeterminada del enlace (evitar ir al inicio de la página)
-
-        // Encuentra la información adicional de la tarjeta clicada
-        var additionalInfo = $(this).find('.additional-info');
-
-        // Oculta todas las informaciones adicionales
-        $('.additional-info').not(additionalInfo).hide();
-
-        // Muestra la información adicional de la tarjeta clicada
-        additionalInfo.toggle();
-    });
+closeBtn.addEventListener('click', () => {
+    sideMenu.style.display = 'none';
+    menuBtn.style.display = 'block'; // Mostrar el botón de menú al cerrar el menú
+    closeBtn.style.display = 'none'; // Ocultar el botón de cerrar al cerrar el menú
 });
 
+shopBtn.addEventListener('click', () =>{
+    shoppingCart.style.display = 'block';
+})
 
+closeShopBtn.addEventListener('click', () =>{
+    shoppingCart.style.display = 'none';
+})
+
+themeToggler.addEventListener('click', () =>{
+    document.body.classList.toggle('dark-theme-variables');
+
+    themeToggler.querySelector('span:nth-child(1)').classList.toggle('active');
+    themeToggler.querySelector('span:nth-child(2)').classList.toggle('active');
+})
