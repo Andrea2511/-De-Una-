@@ -358,8 +358,9 @@ main .card-time{
     font-size: 0.8rem;
 }
 
-.fa-star{
+.card-time #star {
     color: var(--color-primary);
+
 }
 
 .right{
