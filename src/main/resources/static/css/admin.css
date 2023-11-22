@@ -4,6 +4,9 @@
     --color-primary: #edb572;
     --color-danger: #ff7782;
     --color-succes: #41f1b6;
+    --color-succes-light: rgb(201, 241, 235);
+    --color-warning-light: #FFECE6;
+    --color-danger-light: #ffcdd1;
     --color-warning: #ffbb55;
     --color-white: #fff;
     --color-info-dark: #655c52;
@@ -28,7 +31,7 @@
     --color-background: #181a1e;
     --color-white: #202528;
     --color-dark: #edeffd;
-    --color-dark-variant: #a3bdcc;
+    --color-dark-variant: #817169;
     --color-light: rgba(0, 0, 0, 0.4);
     --box-shadow: 0 2rem 3rem var(--color-light);
 
@@ -384,6 +387,294 @@ main table tbody tr:last-child td{
      color: var(--color-primary);
  }
 
+#inventory {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: var(--card-padding);
+    background-color: var(--color-white);
+    border-radius: var(--card-border-radius);
+    box-shadow: var(--box-shadow);
+    margin-top: 4rem;
+}
+
+#inventory .title {
+    font-size: 25px;
+    font-weight: 500;
+}
+
+#inventory .title::after {
+    content: '';
+    position: absolute;
+    margin-top: 2.5rem;
+    height: 3px;
+    width: 30px;
+    background-color: var(--color-primary);
+}
+
+#inventory .status-containers {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.6rem;
+}
+
+#inventory .status-containers .status-container{
+    padding: var(--card-padding);
+    border-radius: var(--card-border-radius);
+    margin-top: 1rem;
+    box-shadow: var(--box-shadow);
+    transition: all 300ms ease;
+    text-align: left;
+}
+
+#inventory .status-containers #vencimiento-container{
+    background: var(--color-succes-light);
+}
+
+.status-containers #vencimiento-container .agotamiento-count{
+    background: var(--color-succes-light);
+}
+
+#inventory .status-containers #agotamiento-container{
+    background: var(--color-warning-light);
+}
+
+#inventory .status-containers #agotados-container{
+    background: var(--color-danger-light);
+}
+
+#inventory .status-containers > div:hover{
+    box-shadow: none;
+}
+
+#inventory .status-containers > div span{
+    padding: 0.5rem;
+    border-radius: 50%;
+    color: var(--color-white);
+    font-size: 2rem;
+}
+
+#inventory table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1.4rem;
+}
+
+#inventory th, #inventory td {
+    border: 1px solid var(--color-light);
+    padding: 1rem;
+}
+
+#inventory th {
+    background-color: var(--color-light);
+}
+
+#inventory tbody tr:hover {
+    background-color: var(--color-light);
+}
+
+#inventory tbody td {
+    height: 2.8rem;
+    color: var(--color-dark-variant);
+}
+
+#inventory tbody tr:last-child td {
+    border: none;
+}
+
+#inventory .pagination {
+    margin-top: 1rem;
+}
+
+#inventory .pagination button {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: var(--border-radius-1);
+    cursor: pointer;
+    margin-right: 0.5rem;
+}
+
+#inventory .pagination button:hover {
+    background-color: var(--color-primary-variant);
+}
+
+#insumos-form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: var(--card-padding);
+    background-color: var(--color-white);
+    border-radius: var(--card-border-radius);
+    box-shadow: var(--box-shadow);
+    margin-top: 4rem;
+}
+
+#insumos-form .title {
+    font-size: 25px;
+    font-weight: 500;
+
+}
+
+#insumos-form .title::before {
+    content: '';
+    position: absolute;
+    margin-top: 2.5rem;
+    height: 3px;
+    width: 30px;
+    background-color: var(--color-primary);
+}
+
+#insumos-form form .food-detail{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+#insumos-form .add-product{
+    background-color: transparent;
+    height: 4rem;
+    width: 100%;
+    border: 2px dashed var(--color-primary);
+    color: var(--color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin-top: 4.5rem;
+}
+
+#insumos-form .add-product div{
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+#insumos-form .add-product div h3{
+    font-weight: 600;
+}
+
+#producto-form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: var(--card-padding);
+    background-color: var(--color-white);
+    border-radius: var(--card-border-radius);
+    box-shadow: var(--box-shadow);
+    margin-top: 4rem;
+}
+
+#producto-form .title {
+    font-size: 25px;
+    font-weight: 500;
+
+}
+
+#producto-form .title::before {
+    content: '';
+    position: absolute;
+    margin-top: 2.5rem;
+    height: 3px;
+    width: 30px;
+    background-color: var(--color-primary);
+}
+
+#producto-form form .food-detail{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+form .food-detail .input-box{
+    margin: 20px 0 12px 0;
+    width: calc(100% / 2 - 20px);
+}
+
+.food-detail .input-box .details{
+    display: block;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.food-detail .input-box select{
+    height: 45px;
+    width: 100%;
+    background-color: transparent;
+    border: 2px solid var(--color-primary);
+    border-radius: var(--border-radius-1);
+    padding-left: 15px;
+    font-size: 16px;
+}
+
+form .food-detail .input-box input{
+    height: 45px;
+    width: 100%;
+    background-color: transparent;
+    border: 2px solid var(--color-primary);
+    border-radius: var(--border-radius-1);
+    padding-left: 15px;
+    font-size: 16px;
+    color: var(--color-info-dark);
+}
+
+form .days .days-title {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+form .days .disponibilidad {
+    display: flex;
+    width: 80%;
+    margin: 14px 0;
+    justify-content: space-between;
+}
+
+.days .disponibilidad input[type="checkbox"] {
+    display: none;
+}
+
+.days .disponibilidad label {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 1px solid var(--color-primary);
+    background-color: transparent;
+    border-radius: 50%;
+    text-align: center;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.days .disponibilidad input[type="checkbox"]:checked + label {
+    background-color: var(--color-primary);
+    color: #fff;
+}
+
+#producto-form button{
+    background-color: transparent;
+    height: 4rem;
+    width: 100%;
+    border: 2px dashed var(--color-primary);
+    color: var(--color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin-top: 4.5rem;
+}
+
+#producto-form button div{
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+#producto-form button div h3{
+    font-weight: 600;
+}
+
  .right{
      margin-top: 1.4rem;
  }
@@ -505,23 +796,8 @@ main table tbody tr:last-child td{
     background: var(--color-succes);
 }
 
-.right .sales-analytics .add-product{
-    background-color: transparent;
-    border: 2px dashed var(--color-primary);
-    color: var(--color-primary);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.right .sales-analytics .add-product div{
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-}
-
-.right .sales-analytics .add-product div h3{
-    font-weight: 600;
+.hidden {
+    display: none;
 }
 
 @media screen and (max-width: 1200px){
