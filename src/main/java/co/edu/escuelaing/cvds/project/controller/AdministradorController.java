@@ -23,6 +23,7 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.UUID;
 
 @Controller
@@ -35,8 +36,6 @@ public class AdministradorController {
     @Autowired
     private InsumoRepository insumoRepository;
 
-    @Value("${upload.path}") // Necesitas configurar esta propiedad en tu archivo application.properties
-    private String uploadPath;
 
     @GetMapping("/dashboard")
     public String mostrarFormulario() {
@@ -79,16 +78,13 @@ public class AdministradorController {
         Comida comida = comidaService.crearComida(nombre, 0.0, precio, cantidad, tipoComida);
 
         if (imagen != null && !imagen.isEmpty()) {
-            // Generamos un nombre único para la imagen usando UUID
-            String fileName = UUID.randomUUID().toString() + "_" + imagen.getOriginalFilename();
-
-            // Guardamos la imagen en el directorio configurado
-            imagen.transferTo(new File(uploadPath + "/" + fileName));
-
-            // Seteamos la ruta de la imagen en la entidad producto
-            comida.setRuta(fileName);
+            // Convertir la imagen a base64
+            byte[] imageData = imagen.getBytes();
+            String base64Image = Base64.getEncoder().encodeToString(imageData);
+    
+            // Guardar la representación base64 en la entidad comida
+            comida.setRuta(base64Image);
         }
-
         comidaService.guardarComida(comida);
 
         return "redirect:/admin/menu";
