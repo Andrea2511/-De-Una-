@@ -78,7 +78,6 @@ document.addEventListener('DOMContentLoaded', function() {
             hideElement(inventory);
             showElement(productForm);
             hideElement(insumoForm);
-            addProductBtn = document.getElementById("add-product");
             break;
         case "guardarInsumo":
             document.querySelector(".addI").classList.add("active");
@@ -96,39 +95,5 @@ document.addEventListener('DOMContentLoaded', function() {
             hideElement(insumoForm);
             break;
     }
-
-    addProductBtn.addEventListener('click', () =>  {
-        // Obtiene los datos del nuevo bloque de entrada de comida
-        const nombre = document.querySelector('#producto-form input[name="nombre"]').value;
-        const precio = document.querySelector('#producto-form input[name="precio"]').value;
-        const cantidad = document.querySelector('#producto-form input[name="cantidad"]').value;
-        const tipoComida = document.querySelector('#producto-form select[name="tipoComida"]').value;
-        const imagen = document.querySelector('#producto-form input[name="imagen"]').files[0];
-
-        // Crea un objeto FormData y agrega los datos
-        const formData = new FormData();
-        formData.append('nombre', nombre);
-        formData.append('precio', precio);
-        formData.append('cantidad', cantidad);
-        formData.append('tipoComida', tipoComida);
-        formData.append('imagen', imagen);
-
-        // Realiza la solicitud AJAX usando fetch
-        fetch('/admin/guardarProducto', {
-            method: 'POST',
-            body: formData,
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Error al guardar el producto.');
-                }
-                // Redirecciona a la página deseada después de guardar
-                window.location.href = '/admin/guardarProducto';
-            })
-            .catch(error => {
-                // Maneja errores si es necesario
-                console.error(error.message);
-            });
-    });
 
 });
