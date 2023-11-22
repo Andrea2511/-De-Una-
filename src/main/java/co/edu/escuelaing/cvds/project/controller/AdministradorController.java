@@ -38,15 +38,44 @@ public class AdministradorController {
     @Value("${upload.path}") // Necesitas configurar esta propiedad en tu archivo application.properties
     private String uploadPath;
 
-    @GetMapping("/guardarProducto")
+    @GetMapping("/dashboard")
     public String mostrarFormulario() {
-        // Lógica para mostrar el formulario, si es necesario
+        return "admin";
+    }
+
+    @GetMapping("/pqrs")
+    public String pqrs() {
+        return "admin";
+    }
+
+    @GetMapping("/guardarProducto")
+    public String addProduct() {
+        return "admin";
+    }
+
+    @GetMapping("/guardarInsumo")
+    public String addInsumo() {
+        return "admin";
+    }
+
+    @GetMapping("/inventario")
+    public String inventario() {
+        return "admin";
+    }
+
+    @GetMapping("/menu")
+    public String menu() {
+        return "admin";
+    }
+
+    @GetMapping("/guardarPromociones")
+    public String addPromos() {
         return "admin";
     }
 
     @PostMapping("/guardarProducto")
     public String guardarProducto(@RequestParam("nombre") String nombre, @RequestParam("precio") double precio, @RequestParam("cantidad") int cantidad, @RequestParam("tipoComida") Categoria tipoComida, @RequestParam("imagen") MultipartFile imagen) throws IOException {
-        
+
         Comida comida = comidaService.crearComida(nombre, 0.0, precio, cantidad, tipoComida);
 
         if (imagen != null && !imagen.isEmpty()) {
@@ -62,7 +91,7 @@ public class AdministradorController {
 
         comidaService.guardarComida(comida);
 
-        return "redirect:/admin/guardarProducto";
+        return "redirect:/admin/dashboard";
     }
 
 }

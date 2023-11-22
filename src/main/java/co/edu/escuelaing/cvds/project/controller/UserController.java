@@ -104,7 +104,7 @@ public class UserController {
 
     @RequestMapping("/admin")
     public ModelAndView adminPage() {
-        return new ModelAndView("redirect:/admin/guardarProducto");
+        return new ModelAndView("redirect:/admin/dashboard");
     }
 
     @RequestMapping("/cliente")
