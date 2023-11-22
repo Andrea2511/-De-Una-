@@ -84,7 +84,7 @@
 
         <div class="dashboard-content">
             <div th:each="comida : ${comidas}" class="dashboard-card comida-card">
-                <img class="card-image" th:src="@{/provicional/{nombreImagen}(nombreImagen=${comida.ruta})}" alt="Comida Imagen">
+                <img class="card-image" th:src="|data:image/png;base64,${comida.ruta}|" alt="Comida Imagen">
                 <div class="card-detail">
                     <h4 th:text="${comida.nombre}"></h4>
                     <p th:text="${'$ ' + comida.precio}" class="precio"></p>

@@ -19,7 +19,8 @@ public class Comida {
 
     @Column(name = "calificacion")
     private double calificacion;
-    @Column(name = "ruta")
+    @Lob
+    @Column(name = "ruta", length = 1048576)
     private String ruta;
     @Column(name = "precio")
     private double precio;
@@ -134,5 +135,7 @@ public class Comida {
                 ", detalleInsumos=" + detalleInsumos +
                 '}';
     }
+
+
 
 }
