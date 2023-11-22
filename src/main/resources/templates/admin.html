@@ -183,16 +183,13 @@
 
             <div class="status-containers">
                 <div class="status-container" id="vencimiento-container">
-                    <p>Productos a punto de vencerse:</p>
-                    <span id="vencimiento-count">0</span>
+                    <p>Productos a punto de vencerse: <span id="vencimiento-count">0</span></p>
                 </div>
                 <div class="status-container" id="agotamiento-container">
-                    <p>Insumos a punto de agotarse:</p>
-                    <span id="agotamiento-count">0</span>
+                    <p>Insumos a punto de agotarse: <span id="agotamiento-count">0</span></p>
                 </div>
                 <div class="status-container" id="agotados-container">
-                    <p>Insumos agotados:</p>
-                    <span id="agotados-count">0</span>
+                    <p>Insumos agotados: <span id="agotados-count">0</span></p>
                 </div>
             </div>
 
@@ -218,62 +215,7 @@
                 </tr>
                 </thead>
                 <tbody id="cuerpoTabla">
-                    <tr>
-                        <td>1</td>
-                        <td>Leche</td>
-                        <td>$2.50</td>
-                        <td>2023-12-31</td>
-                        <td>150/200</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Leche</td>
-                        <td>$2.50</td>
-                        <td>2023-12-31</td>
-                        <td>150/200</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Leche</td>
-                        <td>$2.50</td>
-                        <td>2023-12-31</td>
-                        <td>150/200</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Leche</td>
-                        <td>$2.50</td>
-                        <td>2023-12-31</td>
-                        <td>150/200</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Leche</td>
-                        <td>$2.50</td>
-                        <td>2023-12-31</td>
-                        <td>150/200</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Leche</td>
-                        <td>$2.50</td>
-                        <td>2023-12-31</td>
-                        <td>150/200</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Leche</td>
-                        <td>$2.50</td>
-                        <td>2023-12-31</td>
-                        <td>150/200</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Leche</td>
-                        <td>$2.50</td>
-                        <td>2023-12-31</td>
-                        <td>150/200</td>
-                    </tr>
+                <!-- Aquí se cargarán las filas de la tabla -->
                 </tbody>
             </table>
 
@@ -318,7 +260,7 @@
                         <input type="date" id="fecha-vencimiento" name="fecha-vencimiento" required>
                     </div>
                 </div>
-                <div class="item add-insumo">
+                <div class="item add-product">
                     <div>
                         <span class="material-icons-sharp active">add</span>
                         <h3>Añadir Insumo</h3>
@@ -336,15 +278,15 @@
                 <div class="food-detail">
                     <div class="input-box">
                         <span class="details">Nombre</span>
-                        <input type="text" id="nombre" name="nombre" placeholder="Ingresa el nombre del plato" required>
+                        <input type="text" placeholder="Ingresa el nombre del plato" required>
                     </div>
                     <div class="input-box">
                         <span class="details">Precio</span>
-                        <input type="text" id="precio" name="precio" placeholder="Ingresa el precio" required>
+                        <input type="text" placeholder="Ingresa el precio" required>
                     </div>
                     <div class="input-box">
                         <span class="details">Cantidad</span>
-                        <input type="text" id="cantidad" name="cantidad" placeholder="Ingresa el stock" required>
+                        <input type="text" placeholder="Ingresa el stock" required>
                     </div>
                     <div class="input-box">
                         <span class="details">Tipo de comida</span>
@@ -394,12 +336,12 @@
                     </div>
                 </div>
 
-                <button type="submit">
+                <div class="item add-product">
                     <div>
                         <span class="material-icons-sharp active">add</span>
                         <h3>Añadir Producto</h3>
                     </div>
-                </button>
+                </div>
             </form>
         </div>
 
