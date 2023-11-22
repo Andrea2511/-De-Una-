@@ -455,19 +455,16 @@ main table tbody tr:last-child td{
 }
 
 #inventory .status-containers #vencimiento-count {
-    font-size: 1.5rem;
     font-weight: bold;
     color: var(--color-succes);
 }
 
 #inventory .status-containers #agotamiento-count {
-    font-size: 1.5rem;
     font-weight: bold;
     color: var(--color-warning);
 }
 
 #inventory .status-containers #agotados-count {
-    font-size: 1.5rem;
     font-weight: bold;
     color: var(--color-danger);
 }
