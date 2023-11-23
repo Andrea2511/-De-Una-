@@ -198,7 +198,7 @@
 
             <div id="tipoInsumoButtons">
                 <label for="tipoInsumoSelect">Selecciona Tipo de Insumo:</label>
-                <select id="tipoInsumoSelect">
+                <select id="tipoInsumoSelect" onchange="redireccionar(this.value)">
                     <option value="todos">Todos</option>
                     <option value="CARNES">Carnes</option>
                     <option value="LACTEOS">Productos lácteos</option>
@@ -231,7 +231,7 @@
                     <td th:text="${insumo.fechaVencimiento}"></td>
                     <td>
                         <button class="editar-btn-I"><span class="icon-edit material-icons-sharp">edit</span></button>
-                        <button class="guardar-btn-I"><span class="icon-save material-icons-sharp">save</span></button>
+                        <button class="guardar-btnI"><span class="icon-saveIn material-icons-sharp">save</span></button>
                         <button class="borrar-btn-I"><span class="icon-delete material-icons-sharp">delete</span></button>
                     </td>
                 </tr>
@@ -254,7 +254,7 @@
                     </div>
                     <div class="input-box">
                         <span class="details">Tipo</span>
-                        <select id="tipo" name="tipo" onchange="redireccionar(this.value)" required>
+                        <select id="tipo" name="tipo" required>
                             <option value="CARNES">Carnes</option>
                             <option value="LACTEOS">Productos lacteos</option>
                             <option value="FRUTAS">Frutas</option>
@@ -327,7 +327,7 @@
                 </tr>
                 </thead>
                 <tbody id="cuerpoTablaComida">
-                <tr th:each="comida : ${comidas}" data-comida-id="${comida.comidaId}">
+                <tr th:each="comida : ${comidas}" th:attr="data-comida-id=${comida.comidaId}">
                     <td th:text="${comida.comidaId}"></td>
                     <td class="editable" contenteditable="false" th:text="${comida.nombre}" data-nombre-campo="nombre" data-comida-id="${comida.comidaId}"></td>
                     <td class="editable" contenteditable="false" data-nombre-campo="precio" th:text="${comida.precio}"></td>
@@ -335,7 +335,7 @@
                     <td class="editable" contenteditable="false" data-nombre-campo="cantidad" th:text="${comida.cantidad}"></td>
                     <td>
                         <button class="editar-btn"><span class="icon-edit material-icons-sharp">edit</span></button>
-                        <button class="guardar-btn"><span class="icon-save material-icons-sharp">save</span></button>
+                        <button class="guardar-btn "><span class="icon-save material-icons-sharp">save</span></button>
                         <button class="borrar-btn"><span class="icon-delete material-icons-sharp">delete</span></button>
                     </td>
                 </tr>
