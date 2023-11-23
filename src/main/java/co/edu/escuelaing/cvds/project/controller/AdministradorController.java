@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -63,7 +64,9 @@ public class AdministradorController {
     }
 
     @GetMapping("/menu")
-    public String menu() {
+    public String menu(Model model) {
+        ArrayList<Comida> comidas = comidaService.obtenerTodasLasComidas();
+        model.addAttribute("comidas", comidas);
         return "admin";
     }
 
@@ -89,5 +92,13 @@ public class AdministradorController {
 
         return "redirect:/admin/menu";
     }
+    @PostMapping("/actualizarComida")
+    public String actualizarComida(@RequestBody Comida datosEditados) {
+        // Buscar la comida por ID en la base de datos
+
+        comidaService.actualizarComida(datosEditados.getComidaId(), datosEditados.getNombre(), datosEditados.getPrecio(), datosEditados.getCantidad());
+        return "redirect:/admin/menu";
+    }
+
 
 }
