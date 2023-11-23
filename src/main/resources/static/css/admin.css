@@ -32,6 +32,9 @@
     --color-white: #202528;
     --color-dark: #edeffd;
     --color-dark-variant: #817169;
+    --color-succes-light: rgb(126, 150, 149);
+    --color-warning-light: #9f948d;
+    --color-danger-light: #8a7071;
     --color-light: rgba(0, 0, 0, 0.4);
     --box-shadow: 0 2rem 3rem var(--color-light);
 
@@ -445,6 +448,7 @@ main table tbody tr:last-child td{
 
 #inventory .status-containers > div:hover{
     box-shadow: none;
+    cursor: pointer;
 }
 
 #inventory .status-containers > div span{
@@ -469,50 +473,275 @@ main table tbody tr:last-child td{
     color: var(--color-danger);
 }
 
+#inventory #tipoInsumoButtons{
+    display: flex;
+    gap: 10px;
+    padding: 1rem 25%;
+}
+
+#inventory #tipoInsumoSelect{
+    border-radius: var(--card-border-radius);
+    text-align: center;
+    background-color: var(--color-white);
+    color: var(--color-dark);
+}
+
+#inventory .separator-line {
+    border: none;
+    height: 1px;
+    background-color: var(--color-primary); /* Reemplaza con tu color primario */
+    margin: 10px 0; /* Ajusta según sea necesario */
+}
+
 #inventory table {
+    background: var(--color-white);
     width: 100%;
-    border-collapse: collapse;
-    margin-top: 1.4rem;
+    border-radius: var(--card-border-radius);
+    padding: var(--card-padding);
+    text-align: center;
 }
 
-#inventory th, #inventory td {
-    border: 1px solid var(--color-light);
-    padding: 1rem;
+#inventory table th span.material-icons-sharp {
+    font-size: 1em;
+    margin-right: 15px;
 }
 
-#inventory th {
-    background-color: var(--color-light);
+#inventory table th span.icon-tag {
+    color: red;
 }
 
-#inventory tbody tr:hover {
-    background-color: var(--color-light);
+#inventory table th span.icon-payment {
+    color: green;
 }
 
-#inventory tbody td {
+#inventory table th span.icon-calendar{
+    color: blue;
+}
+
+#inventory table tbody td{
     height: 2.8rem;
+    border-bottom: 1px solid var(--color-light);
     color: var(--color-dark-variant);
 }
 
-#inventory tbody tr:last-child td {
-    border: none;
+tbody td button {
+    font-size: 12px;
+    padding: 2px 5px;
+    background-color: transparent;
 }
 
-#inventory .pagination {
-    margin-top: 1rem;
+table tbody td span.icon-edit {
+    color: var(--color-warning);
 }
 
-#inventory .pagination button {
-    background-color: var(--color-primary);
-    color: var(--color-white);
-    padding: 0.5rem 1rem;
+table tbody td span.icon-delete {
+    color: var(--color-danger);
+}
+
+#inventory table tbody tr {
+    display: none;
+}
+
+#inventory table tbody tr.visible {
+    display: table-row;
+}
+
+#inventory #paginacion {
+    padding: 0.5rem 40%;
+}
+
+#inventory #anteriorBtn,
+#siguienteBtn {
+    margin: 0 5px;
+    padding: 1px 5px;
+    background-color: transparent;
+    color: var(--color-dark);
     border: none;
-    border-radius: var(--border-radius-1);
     cursor: pointer;
-    margin-right: 0.5rem;
+    border-radius: 5px;
+
 }
 
-#inventory .pagination button:hover {
-    background-color: var(--color-primary-variant);
+#inventory #anteriorBtn:hover,
+#siguienteBtn:hover {
+    border-radius: 100%;
+    color: var(--color-white);
+    background-color: var(--color-primary);
+}
+
+#inventory #paginaActual {
+    font-size: 1rem;
+    padding: 10px;
+    background-color: transparent;
+    color: var(--color-dark);
+    border: none;
+    vertical-align: top;
+}
+
+#menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: var(--card-padding);
+    background-color: var(--color-white);
+    border-radius: var(--card-border-radius);
+    box-shadow: var(--box-shadow);
+    margin-top: 4rem;
+}
+
+#menu .title {
+    font-size: 25px;
+    font-weight: 500;
+}
+
+#menu .title::after {
+    content: '';
+    position: absolute;
+    margin-top: 2.5rem;
+    height: 3px;
+    width: 30px;
+    background-color: var(--color-primary);
+}
+
+#menu .status-containers {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.6rem;
+}
+
+#menu .status-containers .status-container{
+    padding: var(--card-padding);
+    border-radius: var(--card-border-radius);
+    margin-top: 1rem;
+    box-shadow: var(--box-shadow);
+    transition: all 300ms ease;
+    text-align: left;
+}
+
+#menu .status-containers #buenos-container{
+    background: var(--color-succes-light);
+}
+
+#menu .status-containers #regular-container{
+    background: var(--color-warning-light);
+}
+
+#menu .status-containers #malos-container{
+    background: var(--color-danger-light);
+}
+
+#menu .status-containers > div:hover{
+    box-shadow: none;
+    cursor: pointer;
+}
+
+#menu .status-containers > div span{
+    padding: 0.5rem;
+    border-radius: 50%;
+    color: var(--color-white);
+    font-size: 2rem;
+}
+
+#menu .status-containers #buenos-count {
+    font-weight: bold;
+    color: var(--color-succes);
+}
+
+#menu .status-containers #regular-count {
+    font-weight: bold;
+    color: var(--color-warning);
+}
+
+#menu .status-containers #malos-count{
+    font-weight: bold;
+    color: var(--color-danger);
+}
+
+#menu #tipoComidaButtons{
+    display: flex;
+    gap: 10px;
+    padding: 1rem 25%;
+}
+
+#menu #tipoComidaSelect{
+    border-radius: var(--card-border-radius);
+    text-align: center;
+    background-color: var(--color-white);
+    color: var(--color-dark);
+}
+
+#menu .separator-line {
+    border: none;
+    height: 1px;
+    background-color: var(--color-primary); /* Reemplaza con tu color primario */
+    margin: 10px 0; /* Ajusta según sea necesario */
+}
+
+#menu table {
+    background: var(--color-white);
+    width: 100%;
+    border-radius: var(--card-border-radius);
+    padding: var(--card-padding);
+    text-align: center;
+}
+
+#menu table th span.material-icons-sharp {
+    font-size: 1em;
+    margin-right: 15px;
+}
+
+#menu table th span.icon-tag {
+    color: red;
+}
+
+#menu table th span.icon-payment {
+    color: green;
+}
+
+#menu table tbody td{
+    height: 2.8rem;
+    border-bottom: 1px solid var(--color-light);
+    color: var(--color-dark-variant);
+}
+
+#menu table tbody tr {
+    display: none;
+}
+
+#menu table tbody tr.visible {
+    display: table-row;
+}
+
+#menu #paginacionComida {
+    padding: 0.5rem 40%;
+}
+
+#menu #anteriorBtnComida,
+#siguienteBtnComida {
+    margin: 0 5px;
+    padding: 1px 5px;
+    background-color: transparent;
+    color: var(--color-dark);
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+
+}
+
+#menu #anteriorBtnComida:hover,
+#siguienteBtnComida:hover {
+    border-radius: 100%;
+    color: var(--color-white);
+    background-color: var(--color-primary);
+}
+
+#menu #paginaActualComida {
+    font-size: 1rem;
+    padding: 10px;
+    background-color: transparent;
+    color: var(--color-dark);
+    border: none;
+    vertical-align: top;
 }
 
 #insumos-form{
@@ -547,7 +776,7 @@ main table tbody tr:last-child td{
     justify-content: space-between;
 }
 
-#insumos-form .add-product{
+#insumos-form button{
     background-color: transparent;
     height: 4rem;
     width: 100%;
@@ -560,13 +789,13 @@ main table tbody tr:last-child td{
     margin-top: 4.5rem;
 }
 
-#insumos-form .add-product div{
+#insumos-form button div{
     display: flex;
     align-items: center;
     gap: 0.6rem;
 }
 
-#insumos-form .add-product div h3{
+#insumos-form button div h3{
     font-weight: 600;
 }
 

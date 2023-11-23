@@ -58,7 +58,7 @@
             </div>
         </aside>
 
-        <main class="hidden">
+        <main>
             <h1>Reporte</h1>
 
             <div class="date">
@@ -178,7 +178,7 @@
 
         </main>
 
-        <div id="inventory" class="hidden">
+        <div id="inventory">
             <h1>Inventario</h1>
 
             <div class="status-containers">
@@ -197,24 +197,28 @@
             </div>
 
             <div id="tipoInsumoButtons">
-                <button onclick="cargarTabla('todos')">Todos</button>
-                <button onclick="cargarTabla('lacteos')">Productos lácteos</button>
-                <button onclick="cargarTabla('frutas')">Frutas</button>
-                <button onclick="cargarTabla('verduras')">Verduras y hortalizas</button>
-                <button onclick="cargarTabla('cereales')">Cereales, azúcares y derivados</button>
-                <button onclick="cargarTabla('aceites')">Aceites y grasas</button>
-                <button onclick="cargarTabla('papas')">Papas y legumbres</button>
-                <button onclick="cargarTabla('frutosSecos')">Frutos secos</button>
+                <label for="tipoInsumoSelect">Selecciona Tipo de Insumo:</label>
+                <select id="tipoInsumoSelect" onchange="cargarTabla(this.value)">
+                    <option value="todos">Todos</option>
+                    <option value="lacteos">Productos lácteos</option>
+                    <option value="frutas">Frutas</option>
+                    <option value="verduras">Verduras y hortalizas</option>
+                    <option value="cereales">Cereales, azúcares y derivados</option>
+                    <option value="aceites">Aceites y grasas</option>
+                    <option value="papas">Papas y legumbres</option>
+                    <option value="frutosSecos">Frutos secos</option>
+                </select>
             </div>
-
+            <hr class="separator-line">
             <table id="tablaInsumos">
                 <thead>
                 <tr>
-                    <th>ID</th>
+                    <th><span class="icon-tag material-icons-sharp">tag</span>ID</th>
                     <th>Nombre del Insumo</th>
-                    <th>Precio</th>
-                    <th>Fecha de Vencimiento</th>
+                    <th><span class="icon-payment material-icons-sharp">payment</span>Precio</th>
+                    <th><span class="icon-calendar material-icons-sharp">calendar_month</span>Fecha de Vencimiento</th>
                     <th>Cantidad</th>
+                    <th class="danger">Acciones</th>
                 </tr>
                 </thead>
                 <tbody id="cuerpoTabla">
@@ -224,6 +228,10 @@
                         <td>$2.50</td>
                         <td>2023-12-31</td>
                         <td>150/200</td>
+                        <td>
+                            <button class="editar-btn"><span class="icon-edit material-icons-sharp">edit</span></button>
+                            <button class="borrar-btn"><span class="icon-delete material-icons-sharp">delete</span></button>
+                        </td>
                     </tr>
                     <tr>
                         <td>1</td>
@@ -231,6 +239,10 @@
                         <td>$2.50</td>
                         <td>2023-12-31</td>
                         <td>150/200</td>
+                        <td>
+                            <button class="editar-btn"><span class="icon-edit material-icons-sharp">edit</span></button>
+                            <button class="borrar-btn"><span class="icon-delete material-icons-sharp">delete</span></button>
+                        </td>
                     </tr>
                     <tr>
                         <td>1</td>
@@ -238,6 +250,10 @@
                         <td>$2.50</td>
                         <td>2023-12-31</td>
                         <td>150/200</td>
+                        <td>
+                            <button class="editar-btn"><span class="icon-edit material-icons-sharp">edit</span></button>
+                            <button class="borrar-btn"><span class="icon-delete material-icons-sharp">delete</span></button>
+                        </td>
                     </tr>
                     <tr>
                         <td>1</td>
@@ -245,6 +261,10 @@
                         <td>$2.50</td>
                         <td>2023-12-31</td>
                         <td>150/200</td>
+                        <td>
+                            <button class="editar-btn"><span class="icon-edit material-icons-sharp">edit</span></button>
+                            <button class="borrar-btn"><span class="icon-delete material-icons-sharp">delete</span></button>
+                        </td>
                     </tr>
                     <tr>
                         <td>1</td>
@@ -252,6 +272,10 @@
                         <td>$2.50</td>
                         <td>2023-12-31</td>
                         <td>150/200</td>
+                        <td>
+                            <button class="editar-btn"><span class="icon-edit material-icons-sharp">edit</span></button>
+                            <button class="borrar-btn"><span class="icon-delete material-icons-sharp">delete</span></button>
+                        </td>
                     </tr>
                     <tr>
                         <td>1</td>
@@ -259,6 +283,10 @@
                         <td>$2.50</td>
                         <td>2023-12-31</td>
                         <td>150/200</td>
+                        <td>
+                            <button class="editar-btn"><span class="icon-edit material-icons-sharp">edit</span></button>
+                            <button class="borrar-btn"><span class="icon-delete material-icons-sharp">delete</span></button>
+                        </td>
                     </tr>
                     <tr>
                         <td>1</td>
@@ -266,6 +294,10 @@
                         <td>$2.50</td>
                         <td>2023-12-31</td>
                         <td>150/200</td>
+                        <td>
+                            <button class="editar-btn"><span class="icon-edit material-icons-sharp">edit</span></button>
+                            <button class="borrar-btn"><span class="icon-delete material-icons-sharp">delete</span></button>
+                        </td>
                     </tr>
                     <tr>
                         <td>1</td>
@@ -273,6 +305,10 @@
                         <td>$2.50</td>
                         <td>2023-12-31</td>
                         <td>150/200</td>
+                        <td>
+                            <button class="editar-btn"><span class="icon-edit material-icons-sharp">edit</span></button>
+                            <button class="borrar-btn"><span class="icon-delete material-icons-sharp">delete</span></button>
+                        </td>
                     </tr>
                     <tr>
                         <td>1</td>
@@ -280,16 +316,55 @@
                         <td>$2.50</td>
                         <td>2023-12-31</td>
                         <td>150/200</td>
+                        <td>
+                            <button class="editar-btn"><span class="icon-edit material-icons-sharp">edit</span></button>
+                            <button class="borrar-btn"><span class="icon-delete material-icons-sharp">delete</span></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Leche</td>
+                        <td>$2.50</td>
+                        <td>2023-12-31</td>
+                        <td>150/200</td>
+                        <td>
+                            <button class="editar-btn"><span class="icon-edit material-icons-sharp">edit</span></button>
+                            <button class="borrar-btn"><span class="icon-delete material-icons-sharp">delete</span></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Leche</td>
+                        <td>$2.50</td>
+                        <td>2023-12-31</td>
+                        <td>150/200</td>
+                        <td>
+                            <button class="editar-btn"><span class="icon-edit material-icons-sharp">edit</span></button>
+                            <button class="borrar-btn"><span class="icon-delete material-icons-sharp">delete</span></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Leche</td>
+                        <td>$2.50</td>
+                        <td>2023-12-31</td>
+                        <td>150/200</td>
+                        <td>
+                            <button class="editar-btn"><span class="icon-edit material-icons-sharp">edit</span></button>
+                            <button class="borrar-btn"><span class="icon-delete material-icons-sharp">delete</span></button>
+                        </td>
                     </tr>
                 </tbody>
             </table>
 
             <div id="paginacion">
-                <!-- Aquí se agregarán los botones de paginación -->
+                <button id="anteriorBtn" onclick="cambiarPagina(-1)"><span class="icon-payment material-icons-sharp">navigate_before</span></button>
+                <span id="paginaActual">1</span>
+                <button id="siguienteBtn" onclick="cambiarPagina(1)"><span class="icon-payment material-icons-sharp">navigate_next</span></button>
             </div>
         </div>
 
-        <div id="insumos-form" class="hidden">
+        <div id="insumos-form">
 
             <div class="title">Añadir Insumo</div>
 
@@ -303,6 +378,7 @@
                     <div class="input-box">
                         <span class="details">Tipo</span>
                         <select id="tipoInsumo" name="tipoComida" required>
+                            <option value="LACTEOS">Productos lacteos</option>
                             <option value="LACTEOS">Productos lacteos</option>
                             <option value="FRUTAS">Frutas</option>
                             <option value="VERDURAS Y HORTALIZAS">Verduras y hortalizas</option>
@@ -325,16 +401,186 @@
                         <input type="date" id="fecha-vencimiento" name="fecha-vencimiento" required>
                     </div>
                 </div>
-                <div class="item add-product">
+                <button type="submit" class="add-insumo">
                     <div>
                         <span class="material-icons-sharp active">add</span>
                         <h3>Añadir Insumo</h3>
                     </div>
-                </div>
+                </button>
             </form>
         </div>
 
-        <div id="producto-form" class="hidden">
+        <div id="menu">
+            <h1>Menú Semanal</h1>
+
+            <div class="status-containers">
+                <div class="status-container" id="buenos-container">
+                    <h3>Platos Destacados </h3>
+                    <span id="buenos-count">0</span>
+                </div>
+                <div class="status-container" id="regular-container">
+                    <h3>Platos Recomendados</h3>
+                    <span id="regular-count">0</span>
+                </div>
+                <div class="status-container" id="malos-container">
+                    <h3>Platos Mejorables</h3>
+                    <span id="malos-count">0</span>
+                </div>
+            </div>
+
+            <div id="tipoComidaButtons">
+                <label for="tipoComidaSelect">Selecciona Tipo de Insumo:</label>
+                <select id="tipoComidaSelect" onchange="cargarTabla(this.value)">
+                    <option value="TODO">Todos</option>
+                    <option value="PLATO_PRINCIPAL">Plato Principal</option>
+                    <option value="FAST_FOOD">Fast Food</option>
+                    <option value="POSTRE">Postre</option>
+                </select>
+            </div>
+            <hr class="separator-line">
+            <table id="tablaComidas">
+                <thead>
+                <tr>
+                    <th><span class="icon-tag material-icons-sharp">tag</span>ID</th>
+                    <th>Nombre del Plato</th>
+                    <th><span class="icon-payment material-icons-sharp">payment</span>Precio</th>
+                    <th>calificacion</th>
+                    <th>Cantidad</th>
+                    <th class="danger">Acciones</th>
+                </tr>
+                </thead>
+                <tbody id="cuerpoTablaComida">
+                    <tr>
+                        <td>1</td>
+                        <td>Leche</td>
+                        <td>$2.50</td>
+                        <td>150/200</td>
+                        <td>
+                            <button class="editar-btn"><span class="icon-edit material-icons-sharp">edit</span></button>
+                            <button class="borrar-btn"><span class="icon-delete material-icons-sharp">delete</span></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Leche</td>
+                        <td>$2.50</td>
+                        <td>150/200</td>
+                        <td>
+                            <button class="editar-btn"><span class="icon-edit material-icons-sharp">edit</span></button>
+                            <button class="borrar-btn"><span class="icon-delete material-icons-sharp">delete</span></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Leche</td>
+                        <td>$2.50</td>
+                        <td>150/200</td>
+                        <td>
+                            <button class="editar-btn"><span class="icon-edit material-icons-sharp">edit</span></button>
+                            <button class="borrar-btn"><span class="icon-delete material-icons-sharp">delete</span></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Leche</td>
+                        <td>$2.50</td>
+                        <td>150/200</td>
+                        <td>
+                            <button class="editar-btn"><span class="icon-edit material-icons-sharp">edit</span></button>
+                            <button class="borrar-btn"><span class="icon-delete material-icons-sharp">delete</span></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Leche</td>
+                        <td>$2.50</td>
+                        <td>150/200</td>
+                        <td>
+                            <button class="editar-btn"><span class="icon-edit material-icons-sharp">edit</span></button>
+                            <button class="borrar-btn"><span class="icon-delete material-icons-sharp">delete</span></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Leche</td>
+                        <td>$2.50</td>
+                        <td>150/200</td>
+                        <td>
+                            <button class="editar-btn"><span class="icon-edit material-icons-sharp">edit</span></button>
+                            <button class="borrar-btn"><span class="icon-delete material-icons-sharp">delete</span></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Leche</td>
+                        <td>$2.50</td>
+                        <td>150/200</td>
+                        <td>
+                            <button class="editar-btn"><span class="icon-edit material-icons-sharp">edit</span></button>
+                            <button class="borrar-btn"><span class="icon-delete material-icons-sharp">delete</span></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Leche</td>
+                        <td>$2.50</td>
+                        <td>150/200</td>
+                        <td>
+                            <button class="editar-btn"><span class="icon-edit material-icons-sharp">edit</span></button>
+                            <button class="borrar-btn"><span class="icon-delete material-icons-sharp">delete</span></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Leche</td>
+                        <td>$2.50</td>
+                        <td>150/200</td>
+                        <td>
+                            <button class="editar-btn"><span class="icon-edit material-icons-sharp">edit</span></button>
+                            <button class="borrar-btn"><span class="icon-delete material-icons-sharp">delete</span></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Leche</td>
+                        <td>$2.50</td>
+                        <td>150/200</td>
+                        <td>
+                            <button class="editar-btn"><span class="icon-edit material-icons-sharp">edit</span></button>
+                            <button class="borrar-btn"><span class="icon-delete material-icons-sharp">delete</span></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Leche</td>
+                        <td>$2.50</td>
+                        <td>150/200</td>
+                        <td>
+                            <button class="editar-btn"><span class="icon-edit material-icons-sharp">edit</span></button>
+                            <button class="borrar-btn"><span class="icon-delete material-icons-sharp">delete</span></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Leche</td>
+                        <td>$2.50</td>
+                        <td>150/200</td>
+                        <td>
+                            <button class="editar-btn"><span class="icon-edit material-icons-sharp">edit</span></button>
+                            <button class="borrar-btn"><span class="icon-delete material-icons-sharp">delete</span></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div id="paginacionComida">
+                <button id="anteriorBtnComida" onclick="cambiarPagina(-1)"><span class="icon-payment material-icons-sharp">navigate_before</span></button>
+                <span id="paginaActualComida">1</span>
+                <button id="siguienteBtnComida" onclick="cambiarPagina(1)"><span class="icon-payment material-icons-sharp">navigate_next</span></button>
+            </div>
+        </div>
+
+        <div id="producto-form">
 
             <div class="title">Añadir Comida</div>
 
@@ -410,7 +656,9 @@
             </form>
         </div>
 
-        <div class="right hidden">
+
+
+        <div class="right">
             <div class="top">
                 <button id="menu-btn">
                     <span class="material-icons-sharp">menu</span>
