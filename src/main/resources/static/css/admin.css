@@ -712,6 +712,19 @@ table tbody td span.icon-delete {
     display: table-row;
 }
 
+#menu table tbody td button.icon-save{
+    color: var(--color-succes);
+    display: none;
+}
+
+tr {
+    transition: opacity 0.2s ease-out;
+}
+
+.oculto {
+    opacity: 0;
+}
+
 #menu #paginacionComida {
     padding: 0.5rem 40%;
 }
@@ -797,11 +810,6 @@ table tbody td span.icon-delete {
 
 #insumos-form button div h3{
     font-weight: 600;
-}
-
-.icon-save{
-    color: var(--color-succes);
-    display: none;
 }
 
 #producto-form{

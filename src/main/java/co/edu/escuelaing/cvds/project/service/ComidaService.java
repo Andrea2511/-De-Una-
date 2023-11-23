@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -76,6 +77,16 @@ public class ComidaService {
 
         // Guardar la comida actualizada en la base de datos
         comidaRepository.save(comidaExistente);
+
+    }
+
+    public void eliminarComida(Long comidaId) {
+
+        Comida comidaExistente = comidaRepository.findById(comidaId)
+                .orElseThrow(() -> new IllegalArgumentException("Comida no encontrada con ID: " + comidaId));
+
+        // Elimina
+        comidaRepository.delete(comidaExistente);
 
     }
 }

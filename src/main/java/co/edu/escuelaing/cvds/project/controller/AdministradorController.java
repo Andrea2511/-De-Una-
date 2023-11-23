@@ -166,4 +166,11 @@ public class AdministradorController {
         return "redirect:/admin/menu";
     }
 
+    @PostMapping("/eliminarComida")
+    public String eliminarComida(@PathVariable Long comidaId) {
+        System.out.println("comidaId: " + comidaId);
+        comidaService.eliminarComida(comidaId);
+        return "redirect:/admin/menu";
+    }
+
 }

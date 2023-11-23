@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let paginaActual = 1;
     var botonesEdit = document.querySelectorAll('.editar-btn');
     var botonesSave = document.querySelectorAll('.guardar-btn');
+    var botonesDelete = document.querySelectorAll('.borrar-btn');
 
     menuBtn.addEventListener('click', () => {
         sideMenu.style.display = 'block';
@@ -194,6 +195,31 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    botonesDelete.forEach(function (btnDel) {
+        btnDel.addEventListener('click', function () {
+            // Obtener el data-comida-id de la fila padre del botón
+
+            var fila = btnDel.closest('tr');
+            console.log('fila', fila);
+
+            if (fila) {
+                var comidaId = fila.getAttribute('data-comida-id');
+                var tbody = fila.parentNode;
+
+                // Verificar si el elemento padre (tbody) existe antes de intentar eliminar la fila
+                if (tbody) {
+                    tbody.removeChild(fila);
+                    // Llamar a la función eliminarComida con el comidaId
+                    eliminarComida(comidaId);
+                } else {
+                    console.error('El elemento padre (tbody) es nulo.');
+                }
+            } else {
+                console.error('No se encontró la fila con data-comida-id.');
+            }
+        });
+    });
+
 });
 
 function activarEdicion(btnEdit) {
@@ -222,20 +248,22 @@ function guardarEdicion(btnSave) {
         cantidad: fila.querySelector('.editable[data-nombre-campo="cantidad"]').innerText.trim()
     };
 
+    console.log('id', datosEditados.comidaId);
+    console.log('Cantidad', datosEditados.cantidad);
+
     // Realizar la solicitud POST al servidor
-    $.ajax({
-        url: '/admin/actualizarComida',
-        type: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify(datosEditados),
-        success: function(data) {
-            // Manejar la respuesta si es necesario
-            console.log('Respuesta del servidor:', data);
+    fetch('/admin/actualizarComida', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
         },
-        error: function(jqXHR, textStatus, errorThrown) {
-            console.error('Error al realizar la solicitud:', error);
-        }
-    });
+        body: JSON.stringify(datosEditados),
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Datos actualizados:', data);
+        })
+        .catch(error => console.error('Error en la solicitud AJAX:', error));
 
     // Restaurar el estado de la interfaz
     camposEditables.forEach(function (campo) {
@@ -248,18 +276,46 @@ function guardarEdicion(btnSave) {
     fila.querySelector('.guardar-btn').style.display = 'none';
 }
 
-function redireccionar(valor) {
-    // Puedes usar JavaScript para redirigir según el valor seleccionado
-    switch (valor) {
-        case "CARNES":
-            window.location.href = "/admin/inventario/carnes";
-            break;
-        case "LACTEOS":
-            window.location.href = "/admin/inventario/lacteos";
-            break;
-        // Agrega más casos según sea necesario
-        default:
-            // Redirigir a una página predeterminada o hacer algo más
-            break;
+function eliminarComida(comidaId) {
+    // Encontrar la fila
+    console.log('comidaId:', comidaId);
+    var fila = document.querySelector(`tr[data-comida-id="${comidaId}"]`);
+
+    // Verificar si la fila se encuentra
+    if (fila) {
+        // Agregar la clase de ocultar
+        fila.classList.add("oculto");
+
+        // Esperar a que termine la transición antes de eliminar la fila
+        fila.addEventListener("transitionend", function() {
+            // Eliminar la fila después de que termine la transición
+            var tbody = fila.parentNode;
+            tbody.removeChild(fila);
+
+            // Realizar la solicitud AJAX para eliminar la entrada en la base de datos
+            var xhr = new XMLHttpRequest();
+            xhr.open("DELETE", `/admin/eliminarComida`, true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    // Manejar la respuesta del servidor si es necesario
+                    console.log(xhr.responseText);
+                } else {
+                    // Manejar errores si es necesario
+                    console.error(xhr.statusText);
+                }
+            };
+
+            xhr.onerror = function () {
+                // Manejar errores de red si es necesario
+                console.error("Error de red al intentar realizar la solicitud.");
+            };
+
+            xhr.send();
+        });
+    } else {
+        // Manejar el caso en que la fila no se encontró
+        console.error(`No se encontró la fila con data-comida-id="${comidaId}"`);
     }
 }
