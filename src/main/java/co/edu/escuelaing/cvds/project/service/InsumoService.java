@@ -52,4 +52,28 @@ public class InsumoService {
     public ArrayList<Insumo> obtenerTodosLosInsumos() {return (ArrayList<Insumo>) insumoRepository.findAll();}
 
     public List<Insumo> obtenerComidasPorTipo(TipoInsumos tipoInsumos) {return insumoRepository.findByTipoOrderByNombre(tipoInsumos);}
+
+    public void actualizarInsumo(Long insumoId, String nombre, double precio, int cantidad, Date fechaVencimiento) {
+
+        Insumo insumoExistente = insumoRepository.findById(insumoId)
+                .orElseThrow(() -> new IllegalArgumentException("Comida no encontrada con ID: " + insumoId));
+
+        // Actualizar los datos con los valores editados
+        insumoExistente.setNombre(nombre);
+        insumoExistente.setPrecio(precio);
+        insumoExistente.setCantidad(cantidad);
+        insumoExistente.setFechaVencimiento(fechaVencimiento);
+
+        // Guardar la comida actualizada en la base de datos
+        insumoRepository.save(insumoExistente);
+
+    }
+
+    public void eliminarInsumo(Long insumoId) {
+        Insumo insumoExistente = insumoRepository.findById(insumoId)
+                .orElseThrow(() -> new IllegalArgumentException("Comida no encontrada con ID: " + insumoId));
+
+        // Elimina
+        insumoRepository.delete(insumoExistente);
+    }
 }

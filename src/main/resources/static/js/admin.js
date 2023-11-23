@@ -18,6 +18,9 @@ document.addEventListener('DOMContentLoaded', function() {
     var botonesEdit = document.querySelectorAll('.editar-btn');
     var botonesSave = document.querySelectorAll('.guardar-btn');
     var botonesDelete = document.querySelectorAll('.borrar-btn');
+    var botonesEditI = document.querySelectorAll('.editar-btn-I');
+    var botonesSaveI = document.querySelectorAll('.guardar-btnI');
+    var botonesDeleteI = document.querySelectorAll('.borrar-btn-I');
 
     menuBtn.addEventListener('click', () => {
         sideMenu.style.display = 'block';
@@ -32,6 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         themeToggler.querySelector('span:nth-child(1)').classList.toggle('active');
         themeToggler.querySelector('span:nth-child(2)').classList.toggle('active');
+
     })
 
     function showElement(element) {
@@ -220,6 +224,43 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    botonesEditI.forEach(function (btnEdit) {
+        btnEdit.addEventListener('click', function () {
+            activarEdicionInsumo(btnEdit);
+        });
+    });
+
+    botonesSaveI.forEach(function (btnSave) {
+        btnSave.addEventListener('click', function () {
+            guardarEdicionI(btnSave);
+        });
+    });
+
+    botonesDeleteI.forEach(function (btnDel) {
+        btnDel.addEventListener('click', function () {
+            // Obtener el data-comida-id de la fila padre del botón
+
+            var fila = btnDel.closest('tr');
+            console.log('fila', fila);
+
+            if (fila) {
+                var insumoId = fila.getAttribute('data-insumo-id');
+                var tbody = fila.parentNode;
+
+                // Verificar si el elemento padre (tbody) existe antes de intentar eliminar la fila
+                if (tbody) {
+                    tbody.removeChild(fila);
+                    // Llamar a la función eliminarComida con el comidaId
+                    eliminarComidaI(insumoId);
+                } else {
+                    console.error('El elemento padre (tbody) es nulo.');
+                }
+            } else {
+                console.error('No se encontró la fila con data-insumo-id.');
+            }
+        });
+    });
+
 });
 
 function activarEdicion(btnEdit) {
@@ -317,5 +358,100 @@ function eliminarComida(comidaId) {
     } else {
         // Manejar el caso en que la fila no se encontró
         console.error(`No se encontró la fila con data-comida-id="${comidaId}"`);
+    }
+}
+
+function activarEdicionInsumo(btnEdit) {
+    var fila = btnEdit.closest('tr');
+    var camposEditables = fila.querySelectorAll('.editable');
+
+    camposEditables.forEach(function (campo) {
+        campo.contentEditable = 'true';
+        campo.classList.add('editing');
+    });
+
+    // Mostrar botones de guardar y ocultar botón de editar
+    fila.querySelector('.editar-btn-I').style.display = 'none';
+    fila.querySelector('.guardar-btnI').style.display = 'inline-block';
+}
+
+function guardarEdicionI(btnSave) {
+    var fila = btnSave.closest('tr');
+    var insumoId = fila.dataset.insumoId;
+    var camposEditables = fila.querySelectorAll('.editable');
+
+    var datosEditados = {
+        insumoId: insumoId,
+        nombre: fila.querySelector('.editable[data-nombre-campo="nombre"]').innerText.trim(),
+        cantidad: fila.querySelector('.editable[data-nombre-campo="cantidad"]').innerText.trim(),
+        precio: fila.querySelector('.editable[data-nombre-campo="precio"]').innerText.trim(),
+        fecha: fila.querySelector('.editable[data-nombre-campo="fecha"]').innerText.trim()
+    };
+
+    // Realizar la solicitud POST al servidor
+    fetch('/admin/actualizarInsumo', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(datosEditados),
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Datos actualizados:', data);
+        })
+        .catch(error => console.error('Error en la solicitud AJAX:', error));
+
+    // Restaurar el estado de la interfaz
+    camposEditables.forEach(function (campo) {
+        campo.contentEditable = 'false';
+        campo.classList.remove('editing');
+    });
+
+    // Mostrar botón de editar y ocultar botón de guardar
+    fila.querySelector('.editar-btn-I').style.display = 'inline-block';
+    fila.querySelector('.guardar-btnI').style.display = 'none';
+}
+
+function eliminarComidaI(insumoId) {
+    // Encontrar la fila
+    var fila = document.querySelector(`tr[data-insumo-id="${insumoId}"]`);
+
+    // Verificar si la fila se encuentra
+    if (fila) {
+        // Agregar la clase de ocultar
+        fila.classList.add("oculto");
+
+        // Esperar a que termine la transición antes de eliminar la fila
+        fila.addEventListener("transitionend", function() {
+            // Eliminar la fila después de que termine la transición
+            var tbody = fila.parentNode;
+            tbody.removeChild(fila);
+
+            // Realizar la solicitud AJAX para eliminar la entrada en la base de datos
+            var xhr = new XMLHttpRequest();
+            xhr.open("DELETE", `/admin/eliminarInsumo`, true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    // Manejar la respuesta del servidor si es necesario
+                    console.log(xhr.responseText);
+                } else {
+                    // Manejar errores si es necesario
+                    console.error(xhr.statusText);
+                }
+            };
+
+            xhr.onerror = function () {
+                // Manejar errores de red si es necesario
+                console.error("Error de red al intentar realizar la solicitud.");
+            };
+
+            xhr.send();
+        });
+    } else {
+        // Manejar el caso en que la fila no se encontró
+        console.error(`No se encontró la fila con data-insumo-id="${insumoId}"`);
     }
 }

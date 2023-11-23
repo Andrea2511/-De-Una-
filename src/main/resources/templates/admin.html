@@ -223,12 +223,12 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="insumo : ${insumos}">
-                    <td th:text="${insumo.insumoId}" id="insumoId"></td>
-                    <td th:text="${insumo.nombre}"></td>
-                    <td th:text="${insumo.cantidad}"></td>
-                    <td th:text="${insumo.precio}"></td>
-                    <td th:text="${insumo.fechaVencimiento}"></td>
+                <tr th:each="insumo : ${insumos}" th:attr="data-insumo-id=${insumo.insumoId}">
+                    <td th:text="${insumo.insumoId}"></td>
+                    <td class="editable" contenteditable="false" th:text="${insumo.nombre}" data-nombre-campo="nombre" data-comida-id="${comida.comidaId}"></td>
+                    <td class="editable" contenteditable="false" th:text="${insumo.cantidad}" data-nombre-campo="cantidad"></td>
+                    <td class="editable" contenteditable="false" th:text="${insumo.precio}" data-nombre-campo="precio"></td>
+                    <td class="editable" contenteditable="false" th:text="${insumo.fechaVencimiento}" data-nombre-campo="fecha"></td>
                     <td>
                         <button class="editar-btn-I"><span class="icon-edit material-icons-sharp">edit</span></button>
                         <button class="guardar-btnI"><span class="icon-saveIn material-icons-sharp">save</span></button>

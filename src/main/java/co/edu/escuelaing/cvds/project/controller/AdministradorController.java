@@ -173,4 +173,17 @@ public class AdministradorController {
         return "redirect:/admin/menu";
     }
 
+    @PostMapping("/actualizarInsumo")
+    public String actualizarInventario(@RequestBody Insumo datosEditados) {
+        // Buscar la comida por ID en la base de datos
+        insumoService.actualizarInsumo(datosEditados.getInsumoId(), datosEditados.getNombre(), datosEditados.getPrecio(), datosEditados.getCantidad(), datosEditados.getFechaVencimiento());
+        return "redirect:/admin/menu";
+    }
+
+    @PostMapping("/eliminarInsumo")
+    public String eliminarInsumo(@PathVariable Long insumoId) {
+        insumoService.eliminarInsumo(insumoId);
+        return "redirect:/admin/menu";
+    }
+
 }
