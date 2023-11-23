@@ -10,10 +10,8 @@ import co.edu.escuelaing.cvds.project.service.ComidaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -63,7 +61,9 @@ public class AdministradorController {
     }
 
     @GetMapping("/menu")
-    public String menu() {
+    public String menu(Model model) {
+        ArrayList<Comida> comidas = comidaService.obtenerTodasLasComidas();
+        model.addAttribute("comidas", comidas);
         return "admin";
     }
 
@@ -87,6 +87,14 @@ public class AdministradorController {
         }
         comidaService.guardarComida(comida);
 
+        return "redirect:/admin/menu";
+    }
+
+    @PostMapping("/actualizarComida")
+    public String actualizarComida(@RequestBody Comida datosEditados) {
+        // Buscar la comida por ID en la base de datos
+
+        comidaService.actualizarComida(datosEditados.getComidaId(), datosEditados.getNombre(), datosEditados.getPrecio(), datosEditados.getCantidad());
         return "redirect:/admin/menu";
     }
 

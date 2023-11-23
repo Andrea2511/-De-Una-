@@ -64,4 +64,19 @@ public class ComidaService {
         // Lógica para guardar el producto en la base de datos
         comidaRepository.save(comida);
     }
+
+    public void actualizarComida(Long comidaId, String nombre, double precio, int cantidad) {
+
+        Comida comidaExistente = comidaRepository.findById(comidaId)
+                .orElseThrow(() -> new IllegalArgumentException("Comida no encontrada con ID: " + comidaId));
+
+        // Actualizar los datos con los valores editados
+        comidaExistente.setNombre(nombre);
+        comidaExistente.setPrecio(precio);
+        comidaExistente.setCantidad(cantidad);
+
+        // Guardar la comida actualizada en la base de datos
+        comidaRepository.save(comidaExistente);
+
+    }
 }
