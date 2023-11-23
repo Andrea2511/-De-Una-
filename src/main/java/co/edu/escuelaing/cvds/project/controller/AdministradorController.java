@@ -57,7 +57,7 @@ public class AdministradorController {
         return "admin";
     }
 
-    @GetMapping("/inventario")
+    @GetMapping("/")
     public String inventario() {
         return "admin";
     }
