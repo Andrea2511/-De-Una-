@@ -327,18 +327,18 @@
                 </tr>
                 </thead>
                 <tbody id="cuerpoTablaComida">
-                    <tr th:each="comida : ${comidas}" data-comida-id="${comida.comidaId}">
-                        <td th:text="${comida.comidaId}"></td>
-                        <td class="editable" contenteditable="false" th:text="${comida.nombre}" data-nombre-campo="nombre" data-comida-id="${comida.comidaId}"></td>
-                        <td class="editable" contenteditable="false" data-nombre-campo="precio" th:text="${comida.precio}"></td>
-                        <td th:text="${comida.calificacion}"></td>
-                        <td class="editable" contenteditable="false" data-nombre-campo="cantidad" th:text="${comida.cantidad}"></td>
-                        <td>
-                            <button class="editar-btn"><span class="icon-edit material-icons-sharp">edit</span></button>
-                            <button class="guardar-btn"><span class="icon-save material-icons-sharp">save</span></button>
-                            <button class="borrar-btn"><span class="icon-delete material-icons-sharp">delete</span></button>
-                        </td>
-                    </tr>
+                <tr th:each="comida : ${comidas}" data-comida-id="${comida.comidaId}">
+                    <td th:text="${comida.comidaId}"></td>
+                    <td class="editable" contenteditable="false" th:text="${comida.nombre}" data-nombre-campo="nombre" data-comida-id="${comida.comidaId}"></td>
+                    <td class="editable" contenteditable="false" data-nombre-campo="precio" th:text="${comida.precio}"></td>
+                    <td th:text="${comida.calificacion}"></td>
+                    <td class="editable" contenteditable="false" data-nombre-campo="cantidad" th:text="${comida.cantidad}"></td>
+                    <td>
+                        <button class="editar-btn"><span class="icon-edit material-icons-sharp">edit</span></button>
+                        <button class="guardar-btn"><span class="icon-save material-icons-sharp">save</span></button>
+                        <button class="borrar-btn"><span class="icon-delete material-icons-sharp">delete</span></button>
+                    </td>
+                </tr>
                 </tbody>
             </table>
 
@@ -522,5 +522,8 @@
         </div>
 
     </div>
+
+
+    <script src="../static/js/admin.js"></script>
 </body>
 </html>
