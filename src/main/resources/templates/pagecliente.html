@@ -83,16 +83,57 @@
         </div>
 
         <div class="dashboard-content">
-            <div th:each="comida : ${comidas}" class="dashboard-card comida-card">
+            <!-- Loop para mostrar las tarjetas de comida -->
+            <div th:each="comida : ${comidas}" class="dashboard-card comida-card" onclick="togglePopup(this)">
                 <img class="card-image" th:src="|data:image/png;base64,${comida.ruta}|" alt="Comida Imagen">
                 <div class="card-detail">
                     <h4 th:text="${comida.nombre}"></h4>
                     <p th:text="${'$ ' + comida.precio}" class="precio"></p>
-                    <p class="card-time"><span class="material-icons-sharp" id="star">star</span>
-                        <span th:text="${comida.calificacion}"></span></p>
+                    <p class="card-time">
+                        <span class="material-icons-sharp" id="star">star</span>
+                        <span th:text="${comida.calificacion}"></span>
+                    </p>
+                </div>
+                <div class="popup" id="popup">
+                    <!-- Contenido del pop-up -->
+                    <div class="popup-content">
+                        <h1>Detalles de la comida</h1>
+                        <!-- Otros detalles o contenido del pop-up -->
+                        <h2 th:text="${comida.nombre}"></h2>
+                        <p>
+                           <h3> En esta sección, encontrarás una detallada descripción del plato que estás a punto de disfrutar.
+                            Desde los ingredientes principales hasta su preparación y sabores característicos,
+                            cada detalle se presenta para que conozcas a fondo esta exquisita especialidad culinaria.</h3>
+                        </p>
+                        <p>
+                        <h3>Ingredientes principales:</h3>
+                        </p>
+
+                        <ul>
+                            <h3>
+                            <li> > Insumo 1</li>
+                            <li> > Insumo 2</li>
+                            <li> > Insumo 3</li>
+                            <li> > Insumo 4</li>
+                            <li> > Insumo 5</li>
+                            </h3>
+                        </ul>
+
+                        <p th:text="${'$ ' + comida.precio}" class="precio-detalle"></p>
+
+                        <p class="card-time">
+                            <span class="material-icons-sharp" id="star">star</span>
+                            <span th:text="${comida.calificacion}"></span>
+                        </p>
+                    </div>
+                    <button onclick="agregarAlCarrito(this,event)" class="agregar-btn">Agregar al carrito</button>
+                    <!-- Mensaje de confirmación -->
+                    <p class="mensaje-agregado">Agregado al carrito de compras</p>
                 </div>
             </div>
         </div>
+
+
     </main>
 
     <div class="right">
@@ -184,6 +225,35 @@
     </div>
 </div>
 
+<script>
+    function mostrarPopup(event) {
+        var popup = document.getElementById('popup');
+        popup.style.display = 'block';
+        event.stopPropagation();
+    }
+
+    function cerrarPopup(event) {
+        var popup = document.getElementById('popup');
+        popup.style.display = 'none';
+        event.stopPropagation()
+    }
+
+    function agregarAlCarrito(btn,event) {
+        mostrarPopup(event)
+        const mensaje = btn.nextElementSibling; // El hermano siguiente del botón es el mensaje
+        mensaje.style.display = 'block';
+
+        // Ocultar el mensaje después de unos segundos
+        setTimeout(() => {
+            mensaje.style.display = 'none';
+        }, 3000); // 3000 milisegundos = 3 segundos
+    }
+
+    function togglePopup(container) {
+        const popup = container.querySelector('.popup');
+        popup.style.display = (popup.style.display === 'none' || popup.style.display === '') ? 'block' : 'none';
+    }
+</script>
 <script src="../static/js/cliente.js"></script>
 <script src=" https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </body>

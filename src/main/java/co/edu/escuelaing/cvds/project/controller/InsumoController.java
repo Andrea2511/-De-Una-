@@ -20,12 +20,12 @@ public class InsumoController {
         // Lógica para la página de inicio
         return "index"; // Esto devuelve el nombre de la plantilla Thymeleaf correspondiente
     }
-    @GetMapping("/inventario")
+    @GetMapping("/admin/inventario")
     public String insumos(Model model) {
         List<Insumo> insumoList = insumoService.getAllInsumos();
         model.addAttribute("insumoList", insumoList);
 
-        return "inventario"; // Nombre de la vista para mostrar la lista de insumos.
+        return "admin"; // Nombre de la vista para mostrar la lista de insumos.
     }
 
     @PostMapping("/inventario/create")
@@ -37,7 +37,7 @@ public class InsumoController {
 
     ) {
         insumoService.createInsumo(nombre, tipo, cantidad, precio);
-        return "redirect:/inventario"; // Redirige a la página de lista de insumos después de la creación.
+        return "redirect:/admin/inventario"; // Redirige a la página de lista de insumos después de la creación.
     }
 
     @GetMapping("/insumos/edit/{insumoId}")
