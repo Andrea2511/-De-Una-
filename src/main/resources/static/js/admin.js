@@ -15,8 +15,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const filasComida = document.getElementById('tablaComidas').getElementsByTagName('tbody')[0].getElementsByTagName('tr');
     const filasPorPagina = 8;
     let paginaActual = 1;
-    var botonesEdit = document.querySelectorAll('.editar-btn');
-    var botonesSave = document.querySelectorAll('.guardar-btn');
 
     menuBtn.addEventListener('click', () => {
         sideMenu.style.display = 'block';
@@ -172,8 +170,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // Actualiza el estado de los botones de paginación
-        document.getElementById('anteriorBtnComida').disabled = paginaActual === 1;
-        document.getElementById('siguienteBtnComida').disabled = paginaActual === Math.ceil(filasComida.length / filasPorPagina);
+        document.getElementById('anteriorBtnComida').disabled = paginaActualComida === 1;
+        document.getElementById('siguienteBtnComida').disabled = paginaActualComida === Math.ceil(filasComida.length / filasPorPaginaComida);
     }
 
     document.getElementById('anteriorBtnComida').addEventListener('click', () => cambiarPaginaComida(-1));
@@ -182,68 +180,4 @@ document.addEventListener('DOMContentLoaded', function() {
 // Inicializa la visibilidad de las filas de comida
     actualizarVisibilidadFilasComida();
 
-    botonesEdit.forEach(function (btnEdit) {
-        btnEdit.addEventListener('click', function () {
-            activarEdicion(btnEdit);
-        });
-    });
-
-    botonesSave.forEach(function (btnSave) {
-        btnSave.addEventListener('click', function () {
-            guardarEdicion(btnSave);
-        });
-    });
-
 });
-
-function activarEdicion(btnEdit) {
-    var fila = btnEdit.closest('tr');
-    var camposEditables = fila.querySelectorAll('.editable');
-
-    camposEditables.forEach(function (campo) {
-        campo.contentEditable = 'true';
-        campo.classList.add('editing');
-    });
-
-    // Mostrar botones de guardar y ocultar botón de editar
-    fila.querySelector('.editar-btn').style.display = 'none';
-    fila.querySelector('.guardar-btn').style.display = 'inline-block';
-}
-
-function guardarEdicion(btnSave) {
-    var fila = btnSave.closest('tr');
-    var comidaId = fila.dataset.comidaId;
-    var camposEditables = fila.querySelectorAll('.editable');
-
-    var datosEditados = {
-        comidaId: comidaId,
-        nombre: fila.querySelector('.editable[data-nombre-campo="nombre"]').innerText.trim(),
-        precio: fila.querySelector('.editable[data-nombre-campo="precio"]').innerText.trim(),
-        cantidad: fila.querySelector('.editable[data-nombre-campo="cantidad"]').innerText.trim()
-    };
-
-    // Realizar la solicitud POST al servidor
-    fetch('/actualizarComida', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(datosEditados),
-    })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Datos actualizados:', data);
-            // Puedes realizar acciones adicionales después de la actualización
-        })
-        .catch(error => console.error('Error en la solicitud AJAX:', error));
-
-    // Restaurar el estado de la interfaz
-    camposEditables.forEach(function (campo) {
-        campo.contentEditable = 'false';
-        campo.classList.remove('editing');
-    });
-
-    // Mostrar botón de editar y ocultar botón de guardar
-    fila.querySelector('.editar-btn').style.display = 'inline-block';
-    fila.querySelector('.guardar-btn').style.display = 'none';
-}

@@ -799,11 +799,6 @@ table tbody td span.icon-delete {
     font-weight: 600;
 }
 
-.guardar-btn{
-    color: var(--color-succes);
-    display: none;
-}
-
 #producto-form{
     display: flex;
     justify-content: center;
@@ -920,15 +915,8 @@ form .days .disponibilidad {
     gap: 0.6rem;
 }
 
-#producto-form button div h3 {
+#producto-form button div h3{
     font-weight: 600;
-}
-
-.editing {
-    border-left: 2px solid var(--color-primary);
-    border-right: 2px solid var(--color-primary);
-    background-color: #fff6f0; /* Un color de fondo para resaltar la edición */
-    transition: border 0.3s, background-color 0.3s; /* Agregar transición para un cambio suave */
 }
 
  .right{

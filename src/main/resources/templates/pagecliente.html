@@ -219,10 +219,9 @@
             <p>Total <span>$174.6</span></p>
         </div>
 
-        <button class="checkout">
+        <button id="btnPagar" class="checkout">
             Pagar
         </button>
-    </div>
 </div>
 
 <script>
@@ -253,6 +252,17 @@
         const popup = container.querySelector('.popup');
         popup.style.display = (popup.style.display === 'none' || popup.style.display === '') ? 'block' : 'none';
     }
+
+    document.getElementById('btnPagar').addEventListener('click', function () {
+        // Abre una nueva ventana o pestaña para realizar el pago
+        var pagoWindow = window.open('', '_blank');
+
+        // Aquí puedes agregar lógica para realizar el pago con saldo y tarjetas
+        // Por ejemplo, puedes redirigir a una página de pago o mostrar un formulario de pago en la nueva ventana
+
+        // Ejemplo de redirección a una página de pago (reemplaza la URL con la correcta)
+        pagoWindow.location.href = '/pago/formularioPago';
+    });
 </script>
 <script src="../static/js/cliente.js"></script>
 <script src=" https://code.jquery.com/jquery-3.6.4.min.js"></script>
