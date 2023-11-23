@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin</title>
     <script  th:src="@{../static/js/admin.js}"></script>
+    <script src=" https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
     <link rel="stylesheet" href="../static/css/admin.css">
 </head>
@@ -197,41 +198,41 @@
 
             <div id="tipoInsumoButtons">
                 <label for="tipoInsumoSelect">Selecciona Tipo de Insumo:</label>
-                <select id="tipoInsumoSelect" onchange="cargarTabla(this.value)">
+                <select id="tipoInsumoSelect">
                     <option value="todos">Todos</option>
-                    <option value="lacteos">Productos lácteos</option>
-                    <option value="frutas">Frutas</option>
-                    <option value="verduras">Verduras y hortalizas</option>
-                    <option value="cereales">Cereales, azúcares y derivados</option>
-                    <option value="aceites">Aceites y grasas</option>
-                    <option value="papas">Papas y legumbres</option>
-                    <option value="frutosSecos">Frutos secos</option>
+                    <option value="CARNES">Carnes</option>
+                    <option value="LACTEOS">Productos lácteos</option>
+                    <option value="FRUTAS">Frutas</option>
+                    <option value="VERDURAS">Verduras y hortalizas</option>
+                    <option value="CEREALES">Cereales, azúcares y derivados</option>
+                    <option value="ACEITES">Aceites y grasas</option>
+                    <option value="PAPAS">Papas y legumbres</option>
+                    <option value="FRUTOSECO">Frutos secos</option>
                 </select>
             </div>
             <hr class="separator-line">
             <table id="tablaInsumos">
                 <thead>
                 <tr>
-                    <th>Id</th>
+                    <th><span class="icon-tag material-icons-sharp">tag</span>ID</th>
                     <th>Nombre</th>
-                    <th>Tipo</th>
                     <th>Cantidad</th>
-                    <th>Precio</th>
-                    <th>Fecha de Vencimiento</th>
-                    <th>Acciones</th>
+                    <th><span class="icon-payment material-icons-sharp">payment</span>Precio</th>
+                    <th><span class="icon-calendar material-icons-sharp">calendar_today</span>Fecha de Vencimiento</th>
+                    <th class="danger">Acciones</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="insumo : ${insumoList}">
+                <tr th:each="insumo : ${insumos}">
                     <td th:text="${insumo.insumoId}" id="insumoId"></td>
                     <td th:text="${insumo.nombre}"></td>
-                    <td th:text="${insumo.tipo}"></td>
                     <td th:text="${insumo.cantidad}"></td>
                     <td th:text="${insumo.precio}"></td>
-                    <td th:text="${#dates.format(insumo.fechaVencimiento, 'dd-MM-yyyy')}"></td>
+                    <td th:text="${insumo.fechaVencimiento}"></td>
                     <td>
-                        <button class="btn btn-info btn-sm" onclick="obtenerValorFila('editPanel',this)">Editar</button>
-                        <button class="btn btn-danger btn-sm" onclick="obtenerValorFila('eliminar',this)">Eliminar</button>
+                        <button class="editar-btn-I"><span class="icon-edit material-icons-sharp">edit</span></button>
+                        <button class="guardar-btn-I"><span class="icon-save material-icons-sharp">save</span></button>
+                        <button class="borrar-btn-I"><span class="icon-delete material-icons-sharp">delete</span></button>
                     </td>
                 </tr>
                 </tbody>
@@ -245,7 +246,7 @@
         </div>
         <div id="insumos-form">
             <div class="title">Añadir Insumo</div>
-            <form action="/inventario/create" method="post">
+            <form action="/admin/guardarInsumo" method="post">
                 <div class="food-detail">
                     <div class="input-box">
                         <span class="details">Nombre</span>
@@ -253,11 +254,11 @@
                     </div>
                     <div class="input-box">
                         <span class="details">Tipo</span>
-                        <select id="tipo" name="tipo" required>
-                            <option value="LACTEOS">Productos lacteos</option>
+                        <select id="tipo" name="tipo" onchange="redireccionar(this.value)" required>
+                            <option value="CARNES">Carnes</option>
                             <option value="LACTEOS">Productos lacteos</option>
                             <option value="FRUTAS">Frutas</option>
-                            <option value="VERDURAS Y HORTALIZAS">Verduras y hortalizas</option>
+                            <option value="VERDURAS">Verduras y hortalizas</option>
                             <option value="CEREALES">Cereales, azucares y derivados</option>
                             <option value="ACEITES">Aceites y grasas</option>
                             <option value="LEGUMBRES">Papas y legumbres</option>
@@ -274,7 +275,7 @@
                     </div>
                     <div class="input-box">
                         <span class="details">Fecha de Vencimiento</span>
-                        <label for="fecha-vencimiento"></label><input type="date" id="fecha-vencimiento" name="fecha-vencimiento" required>
+                        <label for="fecha-vencimiento"></label><input type="date" id="fecha-vencimiento" name="fechaVencimiento" required>
                     </div>
                 </div>
                 <button type="submit" class="add-insumo">
@@ -306,7 +307,7 @@
 
             <div id="tipoComidaButtons">
                 <label for="tipoComidaSelect">Selecciona Tipo de Insumo:</label>
-                <select id="tipoComidaSelect" onchange="cargarTabla(this.value)">
+                <select id="tipoComidaSelect">
                     <option value="TODO">Todos</option>
                     <option value="PLATO_PRINCIPAL">Plato Principal</option>
                     <option value="FAST_FOOD">Fast Food</option>

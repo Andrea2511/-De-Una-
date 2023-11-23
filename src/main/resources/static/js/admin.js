@@ -223,19 +223,19 @@ function guardarEdicion(btnSave) {
     };
 
     // Realizar la solicitud POST al servidor
-    fetch('/actualizarComida', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
+    $.ajax({
+        url: '/admin/actualizarComida',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(datosEditados),
+        success: function(data) {
+            // Manejar la respuesta si es necesario
+            console.log('Respuesta del servidor:', data);
         },
-        body: JSON.stringify(datosEditados),
-    })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Datos actualizados:', data);
-            // Puedes realizar acciones adicionales después de la actualización
-        })
-        .catch(error => console.error('Error en la solicitud AJAX:', error));
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.error('Error al realizar la solicitud:', error);
+        }
+    });
 
     // Restaurar el estado de la interfaz
     camposEditables.forEach(function (campo) {
@@ -246,4 +246,20 @@ function guardarEdicion(btnSave) {
     // Mostrar botón de editar y ocultar botón de guardar
     fila.querySelector('.editar-btn').style.display = 'inline-block';
     fila.querySelector('.guardar-btn').style.display = 'none';
+}
+
+function redireccionar(valor) {
+    // Puedes usar JavaScript para redirigir según el valor seleccionado
+    switch (valor) {
+        case "CARNES":
+            window.location.href = "/admin/inventario/carnes";
+            break;
+        case "LACTEOS":
+            window.location.href = "/admin/inventario/lacteos";
+            break;
+        // Agrega más casos según sea necesario
+        default:
+            // Redirigir a una página predeterminada o hacer algo más
+            break;
+    }
 }

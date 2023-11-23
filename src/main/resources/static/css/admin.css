@@ -673,8 +673,8 @@ table tbody td span.icon-delete {
 #menu .separator-line {
     border: none;
     height: 1px;
-    background-color: var(--color-primary); /* Reemplaza con tu color primario */
-    margin: 10px 0; /* Ajusta según sea necesario */
+    background-color: var(--color-primary);
+    margin: 10px 0;
 }
 
 #menu table {
@@ -799,7 +799,7 @@ table tbody td span.icon-delete {
     font-weight: 600;
 }
 
-.guardar-btn{
+.icon-save{
     color: var(--color-succes);
     display: none;
 }

@@ -1,14 +1,13 @@
 package co.edu.escuelaing.cvds.project.controller;
 
-import co.edu.escuelaing.cvds.project.model.Categoria;
-import co.edu.escuelaing.cvds.project.model.Comida;
-import co.edu.escuelaing.cvds.project.model.DetalleComidaInsumo;
-import co.edu.escuelaing.cvds.project.model.Insumo;
+import co.edu.escuelaing.cvds.project.model.*;
 import co.edu.escuelaing.cvds.project.repository.ComidaRepository;
 import co.edu.escuelaing.cvds.project.repository.InsumoRepository;
 import co.edu.escuelaing.cvds.project.service.ComidaService;
+import co.edu.escuelaing.cvds.project.service.InsumoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,9 +19,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.UUID;
+import java.util.*;
 
 @Controller
 @RequestMapping("/admin")
@@ -30,6 +27,9 @@ public class AdministradorController {
 
     @Autowired
     private ComidaService comidaService;
+
+    @Autowired
+    InsumoService insumoService;
 
     @Autowired
     private InsumoRepository insumoRepository;
@@ -55,8 +55,66 @@ public class AdministradorController {
         return "admin";
     }
 
-    @GetMapping("/")
-    public String inventario() {
+    @GetMapping("/inventario")
+    public String inventario(Model model) {
+        ArrayList<Insumo> insumos = insumoService.obtenerTodosLosInsumos();
+        model.addAttribute("insumos", insumos);
+        return "admin";
+    }
+
+    @GetMapping("/inventario/carnes")
+    public String mostrarCarnes(Model model) {
+        List<Insumo> insumos = insumoService.obtenerComidasPorTipo(TipoInsumos.CARNES);
+        model.addAttribute("insumos", insumos);
+        return "admin";
+    }
+
+    @GetMapping("/inventario/lacteos")
+    public String mostrarLacteos(Model model) {
+        List<Insumo> insumos = insumoService.obtenerComidasPorTipo(TipoInsumos.LACTEOS);
+        model.addAttribute("insumos", insumos);
+        return "admin";
+    }
+
+    @GetMapping("/inventario/frutas")
+    public String mostrarFrutas(Model model) {
+        List<Insumo> insumos = insumoService.obtenerComidasPorTipo(TipoInsumos.FRUTAS);
+        model.addAttribute("insumos", insumos);
+        return "admin";
+    }
+
+    @GetMapping("/inventario/verduras")
+    public String mostrarVerduras(Model model) {
+        List<Insumo> insumos = insumoService.obtenerComidasPorTipo(TipoInsumos.VERDURAS);
+        model.addAttribute("insumos", insumos);
+        return "admin";
+    }
+
+    @GetMapping("/inventario/cereales")
+    public String mostrarCereales(Model model) {
+        List<Insumo> insumos = insumoService.obtenerComidasPorTipo(TipoInsumos.CEREALES);
+        model.addAttribute("insumos", insumos);
+        return "admin";
+    }
+
+    @GetMapping("/inventario/aceites")
+    public String mostrarAceites(Model model) {
+        List<Insumo> insumos = insumoService.obtenerComidasPorTipo(TipoInsumos.ACEITES);
+        model.addAttribute("insumos", insumos);
+        return "admin";
+    }
+
+    @GetMapping("/inventario/legumbres")
+    public String mostrarLegumbres(Model model) {
+        List<Insumo> insumos = insumoService.obtenerComidasPorTipo(TipoInsumos.LEGUMBRES);
+        model.addAttribute("insumos", insumos);
+        return "admin";
+    }
+
+    @GetMapping("/inventario/frutosSecos")
+    public String mostrarFrutos(Model model) {
+        List<Insumo> insumos = insumoService.obtenerComidasPorTipo(TipoInsumos.FRUTOSECO);
+        model.addAttribute("insumos", insumos);
         return "admin";
     }
 
@@ -70,6 +128,15 @@ public class AdministradorController {
     @GetMapping("/guardarPromociones")
     public String addPromos() {
         return "admin";
+    }
+
+    @PostMapping("/guardarInsumo")
+    public String guardarInsumo(@ModelAttribute Insumo insumo){
+
+        System.out.println("Fecha " + insumo.getFechaVencimiento());
+        insumoService.createInsumo(insumo.getNombre(), insumo.getTipo(), insumo.getCantidad(), insumo.getPrecio(), insumo.getFechaVencimiento());
+
+        return "redirect:/admin/inventario";
     }
 
     @PostMapping("/guardarProducto")
@@ -90,10 +157,11 @@ public class AdministradorController {
         return "redirect:/admin/menu";
     }
 
+
     @PostMapping("/actualizarComida")
     public String actualizarComida(@RequestBody Comida datosEditados) {
         // Buscar la comida por ID en la base de datos
-
+        System.out.println("Recibiendo solicitud para actualizar comida: " + datosEditados);
         comidaService.actualizarComida(datosEditados.getComidaId(), datosEditados.getNombre(), datosEditados.getPrecio(), datosEditados.getCantidad());
         return "redirect:/admin/menu";
     }

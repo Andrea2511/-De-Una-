@@ -1,6 +1,7 @@
 package co.edu.escuelaing.cvds.project.model;
 
 import jakarta.persistence.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import java.util.Random;
@@ -16,19 +17,20 @@ public class Insumo {
     @Column(name = "nombre")
     private String nombre;
     @Column(name = "tipo")
-    private String tipo;
+    private TipoInsumos tipo;
     @Column(name = "fechaVencimiento")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private Date fechaVencimiento;
     @Column(name = "cantidad")
-    private String cantidad;
+    private int cantidad;
     @Column(name = "precio")
-    private String precio;
+    private double precio;
 
 
     public Insumo() {
     }
 
-    public Insumo(String nombre, String tipo, String cantidad, String precio, Date fechaVencimiento) {
+    public Insumo(String nombre, TipoInsumos tipo, int cantidad, double precio, Date fechaVencimiento) {
         this.nombre = nombre;
         this.tipo = tipo;
         this.cantidad = cantidad;
@@ -61,27 +63,27 @@ public class Insumo {
         this.nombre = nombre;
     }
 
-    public String getTipo() {
+    public TipoInsumos getTipo() {
         return tipo;
     }
 
-    public void setTipo(String tipo) {
+    public void setTipo(TipoInsumos tipo) {
         this.tipo = tipo;
     }
 
-    public String getCantidad() {
+    public int getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(String cantidad) {
+    public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
 
-    public String getPrecio() {
+    public double getPrecio() {
         return precio;
     }
 
-    public void setPrecio(String precio) {
+    public void setPrecio(double precio) {
         this.precio = precio;
     }
 
