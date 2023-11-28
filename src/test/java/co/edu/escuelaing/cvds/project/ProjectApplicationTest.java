@@ -52,6 +52,24 @@ public class ProjectApplicationTest {
         MockitoAnnotations.initMocks(this);
     }
 
+    // Pruebas login en UserService
+    @Test
+    public void testLogin() {
+        // Arrange
+        String username = "johndoe";
+        String password = "password123";
+        User mockUser = new Cliente();
+        mockUser.setUsername(username);
+        mockUser.setPassword(password);
+        when(userRepository.findByUsername(username)).thenReturn(mockUser);
+
+        // Act
+        String result = userService.login(username, password);
+
+        // Assert
+        assertEquals(mockUser.getRol(), result);
+    }
+
     @Test
     public void testLoginValidCredentials() {
         // Arrange
@@ -62,7 +80,7 @@ public class ProjectApplicationTest {
         String role = userService.login("johndoe", "password123");
 
         // Assert
-        assertEquals("CLIENTE", role); // Adjust the expected role based on your actual roles
+        assertEquals("CLIENTE", role);
     }
 
     @Test
@@ -101,9 +119,38 @@ public class ProjectApplicationTest {
         // Assert
         assertFalse(isValid);
     }
+    @Test
+    public void testEncriptarPassword() throws NoSuchAlgorithmException {
+        // Arrange
+        String originalPassword = "password123";
+        String hashedPassword = "hashedPassword123";
+        when(encriptarService.encriptar(originalPassword)).thenReturn(hashedPassword);
 
-    // Add more tests for other methods as needed
-    // Prueba para el método actualizarInsumo en InsumoService
+        // Act
+        String result = encriptarService.encriptar(originalPassword);
+
+        // Assert
+        assertEquals(hashedPassword, result);
+    }
+
+    @Test
+    public void testCrearUsuario() {
+        // Arrange
+        String firstName = "John";
+        String lastName = "Doe";
+        String username = "johndoe";
+        String password = "password123";
+        String email = "john.doe@example.com";
+
+        // Act
+        userService.crearUsuario(firstName, lastName, username, password, email);
+
+        // Assert
+        verify(userRepository, times(1)).save(any(Cliente.class)); // Ajusta según la implementación real
+    }
+
+    // Pruebas InsumoService
+    @Test
     public void testGetAllInsumos() {
         // Simular el repositorio para devolver una lista de insumos
         List<Insumo> insumos = new ArrayList<>();
@@ -152,23 +199,6 @@ public class ProjectApplicationTest {
 
     }
 
-    // Prueba para el método login en UserService
-    @Test
-    public void testLogin() {
-        // Arrange
-        String username = "johndoe";
-        String password = "password123";
-        User mockUser = new Cliente();
-        mockUser.setUsername(username);
-        mockUser.setPassword(password);
-        when(userRepository.findByUsername(username)).thenReturn(mockUser);
-
-        // Act
-        String result = userService.login(username, password);
-
-        // Assert
-        assertEquals(mockUser.getRol(), result);
-    }
 
     // Prueba para el método eliminarComida en ComidaService
     @Test
@@ -198,36 +228,7 @@ public class ProjectApplicationTest {
         assertSame(mockComidas, result);
     }
 
-    @Test
-    public void testEncriptarPassword() throws NoSuchAlgorithmException {
-        // Arrange
-        String originalPassword = "password123";
-        String hashedPassword = "hashedPassword123";
-        when(encriptarService.encriptar(originalPassword)).thenReturn(hashedPassword);
 
-        // Act
-        String result = encriptarService.encriptar(originalPassword);
 
-        // Assert
-        assertEquals(hashedPassword, result);
-    }
-
-    @Test
-    public void testCrearUsuario() {
-        // Arrange
-        String firstName = "John";
-        String lastName = "Doe";
-        String username = "johndoe";
-        String password = "password123";
-        String email = "john.doe@example.com";
-
-        // Act
-        userService.crearUsuario(firstName, lastName, username, password, email);
-
-        // Assert
-        verify(userRepository, times(1)).save(any(Cliente.class)); // Ajusta según la implementación real
-    }
-
-    // Agrega más pruebas según sea necesario para otros métodos y servicios.
 }
 
