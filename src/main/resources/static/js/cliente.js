@@ -5,17 +5,20 @@ const closeBtn = document.querySelector("#close-btn");
 const closeShopBtn = document.querySelector("#closeShop-btn");
 const shopBtn = document.querySelector("#shop-btn");
 const themeToggler= document.querySelector(".theme-toggler");
+const toggleSelectors = document.querySelectorAll('.toggle-selector');
+var dashboardCards = document.querySelectorAll('.dashboard-card');
+
 
 menuBtn.addEventListener('click', () => {
     sideMenu.style.display = 'block';
     menuBtn.style.display = 'none';
-    closeBtn.style.display = 'block'; // Mostrar el botón de cerrar al abrir el menú
+    closeBtn.style.display = 'block';
 });
 
 closeBtn.addEventListener('click', () => {
     sideMenu.style.display = 'none';
-    menuBtn.style.display = 'block'; // Mostrar el botón de menú al cerrar el menú
-    closeBtn.style.display = 'none'; // Ocultar el botón de cerrar al cerrar el menú
+    menuBtn.style.display = 'block';
+    closeBtn.style.display = 'none';
 });
 
 shopBtn.addEventListener('click', () =>{
@@ -32,3 +35,63 @@ themeToggler.addEventListener('click', () =>{
     themeToggler.querySelector('span:nth-child(1)').classList.toggle('active');
     themeToggler.querySelector('span:nth-child(2)').classList.toggle('active');
 })
+
+function mostrarPopup(index) {
+    // Oculta todos los popups
+    var popups = document.querySelectorAll('.popup');
+    popups.forEach(function (popup) {
+        popup.style.display = 'none';
+    });
+
+    // Muestra el popup específico
+    var popupToShow = document.getElementById('popup-' + index);
+    if (popupToShow) {
+        popupToShow.style.display = 'block';
+    }
+}
+
+function cerrarPopup(event, index) {
+    // Evita la propagación del evento para que no afecte al dashboard-card
+    event.stopPropagation();
+
+    var popupToClose = document.getElementById('popup-' + index);
+    if (popupToClose) {
+        popupToClose.style.display = 'none';
+    }
+}
+
+toggleSelectors.forEach(function (toggleSelector) {
+    toggleSelector.addEventListener('click', function () {
+        const relatedSelector = this.nextElementSibling;
+        relatedSelector.style.display = relatedSelector.style.display === 'none' ? 'block' : 'none';
+    });
+});
+
+function validateForm() {
+    const ingredientCheckboxes = document.querySelectorAll('input[name="ingredientes"]:checked');
+    const drinkRadios = document.querySelectorAll('input[name="bebidas"]:checked');
+
+    if (ingredientCheckboxes.length === 0) {
+        alert('Selecciona Al Menos Un Ingrediente.');
+        return false;
+    }
+
+    if (drinkRadios.length === 0) {
+        alert('Selecciona Una Bebida.');
+        return false;
+    }
+
+    return true;
+}
+
+document.getElementById('crearPedidoBtn').addEventListener('click', function() {
+
+    if (validateForm()){
+        crearPedido();
+    }
+})
+
+function crearPedido() {
+    console.log('Pedido creado con éxito');
+}
+

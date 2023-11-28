@@ -19,9 +19,16 @@ public class Pedido {
     @Column(name = "costoTotal")
     private double costoTotal;
 
+    @Column(name = "estado")
+    private EstadoPedido estado;
+
     //Relaciones
     @ManyToOne
     private Supervisor supervisor;
+
+    @ManyToOne
+    private Cliente cliente;
+
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
     private ArrayList<LineaPedido> lineasPedido;
     @ManyToOne

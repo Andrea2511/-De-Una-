@@ -4,6 +4,7 @@ import co.edu.escuelaing.cvds.project.model.Categoria;
 import co.edu.escuelaing.cvds.project.model.Comida;
 import co.edu.escuelaing.cvds.project.model.User;
 import co.edu.escuelaing.cvds.project.service.ComidaService;
+import co.edu.escuelaing.cvds.project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +23,9 @@ public class ClienteController {
 
     @Autowired
     private ComidaService comidaService;
-    // Operaciones específicas para clientes
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/dashboard")
     public String mostrarTodasLasComidas(Model model) {
@@ -65,5 +68,6 @@ public class ClienteController {
         model.addAttribute("comidas", fastFood);
         return "pagecliente";
     }
+
 
 }

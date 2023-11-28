@@ -34,38 +34,10 @@
 
 }
 
-.agregar-btn {
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-    margin-top: 10px;
-    display: block;
-    margin: 0 auto; /* Esto centra horizontalmente el botón */
-}
-
-.mensaje-agregado {
-    display: none;
-    margin-top: 10px;
-    color: green;
-    text-align: center; /* Centra el mensaje */
-    margin: 0 0 10px 0;
-}
-
-.precio-detalle {
-    display: flex;
-    justify-content: flex-end;
-    margin: 0 10px;
-}
-
 *{
     margin: 0;
     padding: 0;
     outline: 0;
-    appearance: none;
     border: 0;
     text-decoration: none;
     list-style: none;
@@ -321,6 +293,10 @@ main{
 
 }
 
+main h1{
+    margin: 10px;
+}
+
 main .dashboard-menu{
     display: flex;
     gap: 10px;
@@ -336,7 +312,7 @@ main .dashboard-menu > a{
     padding: 0.5rem 0;
     font-size: 0.9rem;
     color: var(--color-info-dark);
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0 1px 4px;
     cursor: pointer;
 }
 
@@ -387,7 +363,152 @@ main .card-time{
 
 .card-time #star {
     color: var(--color-primary);
+    vertical-align: middle;
+}
 
+.popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    cursor: auto;
+}
+
+.popup-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: left;
+    color: var(--color-dark);
+    background: var(--color-white);
+    border-radius: 10px;
+    padding: 20px;
+    max-height: 80%; /* Establece la altura máxima para que se muestre un scrollbar si es necesario */
+    overflow-y: auto; /* Añade un scrollbar vertical si el contenido excede la altura máxima */
+}
+
+.popup-content .close {
+    position: relative;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    font-size: 24px;
+    color: var(--color-dark-variant);
+}
+
+.popup-content .food-details h2{
+    color: var(--color-primary);
+    margin: 5px;
+}
+
+.popup-content .card-image {
+    max-width: 100%;
+    height: 50vh;
+    border-radius: var(--border-radius-2);
+}
+
+.popup-content .star-icon {
+    font-size: 20px;
+    color: var(--color-primary);
+    margin: 5px;
+    vertical-align: middle;
+}
+
+.popup-content #toggleIngredients {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.popup-content #toggleDrinks {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.popup-content .material-icons-sharp {
+    margin-left: 5px;
+}
+
+.ingredient-selector ul {
+    list-style: none;
+    padding: 0;
+}
+
+.ingredient-selector li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    border: 1px dashed var(--color-primary);
+    padding: 10px;
+}
+
+.ingredient-selector label {
+    margin-right: auto; /* Mueve la etiqueta a la izquierda usando margin-right:auto */
+}
+
+.ingredient-selector input[type="checkbox"] {
+    margin-left: auto; /* Mueve el checkbox a la derecha usando margin-left:auto */
+}
+
+.popup-content #ingredientSelector {
+    display: none;
+}
+
+.popup-content #drinkSelector {
+    display: none;
+}
+
+.order-details {
+    border-radius: 5px;
+    box-shadow: var(--box-shadow);
+    padding: 20px;
+}
+
+.order-details .order-content {
+    display: flex;
+    justify-content: space-between;
+}
+
+.order-details .order-content .precio {
+    display: table;
+    align-items: center;
+    margin-left: 5px;
+}
+
+.order-details .order-content .precio p {
+    position: relative;
+    padding: 0;
+    margin-bottom: 0;
+}
+
+.order-details .order-content button {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    align-items: center;
+    padding: 10px;
+    border: none;
+    border-radius: var(--border-radius-2);
+    cursor: pointer;
+}
+
+.order-content button span {
+    margin-right: 10px;
+    line-height: 1;
+}
+
+.order-content button span.material-icons-sharp {
+    vertical-align: middle;
+}
+
+.order-details .order-content button:hover {
+    background-color: var(--color-dark-variant);
 }
 
 .right{
@@ -651,8 +772,6 @@ main .card-time{
         justify-content: center;
         text-align: center;
     }
-
-    /* Agrega más reglas de medios según sea necesario para otros elementos y estilos específicos */
 
 }
 

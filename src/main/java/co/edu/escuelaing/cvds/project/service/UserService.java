@@ -40,16 +40,19 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
-
     public void crearUsuario(String firstName, String lastName, String username, String password, String email){
-        User user = new Cliente(firstName, lastName, username, password, email);
-        userRepository.save(user);
+        User user = new Cliente();
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setUsername(username);
+        user.setPassword(password);
+        user.setEmail(email);
 
+        userRepository.save(user);
     }
 
     public boolean verificarEmail(String email) {
         User user = userRepository.findByEmail(email);
         return user != null && user.getEmail() != null && user.getEmail().equals(email);
     }
-
 }

@@ -4,7 +4,15 @@ import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @DiscriminatorValue("ADMIN")
 public class Administrador extends User{
@@ -12,13 +20,6 @@ public class Administrador extends User{
     //Relaciones
     @OneToOne(mappedBy = "administrador")
     private Restaurante restaurante;
-
-    public Administrador(){
-    }
-
-    public Administrador(String firstName, String lastName, String username, String password, String email) {
-        super(firstName, lastName, username, password, email);
-    }
 
     @Override
     public String getRol() {

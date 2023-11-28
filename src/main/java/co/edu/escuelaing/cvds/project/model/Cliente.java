@@ -1,6 +1,15 @@
 package co.edu.escuelaing.cvds.project.model;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import java.util.HashSet;
 
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @DiscriminatorValue("CLIENTE")
 public class Cliente extends User{
@@ -8,33 +17,10 @@ public class Cliente extends User{
     private String telefono;
     @Column(name = "direccion")
     private String direccion;
-    public Cliente() {
-        super();
-    }
 
     //relaciones
-    @OneToOne(mappedBy = "cliente")
-    private PreferenciasCliente preferenciasCliente;
-
-    public Cliente(String firstName, String lastName, String email, String username, String password) {
-        super(firstName, lastName, email, username, password);
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
-
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
+    @OneToMany(mappedBy = "cliente")
+    private HashSet<Pedido> pedidos;
 
     @Override
     public String getRol() {

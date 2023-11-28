@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cliente</title>
 
+    <link rel="stylesheet" href="../static/css/swiper-bundle.min.css">
+    <script src="../static/js/swiper-bundle.min.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
     <link rel="stylesheet" href="../static/css/cliente.css">
 </head>
@@ -72,7 +74,7 @@
             <img src="../static/images/banner.png">
         </div>
 
-        <h1> Tenemos esto para ti</h1>
+        <h1> Tenemos Esto Para Tí</h1>
         <div class="dashboard-menu">
             <a th:href="@{/cliente/fastFood}">Fast Food</a>
             <a th:href="@{/cliente/platoPrincipal}">Principal</a>
@@ -83,8 +85,7 @@
         </div>
 
         <div class="dashboard-content">
-            <!-- Loop para mostrar las tarjetas de comida -->
-            <div th:each="comida : ${comidas}" class="dashboard-card comida-card" onclick="togglePopup(this)">
+            <div th:each="comida, iterStat : ${comidas}" class="dashboard-card comida-card" th:onclick="'mostrarPopup(' + ${iterStat.index} + ')'">
                 <img class="card-image" th:src="|data:image/png;base64,${comida.ruta}|" alt="Comida Imagen">
                 <div class="card-detail">
                     <h4 th:text="${comida.nombre}"></h4>
@@ -94,46 +95,76 @@
                         <span th:text="${comida.calificacion}"></span>
                     </p>
                 </div>
-                <div class="popup" id="popup">
-                    <!-- Contenido del pop-up -->
+                <div class="popup" th:id="'popup-' + ${iterStat.index}" style="display: none;">
                     <div class="popup-content">
-                        <h1>Detalles de la comida</h1>
-                        <!-- Otros detalles o contenido del pop-up -->
-                        <h2 th:text="${comida.nombre}"></h2>
-                        <p>
-                           <h3> En esta sección, encontrarás una detallada descripción del plato que estás a punto de disfrutar.
-                            Desde los ingredientes principales hasta su preparación y sabores característicos,
-                            cada detalle se presenta para que conozcas a fondo esta exquisita especialidad culinaria.</h3>
-                        </p>
-                        <p>
-                        <h3>Ingredientes principales:</h3>
-                        </p>
 
-                        <ul>
-                            <h3>
-                            <li> > Insumo 1</li>
-                            <li> > Insumo 2</li>
-                            <li> > Insumo 3</li>
-                            <li> > Insumo 4</li>
-                            <li> > Insumo 5</li>
-                            </h3>
-                        </ul>
+                        <span class="close material-icons-sharp" th:onclick="'cerrarPopup(event, ' + ${iterStat.index} + ')'">navigate_before</span>
 
-                        <p th:text="${'$ ' + comida.precio}" class="precio-detalle"></p>
+                        <div class="food-details">
+                            <img class="card-image" th:src="|data:image/png;base64,${comida.ruta}|" alt="Comida Imagen">
+                            <h2 th:text="${comida.nombre}"></h2>
+                            <label>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                            </label>
+                            <p class="card-time">
+                                <span class="material-icons-sharp star-icon">star</span>
+                                <span class="calificacion" th:text="${comida.calificacion}"></span>
+                            </p>
+                        </div>
 
-                        <p class="card-time">
-                            <span class="material-icons-sharp" id="star">star</span>
-                            <span th:text="${comida.calificacion}"></span>
-                        </p>
+                        <p id="toggleIngredients" class="toggle-selector">Selecciona los Ingredientes <span class="material-icons-sharp">expand_more</span></p>
+                        <div class="ingredient-selector" id="ingredientSelector">
+                            <ul>
+                                <li>
+                                    <label for="ingrediente1">Ingrediente 1</label>
+                                    <input type="checkbox" id="ingrediente1" name="ingredientes" value="ingrediente1">
+                                </li>
+                                <li>
+                                    <label for="ingrediente2">Ingrediente 2</label>
+                                    <input type="checkbox" id="ingrediente2" name="ingredientes" value="ingrediente2">
+                                </li>
+                                <li>
+                                    <label for="ingrediente3">Ingrediente 3</label>
+                                    <input type="checkbox" id="ingrediente3" name="ingredientes" value="ingrediente3">
+                                </li>
+                            </ul>
+                        </div>
+
+                        <p id="toggleDrinks" class="toggle-selector">Selecciona tu bebida <span class="material-icons-sharp">expand_more</span></p>
+                        <div class="ingredient-selector" id="drinkSelector">
+                            <ul>
+                                <li>
+                                    <label for="bebida1">Agua con gas</label>
+                                    <input type="radio" id="bebida1" name="bebidas" value="bebida1">
+                                </li>
+                                <li>
+                                    <label for="bebida2">Gaseosa</label>
+                                    <input type="radio" id="bebida2" name="bebidas" value="bebida2">
+                                </li>
+                                <li>
+                                    <label for="bebida3">Jugo de mango</label>
+                                    <input type="radio" id="bebida3" name="bebidas" value="bebida3">
+                                </li>
+                            </ul>
+
+                        </div>
+
+                        <div class="order-details" id="orderDetails">
+                            <div class="order-content">
+                                <div class="precio">
+                                    <p class="text-muted">Precio Total</p>
+                                    <span th:text="${'$ ' + comida.precio}"></span>
+                                </div>
+                                <button type="submit" id="crearPedidoBtn"><span class="material-icons-sharp shop">shopping_bag</span>Añadir al Carrito</button>
+                            </div>
+                        </div>
                     </div>
-                    <button onclick="agregarAlCarrito(this,event)" class="agregar-btn">Agregar al carrito</button>
-                    <!-- Mensaje de confirmación -->
-                    <p class="mensaje-agregado">Agregado al carrito de compras</p>
                 </div>
             </div>
         </div>
-
-
     </main>
 
     <div class="right">
@@ -222,49 +253,9 @@
         <button id="btnPagar" class="checkout">
             Pagar
         </button>
+    </div>
 </div>
-
-<script>
-    function mostrarPopup(event) {
-        var popup = document.getElementById('popup');
-        popup.style.display = 'block';
-        event.stopPropagation();
-    }
-
-    function cerrarPopup(event) {
-        var popup = document.getElementById('popup');
-        popup.style.display = 'none';
-        event.stopPropagation()
-    }
-
-    function agregarAlCarrito(btn,event) {
-        mostrarPopup(event)
-        const mensaje = btn.nextElementSibling; // El hermano siguiente del botón es el mensaje
-        mensaje.style.display = 'block';
-
-        // Ocultar el mensaje después de unos segundos
-        setTimeout(() => {
-            mensaje.style.display = 'none';
-        }, 3000); // 3000 milisegundos = 3 segundos
-    }
-
-    function togglePopup(container) {
-        const popup = container.querySelector('.popup');
-        popup.style.display = (popup.style.display === 'none' || popup.style.display === '') ? 'block' : 'none';
-    }
-
-    document.getElementById('btnPagar').addEventListener('click', function () {
-        // Abre una nueva ventana o pestaña para realizar el pago
-        var pagoWindow = window.open('', '_blank');
-
-        // Aquí puedes agregar lógica para realizar el pago con saldo y tarjetas
-        // Por ejemplo, puedes redirigir a una página de pago o mostrar un formulario de pago en la nueva ventana
-
-        // Ejemplo de redirección a una página de pago (reemplaza la URL con la correcta)
-        pagoWindow.location.href = '/pago/formularioPago';
-    });
-</script>
-<script src="../static/js/cliente.js"></script>
 <script src=" https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="../static/js/cliente.js"></script>
 </body>
 </html>
