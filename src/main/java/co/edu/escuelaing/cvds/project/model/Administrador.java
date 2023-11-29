@@ -15,14 +15,9 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @DiscriminatorValue("ADMIN")
-public class Administrador extends User{
+public class Administrador extends User {
 
     //Relaciones
     @OneToOne(mappedBy = "administrador")
     private Restaurante restaurante;
-
-    @Override
-    public String getRol() {
-        return "ADMINISTRADOR";
-    }
 }

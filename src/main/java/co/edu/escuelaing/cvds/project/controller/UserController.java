@@ -41,7 +41,7 @@ public class UserController {
 
 
         if (isUserValid) {
-            String rol = userService.getUser(username).getRol();
+            String rol = userService.getUser(username).getRoles().get(0);
             Map<String, Object> responseBody = new HashMap<>();
             responseBody.put("success", true);
             responseBody.put("message", "Autenticación exitosa");

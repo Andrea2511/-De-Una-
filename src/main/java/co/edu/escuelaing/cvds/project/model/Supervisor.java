@@ -3,10 +3,11 @@ package co.edu.escuelaing.cvds.project.model;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 @Entity
 @DiscriminatorValue("SUPERVISOR")
-public class Supervisor extends User{
+public class Supervisor extends User {
 
     //Relaciones
     @OneToOne(mappedBy = "supervisor")
@@ -18,12 +19,7 @@ public class Supervisor extends User{
     }
 
     public Supervisor(String firstName, String lastName, String username, String password, String email, String rol) {
-        super(firstName, lastName, username, password, email);
-    }
-
-    @Override
-    public String getRol() {
-        return "SUPERVISOR";
+        super(firstName, lastName, username, password, email, Arrays.asList("SUPERVISOR"));
     }
 
     public Restaurante getRestaurante() {

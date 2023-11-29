@@ -16,7 +16,7 @@ public class UserService {
     public String login(String username, String password){
         User user = userRepository.findByUsername(username);
         if (user != null && user.getPassword().equals(password)) {
-            String role = user.getRol();
+            String role = user.getRoles().get(0);
             return role; // Retorna el nombre del rol
         }
 

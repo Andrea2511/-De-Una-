@@ -12,7 +12,7 @@ import java.util.HashSet;
 @AllArgsConstructor
 @Entity
 @DiscriminatorValue("CLIENTE")
-public class Cliente extends User{
+public class Cliente extends User {
     @Column(name = "telefono")
     private String telefono;
     @Column(name = "direccion")
@@ -21,9 +21,4 @@ public class Cliente extends User{
     //relaciones
     @OneToMany(mappedBy = "cliente")
     private HashSet<Pedido> pedidos;
-
-    @Override
-    public String getRol() {
-        return "CLIENTE";
-    }
 }

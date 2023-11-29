@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "usuarios")
-public abstract class User implements Rol{
+public abstract class User {
 
     @Id
     @Column(name = "username", nullable=false, unique=true)
@@ -32,5 +32,8 @@ public abstract class User implements Rol{
 
     @Column(name = "password", nullable=false)
     private String password;
+
+    @Column(name = "roles", nullable=false)
+    private List<String> roles;
 
 }
