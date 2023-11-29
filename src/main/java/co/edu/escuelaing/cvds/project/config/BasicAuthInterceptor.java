@@ -13,6 +13,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.UUID;
 
@@ -48,7 +50,13 @@ public class BasicAuthInterceptor implements HandlerInterceptor {
             Session session = sessionRepository.findByToken(UUID.fromString(authToken));
             log.info("Session: " + session);
             if (session != null) {
-                if (path.startsWith("/cliente") && !session.getUser().getRoles().contains(Rol.CLIENTE)) {
+                Duration duration = Duration.between(Instant.now(), session.getTimestamp());
+                long oneHour = 60 * 60;
+                if(duration.getSeconds() > oneHour) {
+                    sessionRepository.delete(session);
+                    response.sendError(HttpServletResponse.SC_EXPECTATION_FAILED, "SessionTimeout");
+                    return false;
+                } else if (path.startsWith("/cliente") && !session.getUser().getRoles().contains(Rol.CLIENTE)) {
                     response.sendError(HttpServletResponse.SC_FORBIDDEN, "Forbidden");
                     return false;
                 } else if (path.startsWith("/admin") && !session.getUser().getRoles().contains(Rol.ADMINISTRADOR)) {
