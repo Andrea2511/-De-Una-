@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.util.HashSet;
+import java.util.List;
 
 @Setter
 @Getter
@@ -20,5 +21,5 @@ public class Cliente extends User {
 
     //relaciones
     @OneToMany(mappedBy = "cliente")
-    private HashSet<Pedido> pedidos;
+    private List<Pedido> pedidos;
 }

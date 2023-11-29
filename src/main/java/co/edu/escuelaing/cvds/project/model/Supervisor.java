@@ -19,7 +19,7 @@ public class Supervisor extends User {
     }
 
     public Supervisor(String firstName, String lastName, String username, String password, String email, String rol) {
-        super(firstName, lastName, username, password, email, Arrays.asList("SUPERVISOR"));
+        super(firstName, lastName, username, password, email, Arrays.asList(Rol.SUPERVISOR));
     }
 
     public Restaurante getRestaurante() {

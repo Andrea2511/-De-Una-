@@ -1,43 +1,73 @@
 package co.edu.escuelaing.cvds.project.config;
 
+import co.edu.escuelaing.cvds.project.model.Rol;
+import co.edu.escuelaing.cvds.project.model.Session;
+import co.edu.escuelaing.cvds.project.repository.SessionRepository;
+import co.edu.escuelaing.cvds.project.repository.UserRepository;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
+import java.util.Arrays;
+import java.util.UUID;
 
 
 @Slf4j
+@Component
 public class BasicAuthInterceptor implements HandlerInterceptor {
+
+    @Autowired
+    private SessionRepository sessionRepository;
+
     private static final String USERNAME = "admin";
     private static final String PASSWORD = "admin";
+
+
+
+    private String getCookieValue(HttpServletRequest req, String cookieName) {
+        return Arrays.stream(req.getCookies())
+                .filter(c -> c.getName().equals(cookieName))
+                .findFirst()
+                .map(Cookie::getValue)
+                .orElse(null);
+    }
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         log.info("BasicAuthInterceptor::preHandle()");
-
-        String authHeader = request.getHeader("Authorization");
-        if (authHeader != null && authHeader.startsWith("Basic ")) {
-
-            String base64Credentials = authHeader.substring("Basic ".length());
-            byte[] decodedCredentials = Base64.getDecoder().decode(base64Credentials);
-            String credentials = new String(decodedCredentials, StandardCharsets.UTF_8);
-
-            String[] parts = credentials.split(":");
-            String username = parts[0];
-            String password = parts[1];
-
-            if (USERNAME.equals(username) && PASSWORD.equals(password)) {
-                return true;
+        String path = request.getRequestURI();
+        log.info("Path:" + path);
+        String authToken = getCookieValue(request, "authToken");
+        log.info("AuthToken: " + authToken);
+        if (authToken != null) {
+            Session session = sessionRepository.findByToken(UUID.fromString(authToken));
+            log.info("Session: " + session);
+            if (session != null) {
+                if (path.startsWith("/cliente") && !session.getUser().getRoles().contains(Rol.CLIENTE)) {
+                    response.sendError(HttpServletResponse.SC_FORBIDDEN, "Forbidden");
+                    return false;
+                } else if (path.startsWith("/admin") && !session.getUser().getRoles().contains(Rol.ADMINISTRADOR)) {
+                    response.sendError(HttpServletResponse.SC_FORBIDDEN, "Forbidden");
+                    return false;
+                } else if (path.startsWith("/supervisor") && !session.getUser().getRoles().contains(Rol.SUPERVISOR)) {
+                    response.sendError(HttpServletResponse.SC_FORBIDDEN, "Forbidden");
+                    return false;
+                } else {
+                    return true;
+                }
+            } else {
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Bad Request");
+                return false;
             }
+        } else {
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
+            return false;
         }
-
-        //response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
-        //return false;
-        return true;
     }
 
     @Override

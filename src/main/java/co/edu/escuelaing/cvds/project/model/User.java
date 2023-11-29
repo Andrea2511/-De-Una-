@@ -1,9 +1,6 @@
 package co.edu.escuelaing.cvds.project.model;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.management.relation.Role;
 import java.util.ArrayList;
@@ -14,6 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@ToString
 @Table(name = "usuarios")
 public abstract class User {
 
@@ -34,6 +32,6 @@ public abstract class User {
     private String password;
 
     @Column(name = "roles", nullable=false)
-    private List<String> roles;
+    private List<Rol> roles;
 
 }
