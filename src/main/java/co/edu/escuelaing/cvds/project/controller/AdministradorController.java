@@ -31,10 +31,6 @@ public class AdministradorController {
     @Autowired
     InsumoService insumoService;
 
-    @Autowired
-    private InsumoRepository insumoRepository;
-
-
     @GetMapping("/dashboard")
     public String mostrarFormulario() {
         return "admin";

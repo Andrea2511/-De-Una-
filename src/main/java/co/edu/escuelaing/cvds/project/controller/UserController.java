@@ -47,13 +47,12 @@ public class UserController {
         System.out.println("username:" + username);
         String password = credentials.get("password");
 
-        // Realiza la verificación del usuario (reemplaza esto con tu lógica de verificación real)
         boolean isUserValid = userService.credenciales(username, password);
 
 
         if (isUserValid) {
             User user = userService.getUser(username);
-            Rol rol = user.getRoles().get(0);
+            Rol rol = user.getRol();
             Map<String, Object> responseBody = new HashMap<>();
 
             Session session = new Session(UUID.randomUUID(), Instant.now(), user);
@@ -63,16 +62,15 @@ public class UserController {
             responseBody.put("authToken", session.getToken());
 
             switch (rol) {
-                case ADMINISTRADOR -> responseBody.put("redirect", "/admin"); // Agrega la información de redirección
+                case ADMINISTRADOR -> responseBody.put("redirect", "/admin/dashboard"); // Agrega la información de redirección
                 case CLIENTE -> responseBody.put("redirect", "/cliente/dashboard");
                 case SUPERVISOR -> responseBody.put("redirect", "/supervisor");
             }
 
             response.setContentType("application/json");
             response.getWriter().write(new ObjectMapper().writeValueAsString(responseBody));
-        }  else {
-            // Usuario no autenticado, puedes devolver un código de estado diferente si lo deseas
-            // En este ejemplo, devolvemos un código de estado 401 (Unauthorized)
+        }
+        else {
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Credenciales incorrectas");
         }
     }
@@ -93,7 +91,7 @@ public class UserController {
 
             if (!isUserValid) {
                 if (!userService.verificarEmail(email)) {
-                    userService.crearUsuario(firstName, lastName, username,encriptarService.encriptar(password) ,email , Arrays.asList(Rol.CLIENTE));
+                    userService.crearUsuario(firstName, lastName, username, encriptarService.encriptar(password) , email, Rol.CLIENTE);
                     responseBody.put("success", true);
                     responseBody.put("message", "Registro exitoso");
                     responseBody.put("redirect", "/login");

@@ -12,12 +12,16 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @ToString
-@Table(name = "usuarios")
-public abstract class User {
+@Table(name = "USUARIO")
+public class User {
 
     @Id
     @Column(name = "username", nullable=false, unique=true)
     private String username;
+
+    @Lob
+    @Column(name = "ruta", length = 1048576)
+    private String ruta;
 
     @Column(name = "firstName")
     private String firstName;
@@ -28,10 +32,24 @@ public abstract class User {
     @Column(name = "email", nullable=false, unique=true)
     private String email;
 
+    @Column(name = "telefono")
+    private String telefono;
+
+    @Column(name = "direccion")
+    private String direccion;
+
     @Column(name = "password", nullable=false)
     private String password;
 
-    @Column(name = "roles", nullable=false)
-    private List<Rol> roles;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "rol", nullable=false)
+    private Rol rol;
+
+    @OneToMany(mappedBy = "user")
+    private List<Pedido> pedidos;
+
+    @ManyToOne
+    @JoinColumn(name = "restaurante_nit")
+    private Restaurante restaurante;
 
 }
