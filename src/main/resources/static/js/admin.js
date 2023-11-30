@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const insumoForm = document.getElementById("insumos-form");
     const inventory = document.getElementById("inventory");
     const menu = document.getElementById("menu");
+    const promoForm = document.getElementById("promo");
     const filas = document.getElementById('tablaInsumos').getElementsByTagName('tbody')[0].getElementsByTagName('tr');
     const filasComida = document.getElementById('tablaComidas').getElementsByTagName('tbody')[0].getElementsByTagName('tr');
     const filasPorPagina = 8;
@@ -58,15 +59,19 @@ document.addEventListener('DOMContentLoaded', function() {
             hideElement(insumoForm);
             hideElement(inventory);
             hideElement(menu);
+            hideElement(promoForm);
+
+
             break;
         case "pqrs":
             document.querySelector(".pqrs").classList.add("active");
             hideElement(main);
-            hideElement(right);
+            showElement(right);
             hideElement(inventory);
             hideElement(productForm);
             hideElement(insumoForm);
             hideElement(menu);
+            hideElement(promoForm);
             break;
         case "inventario":
             document.querySelector(".inventario").classList.add("active");
@@ -76,6 +81,7 @@ document.addEventListener('DOMContentLoaded', function() {
             hideElement(insumoForm);
             showElement(inventory);
             hideElement(menu);
+            hideElement(promoForm);
             break;
         case "menu":
             document.querySelector(".menu").classList.add("active");
@@ -85,6 +91,19 @@ document.addEventListener('DOMContentLoaded', function() {
             hideElement(inventory);
             hideElement(productForm);
             hideElement(insumoForm);
+            hideElement(promoForm);
+
+            break;
+        case "guardarPromociones":
+            document.querySelector(".promo").classList.add("active");
+            hideElement(main);
+            showElement(right);
+            hideElement(menu);
+            hideElement(productForm);
+            hideElement(insumoForm);
+            hideElement(inventory);
+            showElement(promoForm);
+
             break;
         case "guardarPromociones":
             document.querySelector(".inventario").classList.add("active");
@@ -103,6 +122,8 @@ document.addEventListener('DOMContentLoaded', function() {
             hideElement(inventory);
             showElement(productForm);
             hideElement(insumoForm);
+            hideElement(promoForm);
+
             break;
         case "guardarInsumo":
             document.querySelector(".addI").classList.add("active");
@@ -112,6 +133,8 @@ document.addEventListener('DOMContentLoaded', function() {
             hideElement(inventory);
             hideElement(productForm);
             showElement(insumoForm);
+            hideElement(promoForm);
+
             break;
         default:
             hideElement(main);
@@ -120,6 +143,8 @@ document.addEventListener('DOMContentLoaded', function() {
             hideElement(inventory);
             hideElement(productForm);
             hideElement(insumoForm);
+            hideElement(promoForm);
+
             break;
     }
 
