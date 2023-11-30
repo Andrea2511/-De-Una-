@@ -84,14 +84,41 @@ function validateForm() {
     return true;
 }
 
-document.getElementById('crearPedidoBtn').addEventListener('click', function() {
+document.getElementById('crearPedidoBtn').addEventListener('click', function () {
+    if (validateForm()) {
+        var index = this.getAttribute("data-index");
+        var formId = "form-" + index;
 
-    if (validateForm()){
-        crearPedido();
+        // Obtén los datos del formulario actual
+        var formData = new FormData(document.getElementById(formId));
+
+        // Realiza una solicitud AJAX para enviar los datos al controlador
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("POST", "/cliente/carritoCompras", true);
+
+        // Configura el manejo de la respuesta
+        xhttp.onload = function () {
+            if (xhttp.status >= 200 && xhttp.status < 300) {
+                // Éxito: Maneja la respuesta del servidor
+                var response = JSON.parse(xhttp.responseText);
+
+                // Muestra el mensaje en la interfaz (puedes adaptar esto según tu estructura HTML)
+                alert(response.mensaje);
+            } else {
+                // Error en la solicitud AJAX
+                alert("Error en la solicitud AJAX");
+            }
+        };
+
+        // Manejo de errores de red o CORS
+        xhttp.onerror = function () {
+            alert("Error de red o CORS al realizar la solicitud AJAX");
+        };
+
+        // Realiza la solicitud AJAX con los datos del formulario
+        xhttp.send(formData);
     }
-})
+});
 
-function crearPedido() {
-    console.log('Pedido creado con éxito');
-}
+
 

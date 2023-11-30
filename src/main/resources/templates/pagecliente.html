@@ -97,76 +97,79 @@
                 </div>
                 <div class="popup" th:id="'popup-' + ${iterStat.index}" style="display: none;">
                     <div class="popup-content">
+                        <form th:id="'form-' + ${iterStat.index}" class="order-details" id="order">
+                            <span class="close material-icons-sharp" th:onclick="'cerrarPopup(event, ' + ${iterStat.index} + ')'">navigate_before</span>
 
-                        <span class="close material-icons-sharp" th:onclick="'cerrarPopup(event, ' + ${iterStat.index} + ')'">navigate_before</span>
-
-                        <div class="food-details">
-                            <img class="card-image" th:src="|data:image/png;base64,${comida.ruta}|" alt="Comida Imagen">
-                            <h2 th:text="${comida.nombre}"></h2>
-                            <label>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                            </label>
-                            <p class="card-time">
-                                <span class="material-icons-sharp star-icon">star</span>
-                                <span class="calificacion" th:text="${comida.calificacion}"></span>
-                            </p>
-                        </div>
-
-                        <p id="toggleIngredients" class="toggle-selector">Selecciona los Ingredientes <span class="material-icons-sharp">expand_more</span></p>
-                        <div class="ingredient-selector" id="ingredientSelector">
-                            <ul>
-                                <li>
-                                    <label for="ingrediente1">Ingrediente 1</label>
-                                    <input type="checkbox" id="ingrediente1" name="ingredientes" value="ingrediente1">
-                                </li>
-                                <li>
-                                    <label for="ingrediente2">Ingrediente 2</label>
-                                    <input type="checkbox" id="ingrediente2" name="ingredientes" value="ingrediente2">
-                                </li>
-                                <li>
-                                    <label for="ingrediente3">Ingrediente 3</label>
-                                    <input type="checkbox" id="ingrediente3" name="ingredientes" value="ingrediente3">
-                                </li>
-                            </ul>
-                        </div>
-
-                        <p id="toggleDrinks" class="toggle-selector">Selecciona tu bebida <span class="material-icons-sharp">expand_more</span></p>
-                        <div class="ingredient-selector" id="drinkSelector">
-                            <ul>
-                                <li>
-                                    <label for="bebida1">Agua con gas</label>
-                                    <input type="radio" id="bebida1" name="bebidas" value="bebida1">
-                                </li>
-                                <li>
-                                    <label for="bebida2">Gaseosa</label>
-                                    <input type="radio" id="bebida2" name="bebidas" value="bebida2">
-                                </li>
-                                <li>
-                                    <label for="bebida3">Jugo de mango</label>
-                                    <input type="radio" id="bebida3" name="bebidas" value="bebida3">
-                                </li>
-                            </ul>
-
-                        </div>
-
-                        <div class="order-details" id="orderDetails">
-                            <div class="order-content">
-                                <div class="precio">
-                                    <p class="text-muted">Precio Total</p>
-                                    <span th:text="${'$ ' + comida.precio}"></span>
-                                </div>
-                                <button type="submit" id="crearPedidoBtn"><span class="material-icons-sharp shop">shopping_bag</span>Añadir al Carrito</button>
+                            <div class="food-details">
+                                <img class="card-image" th:src="|data:image/png;base64,${comida.ruta}|" alt="Comida Imagen">
+                                <h2 th:text="${comida.nombre}"></h2>
+                                <input type="hidden" th:name="'idComida'" th:value="${comida.comidaId}">
+                                <label>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                                    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                </label>
+                                <p class="card-time">
+                                    <span class="material-icons-sharp star-icon">star</span>
+                                    <span class="calificacion" th:text="${comida.calificacion}"></span>
+                                </p>
                             </div>
-                        </div>
+
+                            <p id="toggleIngredients" class="toggle-selector">Selecciona los Ingredientes <span class="material-icons-sharp">expand_more</span></p>
+                            <div class="ingredient-selector" id="ingredientSelector">
+                                <ul>
+                                    <li>
+                                        <label for="ingrediente1">Ingrediente 1</label>
+                                        <input type="checkbox" id="ingrediente1" name="ingredientes" value="ingrediente1">
+                                    </li>
+                                    <li>
+                                        <label for="ingrediente2">Ingrediente 2</label>
+                                        <input type="checkbox" id="ingrediente2" name="ingredientes" value="ingrediente2">
+                                    </li>
+                                    <li>
+                                        <label for="ingrediente3">Ingrediente 3</label>
+                                        <input type="checkbox" id="ingrediente3" name="ingredientes" value="ingrediente3">
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <p id="toggleDrinks" class="toggle-selector">Selecciona tu bebida <span class="material-icons-sharp">expand_more</span></p>
+                            <div class="ingredient-selector" id="drinkSelector">
+                                <ul>
+                                    <li>
+                                        <label for="bebida1">Agua con gas</label>
+                                        <input type="radio" id="bebida1" name="bebidas" value="bebida1">
+                                    </li>
+                                    <li>
+                                        <label for="bebida2">Gaseosa</label>
+                                        <input type="radio" id="bebida2" name="bebidas" value="bebida2">
+                                    </li>
+                                    <li>
+                                        <label for="bebida3">Jugo de mango</label>
+                                        <input type="radio" id="bebida3" name="bebidas" value="bebida3">
+                                    </li>
+                                </ul>
+
+                            </div>
+
+                            <div class="order-details" id="orderDetails">
+                                <div class="order-content">
+                                    <div class="precio">
+                                        <p class="text-muted">Precio Total</p>
+                                        <span th:text="${'$ ' + comida.precio}"></span>
+                                    </div>
+                                    <button type="submit" id="crearPedidoBtn" th:data-index="${iterStat.index}"><span class="material-icons-sharp shop">shopping_bag</span>Añadir al Carrito</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </main>
     <div class="recuerda cambiar comida"></div>
+
     <div class="right">
         <div class="top">
             <div class="close" id="closeShop-btn">

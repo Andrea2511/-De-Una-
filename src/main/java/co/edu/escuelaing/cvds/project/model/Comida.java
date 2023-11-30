@@ -2,7 +2,6 @@ package co.edu.escuelaing.cvds.project.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.util.*;
 
 @Setter
@@ -37,9 +36,6 @@ public class Comida {
 
     @Column(name = "descripcion")
     private String descripcion;
-
-    @Column(name = "bebida")
-    private String bebida;
 
     @Column(name = "cantidad")
     private int cantidad;

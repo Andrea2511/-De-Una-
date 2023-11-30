@@ -29,7 +29,7 @@ public class User {
     @Column(name = "lastName")
     private String lastName;
 
-    @Column(name = "email", nullable=false, unique=true)
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
     @Column(name = "telefono")
@@ -38,14 +38,15 @@ public class User {
     @Column(name = "direccion")
     private String direccion;
 
-    @Column(name = "password", nullable=false)
+    @Column(name = "password", nullable = false)
     private String password;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "rol", nullable=false)
+    @Column(name = "rol", nullable = false)
     private Rol rol;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @ToString.Exclude
     private List<Pedido> pedidos;
 
     @ManyToOne

@@ -4,8 +4,10 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
+@Builder
 @Setter
 @Getter
 @NoArgsConstructor
@@ -26,6 +28,9 @@ public class Pedido {
     @Column(name = "fechaEntrega")
     private LocalDateTime fechaEntrega;
 
+    @Column(name = "subtotal")
+    private double subtotal;
+
     @Column(name = "costoTotal")
     private double costoTotal;
 
@@ -38,8 +43,9 @@ public class Pedido {
     @JoinColumn(name = "username", nullable = false)
     private User user;
 
-    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
-    private ArrayList<LineaPedido> lineasPedido;
+    @OneToMany(mappedBy = "pedido", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private List<LineaPedido> lineasPedido;
 
     @ManyToOne
     @JoinColumn(name = "promocion_id")

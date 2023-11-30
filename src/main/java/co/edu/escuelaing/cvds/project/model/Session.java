@@ -19,7 +19,7 @@ public class Session {
     @Column(name = "token", nullable=false, unique=true)
     private UUID token;
 
-    @Column(name = "firstName")
+    @Column(name = "timestamp")
     private Instant timestamp;
 
     @ManyToOne(fetch = FetchType.EAGER)

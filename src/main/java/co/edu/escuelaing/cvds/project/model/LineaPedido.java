@@ -3,8 +3,7 @@ package co.edu.escuelaing.cvds.project.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
-import java.util.Objects;
+import java.util.*;
 
 @Setter
 @Getter
@@ -22,11 +21,14 @@ public class LineaPedido {
     @Column(name = "cantidad")
     private int cantidad;
 
-    @Column(name = "subtotal")
-    private double subtotal;
-
     @Column(name = "total")
     private double total;
+
+    @Column(name = "bebida")
+    private String bebida;
+
+    @Column(name = "ingredientespedidos")
+    private String ingredientes;
 
     //Relaciones
     @ManyToOne
