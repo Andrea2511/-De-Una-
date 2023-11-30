@@ -35,15 +35,6 @@ public class InsumoService {
         insumoRepository.save(insumo);
     }
 
-    public void updateInsumo(Long insumoId, String nombre, TipoInsumos tipo, int cantidad, double precio) {
-        Insumo insumo = insumoRepository.getReferenceById(insumoId);
-        insumo.setNombre(!nombre.isEmpty() ? nombre : insumo.getNombre());
-        insumo.setTipo(tipo);
-        insumo.setCantidad(cantidad);
-        insumo.setPrecio(precio);
-
-        insumoRepository.save(insumo);
-    }
 
     public void deleteInsumo(Long insumoId) {
         insumoRepository.deleteById(insumoId);
