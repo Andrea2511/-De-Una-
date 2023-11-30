@@ -7,6 +7,8 @@ const shopBtn = document.querySelector("#shop-btn");
 const themeToggler= document.querySelector(".theme-toggler");
 const toggleSelectors = document.querySelectorAll('.toggle-selector');
 const addProducts = document.querySelectorAll('#crearPedidoBtn');
+var subtractButtons = document.querySelectorAll('.amount .subtract');
+var addButtons = document.querySelectorAll('.amount .add');
 var dashboardCards = document.querySelectorAll('.dashboard-card');
 
 
@@ -123,6 +125,35 @@ addProducts.forEach(function (addProduct) {
             // Evita que el formulario realice su acción predeterminada (la recarga de la página)
             event.preventDefault();
         }
+    });
+});
+
+subtractButtons.forEach(function (subtractButton) {
+    subtractButton.addEventListener('click', function (event) {
+        // Obtener el elemento input asociado a este botón
+        var input = event.target.parentElement.querySelector('.amount-input');
+
+        // Obtener el valor actual
+        var currentValue = parseInt(input.value, 10);
+
+        // Restar 1 si es mayor que 1
+        if (currentValue > 1) {
+            input.value = currentValue - 1;
+        }
+    });
+});
+
+// Agregar un evento de clic a cada botón de suma
+addButtons.forEach(function (addButton) {
+    addButton.addEventListener('click', function (event) {
+        // Obtener el elemento input asociado a este botón
+        var input = event.target.parentElement.querySelector('.amount-input');
+
+        // Obtener el valor actual
+        var currentValue = parseInt(input.value, 10);
+
+        // Sumar 1
+        input.value = currentValue + 1;
     });
 });
 

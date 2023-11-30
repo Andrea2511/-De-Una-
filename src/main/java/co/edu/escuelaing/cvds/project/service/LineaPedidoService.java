@@ -28,8 +28,8 @@ public class LineaPedidoService {
 
         lineaPedido.setBebida(bebida);
         lineaPedido.setComida(comida);
-        lineaPedido.setTotal(comida.getPrecio());
         lineaPedido.setCantidad(1);
+        lineaPedido.setTotal(comida.getPrecio() * lineaPedido.getCantidad());
         lineaPedido.setIngredientes(concatenarIngredientes(ingredientes));
 
         // Asignar la línea de pedido al pedido en proceso

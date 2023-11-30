@@ -578,6 +578,29 @@ main .card-time{
     border-radius: 15px;
 }
 
+.amount {
+    display: flex;
+    align-items: center;
+}
+
+.amount span {
+    cursor: pointer;
+    padding: 5px;
+    background-color: #eee;
+}
+
+.amount .material-icons-sharp {
+    font-size: 20px;
+    color: var(--color-primary);
+    background-color: transparent;
+}
+
+.amount .amount-input {
+    width: 10px;
+    text-align: center;
+    margin: 0 5px;
+}
+
 .divider{
     width: 100%;
     border: 1px dashed var(--color-primary);

@@ -184,21 +184,21 @@
         </div>
         <div class="order-time">
             <small class="text-muted">30 mins</small>
-            <small class="text-muted">2 km</small>
+            <small class="text-muted">¡Ya casi estamos!</small>
         </div>
 
         <div class="order-wrapper">
 
-            <th:block th:each="lineaPedido : ${lineasPedido}">
+            <th:block th:each="lineaPedido , iterStat: ${lineasPedido}">
                 <div class="order-card">
                     <img class="order-image" th:src="|data:image/png;base64,${lineaPedido.comida.ruta}|">
                     <div class="order-detail">
                         <span class="car-item-detail" th:text="${lineaPedido.comida.nombre}"></span>
                         <h3 th:text="'$' + ${lineaPedido.total}"></h3>
                         <div class="amount">
-                            <span class="material-icons-sharp">add</span>
-                            <input type="text" th:value="${lineaPedido.cantidad}" class="amount" disabled>
-                            <span class="material-icons-sharp">remove</span>
+                            <span class="material-icons-sharp subtract">remove</span>
+                            <input th:id="'amount-' + ${iterStat.index}" type="text" th:value="${lineaPedido.cantidad}" class="amount-input" disabled>
+                            <span class="material-icons-sharp add">add</span>
                         </div>
                     </div>
                     <span class="btn-delete">
