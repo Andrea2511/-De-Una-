@@ -1,9 +1,6 @@
 package co.edu.escuelaing.cvds.project.controller;
 
-import co.edu.escuelaing.cvds.project.model.Categoria;
-import co.edu.escuelaing.cvds.project.model.Comida;
-import co.edu.escuelaing.cvds.project.model.Session;
-import co.edu.escuelaing.cvds.project.model.User;
+import co.edu.escuelaing.cvds.project.model.*;
 import co.edu.escuelaing.cvds.project.repository.SessionRepository;
 import co.edu.escuelaing.cvds.project.service.ComidaService;
 import co.edu.escuelaing.cvds.project.service.PedidoService;
@@ -33,6 +30,26 @@ public class ClienteController {
 
     @Autowired
     private PedidoService pedidoService;
+
+    @ModelAttribute("nombreUsuario")  // Agregar un atributo global al modelo
+    public String nombreUsuario(HttpServletRequest request) {
+        User usuarioEnSesion = obtenerUsuarioEnSesion(request);
+        return (usuarioEnSesion != null) ? usuarioEnSesion.getUsername() : null;
+    }
+
+    @ModelAttribute("lineasPedido")
+    public List<LineaPedido> addGlobalLineasPedidos(HttpServletRequest request, Model model) {
+        List<LineaPedido> lineasPedidos = obtenerLineasPedidos(request);
+        model.addAttribute("lineasPedidos", lineasPedidos);
+        return lineasPedidos;
+    }
+
+    @ModelAttribute("pedido")
+    public Pedido addGlobalPedido(HttpServletRequest request, Model model) {
+        Pedido pedido = obtenerPedido(request);
+        model.addAttribute("pedido", pedido);
+        return pedido;
+    }
 
     @GetMapping("/dashboard")
     public String mostrarTodasLasComidas(Model model) {
@@ -131,5 +148,15 @@ public class ClienteController {
         Map<String, String> response = new HashMap<>();
         response.put("error", mensaje);
         return response;
+    }
+
+    private List<LineaPedido> obtenerLineasPedidos(HttpServletRequest request) {
+        User usuarioEnSesion = obtenerUsuarioEnSesion(request);
+        return (usuarioEnSesion != null) ? pedidoService.obtenerLineasPedido(usuarioEnSesion) : new ArrayList<>();
+    }
+
+    private Pedido obtenerPedido(HttpServletRequest request) {
+        User usuarioEnSesion = obtenerUsuarioEnSesion(request);
+        return (usuarioEnSesion != null) ? pedidoService.pedidoActive(usuarioEnSesion) : null;
     }
 }

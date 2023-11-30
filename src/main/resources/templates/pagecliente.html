@@ -26,7 +26,7 @@
                     <img src="../static/images/menu-1.png">
                 </div>
                 <div class="info">
-                    <p>Hey, <b> Daniel</b></p>
+                    <p>Hey, <b th:text="${nombreUsuario}"></b></p>
                     <small class="text-muted">Cliente</small>
                 </div>
             </div>
@@ -188,69 +188,37 @@
         </div>
 
         <div class="order-wrapper">
-            <div class="order-card">
-                <img class="order-image" src="../static/images/main-b.jpg">
-                <div class="order-detail">
-                    <span class="car-item-detail">Papas con arroz</span>
-                    <h3>$35</h3>
-                    <div class="amount">
-                        <span class="material-icons-sharp">add</span>
-                        <input type="text" value="2" class="amount" disabled>
-                        <span class="material-icons-sharp">remove</span>
+
+            <th:block th:each="lineaPedido : ${lineasPedido}">
+                <div class="order-card">
+                    <img class="order-image" th:src="|data:image/png;base64,${lineaPedido.comida.ruta}|">
+                    <div class="order-detail">
+                        <span class="car-item-detail" th:text="${lineaPedido.comida.nombre}"></span>
+                        <h3 th:text="'$' + ${lineaPedido.total}"></h3>
+                        <div class="amount">
+                            <span class="material-icons-sharp">add</span>
+                            <input type="text" th:value="${lineaPedido.cantidad}" class="amount" disabled>
+                            <span class="material-icons-sharp">remove</span>
+                        </div>
                     </div>
+                    <span class="btn-delete">
+                <span class="material-icons-sharp">delete</span>
+            </span>
                 </div>
-                <span class="btn-delete">
-                    <span class="material-icons-sharp">delete</span>
-                </span>
-            </div>
-
-            <div class="order-card">
-                <img class="order-image" src="../static/images/main-b.jpg">
-                <div class="order-detail">
-                    <span class="car-item-detail">Papas con arroz</span>
-                    <h3>$35</h3>
-                    <div class="amount">
-                        <span class="material-icons-sharp">add</span>
-                        <input type="text" value="2" class="amount" disabled>
-                        <span class="material-icons-sharp">remove</span>
-                    </div>
-
-                </div>
-                <span class="btn-delete">
-                    <span class="material-icons-sharp">delete</span>
-                </span>
-            </div>
-
-            <div class="order-card">
-                <img class="order-image" src="../static/images/main-b.jpg">
-                <div class="order-detail">
-                    <span class="car-item-detail">Papas con arroz</span>
-                    <h3>$35</h3>
-                    <div class="amount">
-                        <span class="material-icons-sharp">add</span>
-                        <input type="text" value="2" class="amount" disabled>
-                        <span class="material-icons-sharp">remove</span>
-                    </div>
-
-                </div>
-                <span class="btn-delete">
-                    <span class="material-icons-sharp">delete</span>
-                </span>
-            </div>
+            </th:block>
         </div>
 
         <hr class="divider">
         <div class="order-total">
-            <p>Subtotal <span>$156</span></p>
-            <p>IVA <span>$15.6</span></p>
-            <p>Domicilio <span>$3</span></p>
+            <p>Subtotal <span th:text="'$' + ${pedido.subtotal}"></span></p>
+            <p>IVA <span>19%</span></p>
 
             <div class="order-promo">
                 <input class="input-promo" type="text" placeholder="Código">
                 <button class="button-promo">Buscar promo</button>
             </div>
             <hr class="divider">
-            <p>Total <span>$174.6</span></p>
+            <p>Total <span th:text="'$' + ${pedido.costoTotal}"></span></p>
         </div>
 
         <button id="btnPagar" class="checkout">

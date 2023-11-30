@@ -104,4 +104,15 @@ public class PedidoService {
         return subtotal + (subtotal * 0.19);
     }
 
+    public List<LineaPedido> obtenerLineasPedido(User usuarioEnSesion) {
+        if (usuarioEnSesion != null) {
+            Pedido pedidoEnProceso = pedidoRepository.findByUserAndEstado(usuarioEnSesion, EstadoPedido.EN_PROCESO);
+
+            if (pedidoEnProceso != null) {
+                return pedidoEnProceso.getLineasPedido();
+            }
+        }
+
+        return new ArrayList<>();
+    }
 }
