@@ -60,8 +60,6 @@ document.addEventListener('DOMContentLoaded', function() {
             hideElement(inventory);
             hideElement(menu);
             hideElement(promoForm);
-
-
             break;
         case "pqrs":
             document.querySelector(".pqrs").classList.add("active");
@@ -98,17 +96,7 @@ document.addEventListener('DOMContentLoaded', function() {
             document.querySelector(".promo").classList.add("active");
             hideElement(main);
             showElement(right);
-            hideElement(menu);
-            hideElement(productForm);
-            hideElement(insumoForm);
-            hideElement(inventory);
             showElement(promoForm);
-
-            break;
-        case "guardarPromociones":
-            document.querySelector(".inventario").classList.add("active");
-            hideElement(main);
-            showElement(right);
             hideElement(menu);
             hideElement(productForm);
             hideElement(insumoForm);
