@@ -567,6 +567,7 @@ table tbody td span.icon-delete {
     border-radius: 100%;
     color: var(--color-white);
     background-color: var(--color-primary);
+
 }
 
 #inventory #paginaActual {
@@ -1002,6 +1003,8 @@ form .days .disponibilidad {
 }
 
 #promo form .button div h3 {
+
+
     font-weight: 600;
 }
 

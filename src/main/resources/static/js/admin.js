@@ -61,6 +61,7 @@ document.addEventListener('DOMContentLoaded', function() {
             hideElement(menu);
             hideElement(promoForm);
 
+
             break;
         case "pqrs":
             document.querySelector(".pqrs").classList.add("active");
@@ -71,7 +72,6 @@ document.addEventListener('DOMContentLoaded', function() {
             hideElement(insumoForm);
             hideElement(menu);
             hideElement(promoForm);
-
             break;
         case "inventario":
             document.querySelector(".inventario").classList.add("active");
@@ -82,7 +82,6 @@ document.addEventListener('DOMContentLoaded', function() {
             showElement(inventory);
             hideElement(menu);
             hideElement(promoForm);
-
             break;
         case "menu":
             document.querySelector(".menu").classList.add("active");
@@ -105,6 +104,15 @@ document.addEventListener('DOMContentLoaded', function() {
             hideElement(inventory);
             showElement(promoForm);
 
+            break;
+        case "guardarPromociones":
+            document.querySelector(".inventario").classList.add("active");
+            hideElement(main);
+            showElement(right);
+            hideElement(menu);
+            hideElement(productForm);
+            hideElement(insumoForm);
+            hideElement(inventory);
             break;
         case "guardarProducto":
             document.querySelector(".addP").classList.add("active");

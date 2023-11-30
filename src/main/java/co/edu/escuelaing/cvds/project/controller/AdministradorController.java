@@ -74,6 +74,7 @@ public class AdministradorController {
     public String inventario(Model model) {
         ArrayList<Insumo> insumos = insumoService.obtenerTodosLosInsumos();
         model.addAttribute("insumos", insumos);
+
         return "admin";
     }
 
@@ -81,6 +82,71 @@ public class AdministradorController {
     public String mostrarCarnes(Model model) {
         List<Insumo> insumos = insumoService.obtenerComidasPorTipo(TipoInsumos.CARNES);
         model.addAttribute("insumos", insumos);
+
+        return "admin";
+    }
+
+    @GetMapping("/inventario/carnes")
+    public String mostrarCarnes(Model model) {
+        List<Insumo> insumos = insumoService.obtenerComidasPorTipo(TipoInsumos.CARNES);
+        model.addAttribute("insumos", insumos);
+        return "admin";
+    }
+
+    @GetMapping("/inventario/lacteos")
+    public String mostrarLacteos(Model model) {
+        List<Insumo> insumos = insumoService.obtenerComidasPorTipo(TipoInsumos.LACTEOS);
+        model.addAttribute("insumos", insumos);
+        return "admin";
+    }
+
+    @GetMapping("/inventario/frutas")
+    public String mostrarFrutas(Model model) {
+        List<Insumo> insumos = insumoService.obtenerComidasPorTipo(TipoInsumos.FRUTAS);
+        model.addAttribute("insumos", insumos);
+        return "admin";
+    }
+
+    @GetMapping("/inventario/verduras")
+    public String mostrarVerduras(Model model) {
+        List<Insumo> insumos = insumoService.obtenerComidasPorTipo(TipoInsumos.VERDURAS);
+        model.addAttribute("insumos", insumos);
+        return "admin";
+    }
+
+    @GetMapping("/inventario/cereales")
+    public String mostrarCereales(Model model) {
+        List<Insumo> insumos = insumoService.obtenerComidasPorTipo(TipoInsumos.CEREALES);
+        model.addAttribute("insumos", insumos);
+        return "admin";
+    }
+
+    @GetMapping("/inventario/aceites")
+    public String mostrarAceites(Model model) {
+        List<Insumo> insumos = insumoService.obtenerComidasPorTipo(TipoInsumos.ACEITES);
+        model.addAttribute("insumos", insumos);
+        return "admin";
+    }
+
+    @GetMapping("/inventario/legumbres")
+    public String mostrarLegumbres(Model model) {
+        List<Insumo> insumos = insumoService.obtenerComidasPorTipo(TipoInsumos.LEGUMBRES);
+        model.addAttribute("insumos", insumos);
+        return "admin";
+    }
+
+    @GetMapping("/inventario/frutosSecos")
+    public String mostrarFrutos(Model model) {
+        List<Insumo> insumos = insumoService.obtenerComidasPorTipo(TipoInsumos.FRUTOSECO);
+        model.addAttribute("insumos", insumos);
+        return "admin";
+    }
+
+    @GetMapping("/menu")
+    public String menu(Model model) {
+        ArrayList<Comida> comidas = comidaService.obtenerTodasLasComidas();
+        model.addAttribute("comidas", comidas);
+
         return "admin";
     }
 
@@ -151,6 +217,8 @@ public class AdministradorController {
         promocionService.eliminarPromocion(nombre);
         return "redirect:/admin/menu";
     }
+
+
 
     @PostMapping("/guardarInsumo")
     public String guardarInsumo(@ModelAttribute Insumo insumo){
