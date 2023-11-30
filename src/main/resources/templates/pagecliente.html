@@ -97,7 +97,7 @@
                 </div>
                 <div class="popup" th:id="'popup-' + ${iterStat.index}" style="display: none;">
                     <div class="popup-content">
-                        <form th:id="'form-' + ${iterStat.index}" class="order-details" id="order">
+                        <form th:id="'form-' + ${iterStat.index}" class="order-details" id="order" method="post" action="/cliente/carritoCompras">
                             <span class="close material-icons-sharp" th:onclick="'cerrarPopup(event, ' + ${iterStat.index} + ')'">navigate_before</span>
 
                             <div class="food-details">

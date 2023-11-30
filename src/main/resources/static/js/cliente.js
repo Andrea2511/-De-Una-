@@ -6,6 +6,7 @@ const closeShopBtn = document.querySelector("#closeShop-btn");
 const shopBtn = document.querySelector("#shop-btn");
 const themeToggler= document.querySelector(".theme-toggler");
 const toggleSelectors = document.querySelectorAll('.toggle-selector');
+const addProducts = document.querySelectorAll('#crearPedidoBtn');
 var dashboardCards = document.querySelectorAll('.dashboard-card');
 
 
@@ -84,40 +85,45 @@ function validateForm() {
     return true;
 }
 
-document.getElementById('crearPedidoBtn').addEventListener('click', function () {
-    if (validateForm()) {
-        var index = this.getAttribute("data-index");
-        var formId = "form-" + index;
 
-        // Obtén los datos del formulario actual
-        var formData = new FormData(document.getElementById(formId));
+addProducts.forEach(function (addProduct) {
+    addProduct.addEventListener('click', function (event) {
+        console.log("Button clicked:", this);
+        if (validateForm()) {
+            var index = this.getAttribute("data-index");
+            var formId = "form-" + index;
 
-        // Realiza una solicitud AJAX para enviar los datos al controlador
-        var xhttp = new XMLHttpRequest();
-        xhttp.open("POST", "/cliente/carritoCompras", true);
+            // Obtén los datos del formulario actual
+            var formData = new FormData(document.getElementById(formId));
 
-        // Configura el manejo de la respuesta
-        xhttp.onload = function () {
-            if (xhttp.status >= 200 && xhttp.status < 300) {
-                // Éxito: Maneja la respuesta del servidor
-                var response = JSON.parse(xhttp.responseText);
+            // Realiza una solicitud AJAX para enviar los datos al controlador
+            fetch("/cliente/carritoCompras", {
+                method: "POST",
+                body: formData
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Error en la solicitud AJAX. Estado: " + response.status);
+                    }
+                    return response.json();
+                })
+                .then(responseData => {
+                    // Muestra el mensaje del servidor
+                    alert(responseData.mensaje);
+                })
+                .catch(error => {
+                    // Error general
+                    console.error("Error al realizar la solicitud AJAX:", error);
+                })
+                .finally(() => {
+                    // Redirige a /cliente/dashboard después de cerrar la alerta
+                    window.location.href = '/cliente/dashboard';
+                });
 
-                // Muestra el mensaje en la interfaz (puedes adaptar esto según tu estructura HTML)
-                alert(response.mensaje);
-            } else {
-                // Error en la solicitud AJAX
-                alert("Error en la solicitud AJAX");
-            }
-        };
-
-        // Manejo de errores de red o CORS
-        xhttp.onerror = function () {
-            alert("Error de red o CORS al realizar la solicitud AJAX");
-        };
-
-        // Realiza la solicitud AJAX con los datos del formulario
-        xhttp.send(formData);
-    }
+            // Evita que el formulario realice su acción predeterminada (la recarga de la página)
+            event.preventDefault();
+        }
+    });
 });
 
 

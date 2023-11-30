@@ -61,9 +61,14 @@ public class PedidoService {
     }
 
     private boolean existeLineaPedidoParaComida(Pedido pedido, String idComida) {
-
-        return pedido.getLineasPedido().stream()
-                .anyMatch(linea -> linea.getComida().getComidaId().equals(idComida));
+        if (pedido.getLineasPedido() != null) {
+            for (LineaPedido lineaPedido : pedido.getLineasPedido()) {
+                if (String.valueOf(lineaPedido.getComida().getComidaId()).equals(idComida)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     private void crearNuevoPedido(User usuarioEnSesion) {
