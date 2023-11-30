@@ -3,8 +3,10 @@ package co.edu.escuelaing.cvds.project.controller;
 import co.edu.escuelaing.cvds.project.model.*;
 import co.edu.escuelaing.cvds.project.repository.ComidaRepository;
 import co.edu.escuelaing.cvds.project.repository.InsumoRepository;
+import co.edu.escuelaing.cvds.project.repository.PromocionRepository;
 import co.edu.escuelaing.cvds.project.service.ComidaService;
 import co.edu.escuelaing.cvds.project.service.InsumoService;
+import co.edu.escuelaing.cvds.project.service.PromocionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -19,6 +21,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Controller
@@ -34,7 +37,9 @@ public class AdministradorController {
     @Autowired
     private InsumoRepository insumoRepository;
 
-
+    @Autowired
+    private PromocionService promocionService;
+  
     @GetMapping("/dashboard")
     public String mostrarFormulario() {
         return "admin";
@@ -55,10 +60,18 @@ public class AdministradorController {
         return "admin";
     }
 
+    @GetMapping("/guardarPromociones")
+    public String addPromocion(Model model) {;
+        ArrayList<Promocion> promociones = promocionService.obtenerTodasLasPromociones();
+        model.addAttribute("promociones", promociones);
+        return "admin";
+    }
+
     @GetMapping("/inventario")
     public String inventario(Model model) {
         ArrayList<Insumo> insumos = insumoService.obtenerTodosLosInsumos();
         model.addAttribute("insumos", insumos);
+
         return "admin";
     }
 
@@ -66,8 +79,11 @@ public class AdministradorController {
     public String mostrarCarnes(Model model) {
         List<Insumo> insumos = insumoService.obtenerComidasPorTipo(TipoInsumos.CARNES);
         model.addAttribute("insumos", insumos);
+
         return "admin";
     }
+
+
 
     @GetMapping("/inventario/lacteos")
     public String mostrarLacteos(Model model) {
@@ -122,13 +138,23 @@ public class AdministradorController {
     public String menu(Model model) {
         ArrayList<Comida> comidas = comidaService.obtenerTodasLasComidas();
         model.addAttribute("comidas", comidas);
+
         return "admin";
     }
 
-    @GetMapping("/guardarPromociones")
-    public String addPromos() {
-        return "admin";
+    @PostMapping ("/guardarPromociones")
+    public String guardarPromociones(@RequestParam("nombre") String nombre, @RequestParam("descripcion") String descripcion, @RequestParam("fechaInicio")LocalDateTime fechaInicio, @RequestParam("fechaFin")LocalDateTime fechaFin, @RequestParam("categoria") String categoria, @RequestParam("tipoDescuento")TipoDescuento tipoDescuento,@RequestParam("descuento")Double descuento) {
+        promocionService.crearPromocion(nombre,descripcion,fechaInicio,fechaFin,categoria,tipoDescuento,descuento);
+        return "redirect:/admin/menu";
     }
+
+    @PostMapping("/eliminarPromociones")
+    public String eliminarPromocion(@PathVariable String nombre) {
+        promocionService.eliminarPromocion(nombre);
+        return "redirect:/admin/menu";
+    }
+
+
 
     @PostMapping("/guardarInsumo")
     public String guardarInsumo(@ModelAttribute Insumo insumo){
@@ -168,7 +194,6 @@ public class AdministradorController {
 
     @PostMapping("/eliminarComida")
     public String eliminarComida(@PathVariable Long comidaId) {
-        System.out.println("comidaId: " + comidaId);
         comidaService.eliminarComida(comidaId);
         return "redirect:/admin/menu";
     }
