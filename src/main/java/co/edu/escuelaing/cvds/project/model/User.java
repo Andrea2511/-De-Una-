@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 @Table(name = "usuarios") // Tabla principal para SINGLE_TABLE
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "tipo_usuario", discriminatorType = DiscriminatorType.STRING)
-public abstract class User implements Rol {
+public abstract class User implements Rol{
 
     @Id
     @Column(name = "username")
@@ -20,6 +20,8 @@ public abstract class User implements Rol {
     private String email;
     @Column(name = "password")
     private String password;
+    @Column(name = "rol")
+    private String rol;
 
     public User(){
     }

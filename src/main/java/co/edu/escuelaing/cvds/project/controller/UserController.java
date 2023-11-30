@@ -48,7 +48,7 @@ public class UserController {
 
             switch (rol) {
                 case "ADMINISTRADOR" -> responseBody.put("redirect", "/admin"); // Agrega la información de redirección
-                case "CLIENTE" -> responseBody.put("redirect", "/cliente/dashboard");
+                case "CLIENTE" -> responseBody.put("redirect", "/cliente");
                 case "SUPERVISOR" -> responseBody.put("redirect", "/supervisor");
             }
 
@@ -102,15 +102,16 @@ public class UserController {
         }
     }
 
+
     @RequestMapping("/admin")
     public ModelAndView adminPage() {
-        return new ModelAndView("redirect:/admin/dashboard");
+        return new ModelAndView("admin");
     }
-
+    //falta pagina principal para el administrador
+    //modificar para principal para el cliente
     @RequestMapping("/cliente")
-    public String redirectToCliente() {
-        // Redirige a la página específica para clientes en el ClienteController
-        return "redirect:/cliente/dashboard";
+    public ModelAndView clientepage() {
+        return new ModelAndView("pagecliente"); // Página de empleado
     }
 
     //modificar pagina principal para el supervisor

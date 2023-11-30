@@ -1,7 +1,13 @@
 package co.edu.escuelaing.cvds.project.model;
 
 import jakarta.persistence.*;
-import java.util.*;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Objects;
 
 @Entity
 @Table(name = "COMIDA")
@@ -13,26 +19,17 @@ public class Comida {
     private Long comidaId;
     @Column(name = "nombre")
     private String nombre;
-
-    @Column(name = "categoria")
-    private Categoria categoria;
-
     @Column(name = "calificacion")
     private double calificacion;
-    @Lob
-    @Column(name = "ruta", length = 1048576)
-    private String ruta;
+    @Column(name = "foto")
+    private ImageIcon foto;
     @Column(name = "precio")
     private double precio;
-
-    @Column(name = "cantidad")
-    private int cantidad;
+    @OneToMany(mappedBy = "comida")
+    private ArrayList<DetalleComidaInsumo> detalleInsumos;
 
     @OneToMany(mappedBy = "comida")
-    private Set<DetalleComidaInsumo> detalleInsumos = new HashSet<>();
-
-    @OneToMany(mappedBy = "comida")
-    private Set<LineaPedido> lineasPedidos;
+    private ArrayList<LineaPedido> lineasPedidos;
 
     @ManyToOne
     @JoinColumn(name = "promocion_id")
@@ -41,10 +38,13 @@ public class Comida {
     public Comida() {
     }
 
-    public Comida(String nombre, double calificacion, double precio, Set<DetalleComidaInsumo> detalleInsumos) {
+    public Comida(Long comidaId, String nombre, double calificacion, ImageIcon foto, double precio, ArrayList<DetalleComidaInsumo> insumos) {
+        this.comidaId = comidaId;
         this.nombre = nombre;
         this.calificacion = calificacion;
+        this.foto = foto;
         this.precio = precio;
+        this.detalleInsumos = insumos;
     }
 
     public Long getComidaId() {
@@ -71,12 +71,12 @@ public class Comida {
         this.calificacion = calificacion;
     }
 
-    public String getRuta() {
-        return ruta;
+    public ImageIcon getFoto() {
+        return foto;
     }
 
-    public void setRuta(String ruta) {
-        this.ruta = ruta;
+    public void setFoto(ImageIcon foto) {
+        this.foto = foto;
     }
 
     public double getPrecio() {
@@ -87,27 +87,11 @@ public class Comida {
         this.precio = precio;
     }
 
-    public int getCantidad() {
-        return cantidad;
-    }
-
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
-    }
-
-    public Categoria getCategoria() {
-        return categoria;
-    }
-
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
-    }
-
-    public Set<DetalleComidaInsumo> getDetalleInsumos() {
+    public ArrayList<DetalleComidaInsumo> getDetalleInsumos() {
         return detalleInsumos;
     }
 
-    public void setDetalleInsumos(Set<DetalleComidaInsumo> detalleInsumos) {
+    public void setDetalleInsumos(ArrayList<DetalleComidaInsumo> detalleInsumos) {
         this.detalleInsumos = detalleInsumos;
     }
 
@@ -116,12 +100,12 @@ public class Comida {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Comida comida = (Comida) o;
-        return Double.compare(calificacion, comida.calificacion) == 0 && Double.compare(precio, comida.precio) == 0 && Objects.equals(comidaId, comida.comidaId) && Objects.equals(nombre, comida.nombre) && Objects.equals(ruta, comida.ruta) && Objects.equals(detalleInsumos, comida.detalleInsumos);
+        return Double.compare(calificacion, comida.calificacion) == 0 && Double.compare(precio, comida.precio) == 0 && Objects.equals(comidaId, comida.comidaId) && Objects.equals(nombre, comida.nombre) && Objects.equals(foto, comida.foto) && Objects.equals(detalleInsumos, comida.detalleInsumos);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(comidaId, nombre, calificacion, ruta, precio, detalleInsumos);
+        return Objects.hash(comidaId, nombre, calificacion, foto, precio, detalleInsumos);
     }
 
     @Override
@@ -130,12 +114,10 @@ public class Comida {
                 "insumoId=" + comidaId +
                 ", nombre='" + nombre + '\'' +
                 ", calificacion=" + calificacion +
-                ", ruta=" + ruta +
+                ", foto=" + foto +
                 ", precio=" + precio +
                 ", detalleInsumos=" + detalleInsumos +
                 '}';
     }
-
-
 
 }
