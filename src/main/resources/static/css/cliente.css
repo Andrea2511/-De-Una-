@@ -242,7 +242,7 @@ aside .sidebar a span{
 aside .sidebar a:last-child{
     position: fixed;
     bottom: 2rem;
-    width: 100%;
+    width: 10%;
 }
 
 aside .sidebar a.active{
@@ -509,6 +509,151 @@ main .card-time{
 
 .order-details .order-content button:hover {
     background-color: var(--color-dark-variant);
+}
+
+.instantCard-container {
+    margin-top: 5rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.instantCard-container .general {
+    flex: 1;
+    padding: 20px;
+}
+
+.instantCard-container .general h3{
+    color: var(--color-info-dark);
+    margin-bottom: 20px;
+}
+
+.general .value-info {
+    display: flex;
+    justify-content: space-between;
+    border-radius: var(--card-border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.general .value-info h3 {
+    font-size: 1.5rem;
+}
+
+.general .value-info button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+    border-radius: var(--border-radius-2);
+    cursor: pointer;
+}
+
+.general .value-info button:hover {
+    background-color: var(--color-dark-variant);
+}
+
+.instantCard-container .more-details {
+    flex: 1;
+    padding: 20px;
+    border-left: 1px dashed var(--color-primary);
+}
+
+.card {
+    position: relative;
+    width: 300px;
+    height: 180px;
+    perspective: 1000px;
+    transform-style: preserve-3d;
+    cursor: pointer;
+    transition: transform 0.5s;
+}
+
+.card .background-card {
+    background: linear-gradient(45deg, var(--color-dark), var(--color-primary));
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.card .content {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transform-style: preserve-3d;
+    transition: transform 0.5s;
+}
+
+.card p {
+    padding: 15px;
+    margin: 0;
+    text-align: center;
+    color: var(--color-white);
+    backface-visibility: hidden;
+}
+
+.card .front {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.card .back {
+    transform: rotateX(180deg);
+}
+
+.card .franja {
+    position: absolute;
+    top: 70%;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    background-color: var(--color-info-dark);
+    transform: rotateX(180deg);
+    display: none;
+}
+
+.card.flipped .content {
+    transform: rotateX(180deg);
+}
+
+.card.flipped .franja {
+    display: block;
+}
+
+.instantCard-container .redeem {
+    display: flex;
+    justify-content: space-between;
+    border-radius: var(--card-border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 20px;
+}
+
+.redeem button{
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+    border-radius: var(--border-radius-2);
+    cursor: pointer;
+}
+
+.redeem button:hover {
+    background-color: var(--color-dark-variant);
+}
+
+.card-history,
+.detail-transaction {
+    margin-top: 20px;
 }
 
 .right{

@@ -41,23 +41,24 @@
                 <span class="material-icons-sharp active">light_mode</span>
                 <span class="material-icons-sharp">dark_mode</span>
             </div>
-            <a href="#" class="active">
-                <span class="material-icons-sharp">search</span>
-                <h3>Buscar</h3>
-            </a>
-            <a href="#">
+            <a href="/cliente/dashboard" class="dashboard">
                 <span class="material-icons-sharp">home</span>
                 <h3>Inicio</h3>
             </a>
-            <a href="#">
-                <span class="material-icons-sharp">favorite</span>
-                <h3>Preferencias</h3>
+            <a href="/cliente/instantCard" class="instantCard">
+                <span class="material-icons-sharp">credit_card</span>
+                <h3>InstantCard</h3>
             </a>
-            <a href="#">
+
+            <a href="/cliente/historial" class="history">
+                <span class="material-icons-sharp">history</span>
+                <h3>Historial</h3>
+            </a>
+            <a href="/cliente/cuenta" class="cuenta">
                 <span class="material-icons-sharp">account_circle</span>
                 <h3>Cuenta</h3>
             </a>
-            <a href="#">
+            <a href="/cliente/pqrs" class="pqrs">
                 <span class="material-icons-sharp">flag</span>
                 <h3>PQRS</h3>
             </a>
@@ -67,6 +68,47 @@
             </a>
         </div>
     </aside>
+
+    <div class="instantCard-container">
+        <div class="general">
+            <h1>InstantCard</h1>
+            <h3>¡Tu instantCard te estaba esperando!</h3>
+
+            <div class="value-info">
+                <div class="balance">
+                    <small class="text-muted">Saldo Total</small>
+                    <h3>$ 20.000</h3>
+                </div>
+                <button>Recargar</button>
+            </div>
+            <div class="card" onclick="flipCard()">
+                <div class="background-card"></div>
+                <div class="content">
+                    <p class="front">¡De Una!</p>
+                    <div class="franja"></div>
+                    <p class="back">Andrea Torres Tobar</p>
+                </div>
+            </div>
+            <div class="redeem">
+                <div class="info-points">
+                    <h3>Redime Tus Puntos, ¡De Una!</h3>
+                    <small class="text-muted">Puntos Totales</small>
+                    <h2>100</h2>
+                </div>
+                <button>Redimir</button>
+            </div>
+        </div>
+        <div class="more-details">
+            <div class="card-history">
+                <h3>Historial de Transacciones</h3>
+                <!-- Lista o tabla de historial de transacciones -->
+            </div>
+            <div class="detail-transaction">
+                <h3>Detalle de Transacción</h3>
+                <!-- Detalles específicos de una transacción -->
+            </div>
+        </div>
+    </div>
 
     <main>
 
@@ -168,7 +210,6 @@
             </div>
         </div>
     </main>
-    <div class="recuerda cambiar comida"></div>
 
     <div class="right">
         <div class="top">

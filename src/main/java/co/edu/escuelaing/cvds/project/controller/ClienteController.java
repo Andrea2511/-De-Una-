@@ -58,6 +58,26 @@ public class ClienteController {
         return "pagecliente";
     }
 
+    @GetMapping("/instantCard")
+    public String instantCard() {
+        return "pagecliente";
+    }
+
+    @GetMapping("/historial")
+    public String historial() {
+        return "pagecliente";
+    }
+
+    @GetMapping("/cuenta")
+    public String cuenta() {
+        return "pagecliente";
+    }
+
+    @GetMapping("/pqrs")
+    public String pqrs() {
+        return "pagecliente";
+    }
+
     @GetMapping("/postres")
     public String mostrarPostres(Model model) {
         List<Comida> postres = comidaService.obtenerComidasPorCategoria(Categoria.POSTRE);
