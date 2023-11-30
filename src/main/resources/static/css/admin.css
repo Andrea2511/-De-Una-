@@ -567,6 +567,7 @@ table tbody td span.icon-delete {
     border-radius: 100%;
     color: var(--color-white);
     background-color: var(--color-primary);
+
 }
 
 #inventory #paginaActual {
@@ -932,6 +933,81 @@ form .days .disponibilidad {
     font-weight: 600;
 }
 
+#promo .general{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px; /* Puedes ajustar el padding según tu diseño */
+    background-color: #fff; /* Puedes cambiar el color de fondo */
+    border-radius: 8px; /* Igualar al valor de --card-border-radius */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Igualar al valor de --box-shadow */
+    margin-top: 8vh;
+    min-height: 80vh;
+}
+
+#promo .title-promo {
+    font-size: 25px;
+    font-weight: 500;
+    position: relative;
+}
+
+#promo .title::before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 3px;
+    width: 30px;
+    background-color: var(--color-white);; /* Cambiar al color deseado */
+    margin-top: 5px; /* Ajustar según el diseño */
+}
+
+#promo form .general1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#promo form .label {
+    margin-bottom: 8px;
+}
+
+#promo form .input,
+#promo form .textarea,
+#promo form .select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid #DAA520;
+}
+
+#promo form .button {
+    background-color: transparent;
+    height: 4rem;
+    width: 100%;
+    border: 2px dashed; /* Cambiar al color deseado */
+    color: var(--color-primary); /* Cambiar al color deseado */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin-top: 4.5rem;
+}
+
+#promo form .button div {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+#promo form .button div h3 {
+
+
+    font-weight: 600;
+}
+
 .editing {
     border-left: 2px solid var(--color-primary);
     border-right: 2px solid var(--color-primary);
@@ -1223,4 +1299,5 @@ form .days .disponibilidad {
     .right .top button span{
         font-size: 2rem;
     }
+
 }

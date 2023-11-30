@@ -1,5 +1,7 @@
 package co.edu.escuelaing.cvds.project.model;
 import jakarta.persistence.*;
+import net.bytebuddy.asm.Advice;
+
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Set;
@@ -48,8 +50,21 @@ public class Promocion {
     public Promocion() {
     }
 
+    public Promocion(String nombre,String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin,String categoria, TipoDescuento tipoDescuento, Double descuento){
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        this.categoria = categoria;
+        this.tipoDescuento = tipoDescuento;
+        this.descuento = descuento;
+    }
     public String getNombre() {
         return nombre;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public void setNombre(String nombre) {
