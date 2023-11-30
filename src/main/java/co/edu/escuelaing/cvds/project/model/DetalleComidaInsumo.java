@@ -1,10 +1,16 @@
 package co.edu.escuelaing.cvds.project.model;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 @Entity
 @Table(name = "DETALLE_COMIDA_INSUMO")
 public class DetalleComidaInsumo {
@@ -25,57 +31,4 @@ public class DetalleComidaInsumo {
     @Column(name = "cantidad")
     private int cantidad;
 
-    public DetalleComidaInsumo() {
-
-    }
-
-    public DetalleComidaInsumo( Long id, int cantidad) {
-        this.detalleInsumoId = id;
-        this.cantidad = cantidad;
-    }
-
-    public Long getId() {
-        return detalleInsumoId;
-    }
-
-    public void setId(Long id) {
-        this.detalleInsumoId = id;
-    }
-
-    public int getCantidad() {
-        return cantidad;
-    }
-
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
-    }
-
-    public Comida getComida() {
-        return comida;
-    }
-
-    public void setComida(Comida comida) {
-        this.comida = comida;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        DetalleComidaInsumo that = (DetalleComidaInsumo) o;
-        return cantidad == that.cantidad && Objects.equals(detalleInsumoId, that.detalleInsumoId);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(detalleInsumoId, cantidad);
-    }
-
-    @Override
-    public String toString() {
-        return "DetalleComidaInsumo{" +
-                "id=" + detalleInsumoId +
-                ", cantidad=" + cantidad +
-                '}';
-    }
 }

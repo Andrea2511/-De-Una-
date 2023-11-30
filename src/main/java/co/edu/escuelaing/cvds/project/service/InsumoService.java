@@ -30,8 +30,12 @@ public class InsumoService {
     }
 
     public void createInsumo(String nombre, TipoInsumos tipo, int cantidad, double precio, Date fecha) {
-        Insumo insumo = new Insumo(nombre, tipo, cantidad, precio, fecha);
-
+        Insumo insumo = new Insumo();
+        insumo.setNombre(nombre);
+        insumo.setTipo(tipo);
+        insumo.setCantidad(cantidad);
+        insumo.setPrecio(precio);
+        insumo.setFechaVencimiento(fecha);
         insumoRepository.save(insumo);
     }
 

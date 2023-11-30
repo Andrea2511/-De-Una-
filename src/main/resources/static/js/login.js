@@ -41,6 +41,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     // Verifica si hay información de redirección en la respuesta
                     if (data.redirect) {
                         console.log("Redirigiendo a:", data.redirect);
+                        document.cookie = "authToken=" + data.authToken + "; path=/";
                         window.location.href = data.redirect;
                     }
                 } else {

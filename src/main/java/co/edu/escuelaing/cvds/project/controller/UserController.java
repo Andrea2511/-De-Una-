@@ -1,4 +1,9 @@
 package co.edu.escuelaing.cvds.project.controller;
+import co.edu.escuelaing.cvds.project.model.Rol;
+import co.edu.escuelaing.cvds.project.model.Session;
+import co.edu.escuelaing.cvds.project.model.User;
+import co.edu.escuelaing.cvds.project.repository.PedidoRepository;
+import co.edu.escuelaing.cvds.project.repository.SessionRepository;
 import co.edu.escuelaing.cvds.project.service.EncriptarService;
 import co.edu.escuelaing.cvds.project.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,8 +17,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import java.time.Instant;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 //import javax.servlet.http.HttpSession; importante
 
 @Controller
@@ -21,6 +29,12 @@ public class UserController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    PedidoRepository pedidoRepository;
+
+    @Autowired
+    SessionRepository sessionRepository;
 
     @Autowired
     private EncriptarService encriptarService;
@@ -34,29 +48,33 @@ public class UserController {
     public void verificarUsuario(@RequestBody Map<String, String> credentials, HttpServletResponse response) throws IOException, NoSuchAlgorithmException {
         // Obtiene el usuario y la contraseña del cuerpo de la solicitud
         String username = credentials.get("username");
+        System.out.println("username:" + username);
         String password = credentials.get("password");
 
-        // Realiza la verificación del usuario (reemplaza esto con tu lógica de verificación real)
         boolean isUserValid = userService.credenciales(username, password);
 
 
         if (isUserValid) {
-            String rol = userService.getUser(username).getRol();
+            User user = userService.getUser(username);
+            Rol rol = user.getRol();
             Map<String, Object> responseBody = new HashMap<>();
+
+            Session session = new Session(UUID.randomUUID(), Instant.now(), user);
+            sessionRepository.save(session);
             responseBody.put("success", true);
             responseBody.put("message", "Autenticación exitosa");
+            responseBody.put("authToken", session.getToken());
 
             switch (rol) {
-                case "ADMINISTRADOR" -> responseBody.put("redirect", "/admin"); // Agrega la información de redirección
-                case "CLIENTE" -> responseBody.put("redirect", "/cliente/dashboard");
-                case "SUPERVISOR" -> responseBody.put("redirect", "/supervisor");
+                case ADMINISTRADOR -> responseBody.put("redirect", "/admin/dashboard"); // Agrega la información de redirección
+                case CLIENTE -> responseBody.put("redirect", "/cliente/dashboard");
+                case SUPERVISOR -> responseBody.put("redirect", "/supervisor");
             }
 
             response.setContentType("application/json");
             response.getWriter().write(new ObjectMapper().writeValueAsString(responseBody));
-        }  else {
-            // Usuario no autenticado, puedes devolver un código de estado diferente si lo deseas
-            // En este ejemplo, devolvemos un código de estado 401 (Unauthorized)
+        }
+        else {
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Credenciales incorrectas");
         }
     }
@@ -77,7 +95,7 @@ public class UserController {
 
             if (!isUserValid) {
                 if (!userService.verificarEmail(email)) {
-                    userService.crearUsuario(firstName, lastName, username,encriptarService.encriptar(password) ,email );
+                    userService.crearUsuario(firstName, lastName, username, encriptarService.encriptar(password) , email, Rol.CLIENTE);
                     responseBody.put("success", true);
                     responseBody.put("message", "Registro exitoso");
                     responseBody.put("redirect", "/login");
@@ -109,7 +127,7 @@ public class UserController {
 
     @RequestMapping("/cliente")
     public String redirectToCliente() {
-        // Redirige a la página específica para clientes en el ClienteController
+
         return "redirect:/cliente/dashboard";
     }
 

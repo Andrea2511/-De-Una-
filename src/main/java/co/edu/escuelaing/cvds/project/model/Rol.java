@@ -1,6 +1,7 @@
 package co.edu.escuelaing.cvds.project.model;
 
-public interface  Rol {
-
-    String getRol();
+public enum Rol {
+    ADMINISTRADOR,
+    CLIENTE,
+    SUPERVISOR
 }
