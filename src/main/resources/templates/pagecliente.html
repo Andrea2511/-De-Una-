@@ -1,10 +1,270 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Página de Empleado</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cliente</title>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/cliente.css">
 </head>
 <body>
-    <h1>Bienvenido, cliente</h1>
-    <!-- Contenido de la página de empleado -->
+<div class="container">
+    <aside>
+        <div class="top">
+            <button id="menu-btn">
+                <span class="material-icons-sharp">menu</span>
+            </button>
+            <div class="close" id="close-btn">
+                <span class="material-icons-sharp">close</span>
+            </div>
+            <div class="profile">
+                <div class="profile-photo">
+                    <img src="../static/images/menu-1.png">
+                </div>
+                <div class="info">
+                    <p>Hey, <b> Daniel</b></p>
+                    <small class="text-muted">Cliente</small>
+                </div>
+            </div>
+            <div class="cart" id="shop-btn">
+                <span class="material-icons-sharp">shopping_cart</span>
+            </div>
+        </div>
+
+        <div class="sidebar">
+
+            <div class="theme-toggler">
+                <span class="material-icons-sharp active">light_mode</span>
+                <span class="material-icons-sharp">dark_mode</span>
+            </div>
+            <a href="#" class="active">
+                <span class="material-icons-sharp">search</span>
+                <h3>Buscar</h3>
+            </a>
+            <a href="#">
+                <span class="material-icons-sharp">home</span>
+                <h3>Inicio</h3>
+            </a>
+            <a href="#">
+                <span class="material-icons-sharp">favorite</span>
+                <h3>Preferencias</h3>
+            </a>
+            <a href="#">
+                <span class="material-icons-sharp">account_circle</span>
+                <h3>Cuenta</h3>
+            </a>
+            <a href="#">
+                <span class="material-icons-sharp">flag</span>
+                <h3>PQRS</h3>
+            </a>
+            <a href="/login">
+                <span class="material-icons-sharp">logout</span>
+                <h3>Salir</h3>
+            </a>
+        </div>
+    </aside>
+
+    <main>
+
+        <div class="dashboard-banner">
+            <img src="../static/images/banner.png">
+        </div>
+
+        <h1> Tenemos esto para ti</h1>
+        <div class="dashboard-menu">
+            <a th:href="@{/cliente/fastFood}">Fast Food</a>
+            <a th:href="@{/cliente/platoPrincipal}">Principal</a>
+            <a th:href="@{/cliente/postres}">Postres</a>
+            <a th:href="@{/cliente/promociones}">Promociones</a>
+            <a th:href="@{/cliente/mejoresCalificados}">Mejor calificado</a>
+            <a href="/cliente/dashboard">Todo</a>
+        </div>
+
+        <div class="dashboard-content">
+            <!-- Loop para mostrar las tarjetas de comida -->
+            <div th:each="comida : ${comidas}" class="dashboard-card comida-card" onclick="togglePopup(this)">
+                <img class="card-image" th:src="|data:image/png;base64,${comida.ruta}|" alt="Comida Imagen">
+                <div class="card-detail">
+                    <h4 th:text="${comida.nombre}"></h4>
+                    <p th:text="${'$ ' + comida.precio}" class="precio"></p>
+                    <p class="card-time">
+                        <span class="material-icons-sharp" id="star">star</span>
+                        <span th:text="${comida.calificacion}"></span>
+                    </p>
+                </div>
+                <div class="popup" id="popup">
+                    <!-- Contenido del pop-up -->
+                    <div class="popup-content">
+                        <h1>Detalles de la comida</h1>
+                        <!-- Otros detalles o contenido del pop-up -->
+                        <h2 th:text="${comida.nombre}"></h2>
+                        <p>
+                           <h3> En esta sección, encontrarás una detallada descripción del plato que estás a punto de disfrutar.
+                            Desde los ingredientes principales hasta su preparación y sabores característicos,
+                            cada detalle se presenta para que conozcas a fondo esta exquisita especialidad culinaria.</h3>
+                        </p>
+                        <p>
+                        <h3>Ingredientes principales:</h3>
+                        </p>
+
+                        <ul>
+                            <h3>
+                            <li> > Insumo 1</li>
+                            <li> > Insumo 2</li>
+                            <li> > Insumo 3</li>
+                            <li> > Insumo 4</li>
+                            <li> > Insumo 5</li>
+                            </h3>
+                        </ul>
+
+                        <p th:text="${'$ ' + comida.precio}" class="precio-detalle"></p>
+
+                        <p class="card-time">
+                            <span class="material-icons-sharp" id="star">star</span>
+                            <span th:text="${comida.calificacion}"></span>
+                        </p>
+                    </div>
+                    <button onclick="agregarAlCarrito(this,event)" class="agregar-btn">Agregar al carrito</button>
+                    <!-- Mensaje de confirmación -->
+                    <p class="mensaje-agregado">Agregado al carrito de compras</p>
+                </div>
+            </div>
+        </div>
+
+
+    </main>
+
+    <div class="right">
+        <div class="top">
+            <div class="close" id="closeShop-btn">
+                <span class="material-icons-sharp">close</span>
+            </div>
+            <h3>Mi carrito</h3>
+        </div>
+
+        <div class="order-address">
+            <p>Dirección de entrega</p>
+            <h4>lorem ipsum dolor sit amet</h4>
+        </div>
+        <div class="order-time">
+            <small class="text-muted">30 mins</small>
+            <small class="text-muted">2 km</small>
+        </div>
+
+        <div class="order-wrapper">
+            <div class="order-card">
+                <img class="order-image" src="../static/images/main-b.jpg">
+                <div class="order-detail">
+                    <span class="car-item-detail">Papas con arroz</span>
+                    <h3>$35</h3>
+                    <div class="amount">
+                        <span class="material-icons-sharp">add</span>
+                        <input type="text" value="2" class="amount" disabled>
+                        <span class="material-icons-sharp">remove</span>
+                    </div>
+                </div>
+                <span class="btn-delete">
+                    <span class="material-icons-sharp">delete</span>
+                </span>
+            </div>
+
+            <div class="order-card">
+                <img class="order-image" src="../static/images/main-b.jpg">
+                <div class="order-detail">
+                    <span class="car-item-detail">Papas con arroz</span>
+                    <h3>$35</h3>
+                    <div class="amount">
+                        <span class="material-icons-sharp">add</span>
+                        <input type="text" value="2" class="amount" disabled>
+                        <span class="material-icons-sharp">remove</span>
+                    </div>
+
+                </div>
+                <span class="btn-delete">
+                    <span class="material-icons-sharp">delete</span>
+                </span>
+            </div>
+
+            <div class="order-card">
+                <img class="order-image" src="../static/images/main-b.jpg">
+                <div class="order-detail">
+                    <span class="car-item-detail">Papas con arroz</span>
+                    <h3>$35</h3>
+                    <div class="amount">
+                        <span class="material-icons-sharp">add</span>
+                        <input type="text" value="2" class="amount" disabled>
+                        <span class="material-icons-sharp">remove</span>
+                    </div>
+
+                </div>
+                <span class="btn-delete">
+                    <span class="material-icons-sharp">delete</span>
+                </span>
+            </div>
+        </div>
+
+        <hr class="divider">
+        <div class="order-total">
+            <p>Subtotal <span>$156</span></p>
+            <p>IVA <span>$15.6</span></p>
+            <p>Domicilio <span>$3</span></p>
+
+            <div class="order-promo">
+                <input class="input-promo" type="text" placeholder="Código">
+                <button class="button-promo">Buscar promo</button>
+            </div>
+            <hr class="divider">
+            <p>Total <span>$174.6</span></p>
+        </div>
+
+        <button id="btnPagar" class="checkout">
+            Pagar
+        </button>
+</div>
+
+<script>
+    function mostrarPopup(event) {
+        var popup = document.getElementById('popup');
+        popup.style.display = 'block';
+        event.stopPropagation();
+    }
+
+    function cerrarPopup(event) {
+        var popup = document.getElementById('popup');
+        popup.style.display = 'none';
+        event.stopPropagation()
+    }
+
+    function agregarAlCarrito(btn,event) {
+        mostrarPopup(event)
+        const mensaje = btn.nextElementSibling; // El hermano siguiente del botón es el mensaje
+        mensaje.style.display = 'block';
+
+        // Ocultar el mensaje después de unos segundos
+        setTimeout(() => {
+            mensaje.style.display = 'none';
+        }, 3000); // 3000 milisegundos = 3 segundos
+    }
+
+    function togglePopup(container) {
+        const popup = container.querySelector('.popup');
+        popup.style.display = (popup.style.display === 'none' || popup.style.display === '') ? 'block' : 'none';
+    }
+
+    document.getElementById('btnPagar').addEventListener('click', function () {
+        // Abre una nueva ventana o pestaña para realizar el pago
+        var pagoWindow = window.open('', '_blank');
+
+        // Aquí puedes agregar lógica para realizar el pago con saldo y tarjetas
+        // Por ejemplo, puedes redirigir a una página de pago o mostrar un formulario de pago en la nueva ventana
+
+        // Ejemplo de redirección a una página de pago (reemplaza la URL con la correcta)
+        pagoWindow.location.href = '/pago/formularioPago';
+    });
+</script>
+<script src="../static/js/cliente.js"></script>
+<script src=" https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </body>
 </html>

@@ -26,6 +26,7 @@ public class DetalleComidaInsumo {
     private int cantidad;
 
     public DetalleComidaInsumo() {
+
     }
 
     public DetalleComidaInsumo( Long id, int cantidad) {
@@ -47,6 +48,14 @@ public class DetalleComidaInsumo {
 
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
+    }
+
+    public Comida getComida() {
+        return comida;
+    }
+
+    public void setComida(Comida comida) {
+        this.comida = comida;
     }
 
     @Override

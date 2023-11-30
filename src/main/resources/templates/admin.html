@@ -1,10 +1,593 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <script  th:src="@{../static/js/admin.js}"></script>
+    <script src=" https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/admin.css">
 </head>
 <body>
+    <div class="container">
+        <aside>
+            <div class="top">
+                <div class="logo">
+                <img src="../static/images/logo.png" alt="">
+                </div>
+                <div class="close" id="close-btn">
+                    <span class="material-icons-sharp">close</span>
+                </div>
+            </div>
+            <div class="sidebar">
+                <a class="dashboard" href="/admin/dashboard" >
+                    <span class="material-icons-sharp">insights</span>
+                    <h3>Reporte</h3>
+                </a>
+                <a class="pqrs" href="/admin/pqrs">
+                    <span class="material-icons-sharp">mail_outline</span>
+                    <h3>PQRS</h3>
+                    <span class="message-count">26</span>
+                </a>
+                <a class="inventario" href="/admin/inventario">
+                    <span class="material-icons-sharp">receipt_long</span>
+                    <h3>Inventario</h3>
+                </a>
+                <a class="menu" href="/admin/menu">
+                    <span class="material-icons-sharp">inventory</span>
+                    <h3>Menú</h3>
+                </a>
+                <a class="promo" href="/admin/guardarPromociones">
+                    <span class="material-icons-sharp">monetization_on</span>
+                    <h3>Añadir promociones</h3>
+                </a>
+                <a class="addP" href="/admin/guardarProducto">
+                    <span class="material-icons-sharp">add</span>
+                    <h3>Añadir productos</h3>
+                </a>
+                <a class="addI" href="/admin/guardarInsumo">
+                    <span class="material-icons-sharp">add</span>
+                    <h3>Añadir insumos</h3>
+                </a>
 
+                <a href="/login" id="add-insumos-btn">
+                    <span class="material-icons-sharp">logout</span>
+                    <h3>Salir</h3>
+                </a>
+            </div>
+        </aside>
+
+        <main>
+            <h1>Reporte</h1>
+
+            <div class="date">
+                <input type="date">
+            </div>
+
+            <div class="insights">
+                <div class="sales">
+                    <span class="material-icons-sharp">analytics</span>
+                    <div class="middle">
+                        <div class="left">
+                            <h3>Ventas Totales</h3>
+                            <h1>$25,024</h1>
+                        </div>
+                        <div class="progress">
+                            <svg>
+                                <circle cx="38" cy="38" r="36"></circle>
+                            </svg>
+                            <div class="number">
+                                <p>81%</p>
+                            </div>
+                        </div>
+                    </div>
+                    <small class="text-muted">Últimas 24 Horas</small>
+                </div>
+
+                <div class="expenses">
+                    <span class="material-icons-sharp">bar_chart</span>
+                    <div class="middle">
+                        <div class="left">
+                            <h3>Gastos Totales</h3>
+                            <h1>$25,024</h1>
+                        </div>
+                        <div class="progress">
+                            <svg>
+                                <circle cx="38" cy="38" r="36"></circle>
+                            </svg>
+                            <div class="number">
+                                <p>81%</p>
+                            </div>
+                        </div>
+                    </div>
+                    <small class="text-muted">Últimas 24 Horas</small>
+                </div>
+
+                <div class="income">
+                    <span class="material-icons-sharp">stacked_line_chart</span>
+                    <div class="middle">
+                        <div class="left">
+                            <h3>Ingresos Recibidos</h3>
+                            <h1>$25,024</h1>
+                        </div>
+                        <div class="progress">
+                            <svg>
+                                <circle cx="38" cy="38" r="36"></circle>
+                            </svg>
+                            <div class="number">
+                                <p>81%</p>
+                            </div>
+                        </div>
+                    </div>
+                    <small class="text-muted">Últimas 24 Horas</small>
+                </div>
+            </div>
+
+            <div class="menu-opinions">
+                <h2>Menu del día</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Cantidad</th>
+                            <th>Valor</th>
+                            <th>Calificaciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Pan con queso</td>
+                            <td>20</td>
+                            <td>2000</td>
+                            <td class="danger">2.0</td>
+                            <td class="primary">Opiniones</td>
+                        </tr>
+                        <tr>
+                            <td>Pan con queso</td>
+                            <td>20</td>
+                            <td>2000</td>
+                            <td class="danger">2.0</td>
+                            <td class="primary">Opiniones</td>
+                        </tr>
+                        <tr>
+                            <td>Pan con queso</td>
+                            <td>20</td>
+                            <td>2000</td>
+                            <td class="danger">2.0</td>
+                            <td class="primary">Opiniones</td>
+                        </tr>
+                        <tr>
+                            <td>Pan con queso</td>
+                            <td>20</td>
+                            <td>2000</td>
+                            <td class="danger">2.0</td>
+                            <td class="primary">Opiniones</td>
+                        </tr>
+                        <tr>
+                            <td>Pan con queso</td>
+                            <td>20</td>
+                            <td>2000</td>
+                            <td class="danger">2.0</td>
+                            <td class="primary">Opiniones</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <a href="#">Mostrar Todo</a>
+            </div>
+
+        </main>
+
+        <div id="inventory">
+            <h1>Inventario</h1>
+            <div class="status-containers">
+                <div class="status-container" id="vencimiento-container">
+                    <h3>Productos Por Vencerse</h3>
+                    <span id="vencimiento-count">0</span>
+                </div>
+                <div class="status-container" id="agotamiento-container">
+                    <h3>Insumos Por Agotarse</h3>
+                    <span id="agotamiento-count">0</span>
+                </div>
+                <div class="status-container" id="agotados-container">
+                    <h3>Insumos Agotados</h3>
+                    <span id="agotados-count">0</span>
+                </div>
+            </div>
+
+            <div id="tipoInsumoButtons">
+                <label for="tipoInsumoSelect">Selecciona Tipo de Insumo:</label>
+                <select id="tipoInsumoSelect" onchange="redireccionar(this.value)">
+                    <option value="todos">Todos</option>
+                    <option value="CARNES">Carnes</option>
+                    <option value="LACTEOS">Productos lácteos</option>
+                    <option value="FRUTAS">Frutas</option>
+                    <option value="VERDURAS">Verduras y hortalizas</option>
+                    <option value="CEREALES">Cereales, azúcares y derivados</option>
+                    <option value="ACEITES">Aceites y grasas</option>
+                    <option value="PAPAS">Papas y legumbres</option>
+                    <option value="FRUTOSECO">Frutos secos</option>
+                </select>
+            </div>
+            <hr class="separator-line">
+            <table id="tablaInsumos">
+                <thead>
+                <tr>
+                    <th><span class="icon-tag material-icons-sharp">tag</span>ID</th>
+                    <th>Nombre</th>
+                    <th>Cantidad</th>
+                    <th><span class="icon-payment material-icons-sharp">payment</span>Precio</th>
+                    <th><span class="icon-calendar material-icons-sharp">calendar_today</span>Fecha de Vencimiento</th>
+                    <th class="danger">Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="insumo : ${insumos}" th:attr="data-insumo-id=${insumo.insumoId}">
+                    <td th:text="${insumo.insumoId}"></td>
+                    <td class="editable" contenteditable="false" th:text="${insumo.nombre}" data-nombre-campo="nombre" data-comida-id="${comida.comidaId}"></td>
+                    <td class="editable" contenteditable="false" th:text="${insumo.cantidad}" data-nombre-campo="cantidad"></td>
+                    <td class="editable" contenteditable="false" th:text="${insumo.precio}" data-nombre-campo="precio"></td>
+                    <td class="editable" contenteditable="false" th:text="${insumo.fechaVencimiento}" data-nombre-campo="fecha"></td>
+                    <td>
+                        <button class="editar-btn-I"><span class="icon-edit material-icons-sharp">edit</span></button>
+                        <button class="guardar-btnI"><span class="icon-saveIn material-icons-sharp">save</span></button>
+                        <button class="borrar-btn-I"><span class="icon-delete material-icons-sharp">delete</span></button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div id="paginacion">
+                <button id="anteriorBtn" onclick="cambiarPagina(-1)"><span class="icon-payment material-icons-sharp">navigate_before</span></button>
+                <span id="paginaActual">1</span>
+                <button id="siguienteBtn" onclick="cambiarPagina(1)"><span class="icon-payment material-icons-sharp">navigate_next</span></button>
+            </div>
+        </div>
+        <div id = "promo" class="general">
+            <div class="title-promo">Añadir Promoción</div>
+            <form action="/admin/guardarPromociones" method="post">
+                <label for="nombre" class="label">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" class="input"><br>
+
+                <label for="descripcion" class="label">Descripción:</label>
+                <textarea id="descripcion" name="descripcion" class="input"></textarea><br>
+
+                <label for="descuento" class="label">Descuento:</label>
+                <input type="number" id="descuento" name="descuento" class="input"><br>
+
+                <label for="fechaInicio" class="label">Fecha de inicio:</label>
+                <input type="datetime-local" id="fechaInicio" name="fechaInicio" class="input"><br>
+
+                <label for="fechaFin" class="label">Fecha de fin:</label>
+                <input type="datetime-local" id="fechaFin" name="fechaFin" class="input"><br>
+
+                <label for="tipoDescuento" class="label">Tipo de Descuento:</label>
+                <select id="tipoDescuento" name="tipoDescuento" class="select">
+                    <option value="PORCENTAJE" class="textarea">Porcentaje</option>
+                    <option value="COMPRA_MINIMA" class="textarea">Compra Mínima</option>
+                    <option value="CANTIDAD" class="textarea">Cantidad</option>
+                    <option value="TEMPORADA_EVENTO" class="textarea">Temporada/Evento</option>
+                </select><br>
+
+                <label for="categoria" class="label">Categoría:</label>
+                <select id="categoria" name="categoria" class="select">
+                    <option value="FAST_FOOD" class="textarea">Fast Food</option>
+                    <option value="POSTRE" class="textarea">Postre</option>
+                    <option value="PLATO_PRINCIPAL" class="textarea">Plato Principal</option>
+                </select><br>
+
+                <button type="submit" class="button">Guardar Promoción</button>
+            </form>
+            <hr class="separator-line">
+            <table id = tablaPromociones">
+                <thead>
+                <tr>
+                    <th><span class="icon-tag material-icons-sharp">tag</span>ID</th>
+                    <th>Nombre de la Promoción</th>
+                    <th>Descripción</th>
+                    <th>Fecha de Inicio</th>
+                    <th>Fecha de Fin</th>
+                    <th>Categoría</th>
+                    <th>Tipo de Descuento</th>
+                    <th>Descuento</th>
+                </tr>
+                </thead>
+                <tbody id="cuerpoTablaPromocion">
+                <tr th:each="promocion : ${promociones}" th:attr="data-promocion-id=${promocion.id}">
+                    <td th:text="${promocion.id}"></td>
+                    <td th:text="${promocion.nombre}"></td>
+                    <td th:text="${promocion.descripcion}"></td>
+                    <td th:text="${#dates.format(promocion.fechaInicio, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                    <td th:text="${#dates.format(promocion.fechaFin, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                    <td th:text="${promocion.categoria}"></td>
+                    <td th:text="${promocion.tipoDescuento}"></td>
+                    <td th:text="${promocion.descuento}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="insumos-form">
+            <div class="title">Añadir Insumo</div>
+            <form action="/admin/guardarInsumo" method="post">
+                <div class="food-detail">
+                    <div class="input-box">
+                        <span class="details">Nombre</span>
+                        <input type="text" placeholder="Ingresa el nombre del insumo" id="nombres" name="nombre" required>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Tipo</span>
+                        <select id="tipo" name="tipo" required>
+                            <option value="CARNES">Carnes</option>
+                            <option value="LACTEOS">Productos lacteos</option>
+                            <option value="FRUTAS">Frutas</option>
+                            <option value="VERDURAS">Verduras y hortalizas</option>
+                            <option value="CEREALES">Cereales, azucares y derivados</option>
+                            <option value="ACEITES">Aceites y grasas</option>
+                            <option value="LEGUMBRES">Papas y legumbres</option>
+                            <option value="FRUTOSECO">Frutos secos</option>
+                        </select>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Cantidad</span>
+                        <label for="cantidad"></label><input type="text" placeholder="Ingresa el stock" id="cantidad" name="cantidad" required>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Precio</span>
+                        <label for="precio"></label><input type="number" placeholder="Ingresa el costo" id="precio" name="precio" required>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Fecha de Vencimiento</span>
+                        <label for="fecha-vencimiento"></label><input type="date" id="fecha-vencimiento" name="fechaVencimiento" required>
+                    </div>
+                </div>
+                <button type="submit" class="add-insumo">
+                    <div>
+                        <span class="material-icons-sharp active">add</span>
+                        <h3>Añadir Insumo</h3>
+                    </div>
+                </button>
+            </form>
+        </div>
+
+        <div id="menu">
+            <h1>Menú Semanal</h1>
+
+            <div class="status-containers">
+                <div class="status-container" id="buenos-container">
+                    <h3>Platos Destacados </h3>
+                    <span id="buenos-count">0</span>
+                </div>
+                <div class="status-container" id="regular-container">
+                    <h3>Platos Recomendados</h3>
+                    <span id="regular-count">0</span>
+                </div>
+                <div class="status-container" id="malos-container">
+                    <h3>Platos Mejorables</h3>
+                    <span id="malos-count">0</span>
+                </div>
+            </div>
+
+            <div id="tipoComidaButtons">
+                <label for="tipoComidaSelect">Selecciona Tipo de Insumo:</label>
+                <select id="tipoComidaSelect">
+                    <option value="TODO">Todos</option>
+                    <option value="PLATO_PRINCIPAL">Plato Principal</option>
+                    <option value="FAST_FOOD">Fast Food</option>
+                    <option value="POSTRE">Postre</option>
+                </select>
+            </div>
+            <hr class="separator-line">
+            <table id="tablaComidas">
+                <thead>
+                <tr>
+                    <th><span class="icon-tag material-icons-sharp">tag</span>ID</th>
+                    <th>Nombre del Plato</th>
+                    <th><span class="icon-payment material-icons-sharp">payment</span>Precio</th>
+                    <th>calificacion</th>
+                    <th>Cantidad</th>
+                    <th class="danger">Acciones</th>
+                </tr>
+                </thead>
+                <tbody id="cuerpoTablaComida">
+                <tr th:each="comida : ${comidas}" th:attr="data-comida-id=${comida.comidaId}">
+                    <td th:text="${comida.comidaId}"></td>
+                    <td class="editable" contenteditable="false" th:text="${comida.nombre}" data-nombre-campo="nombre" data-comida-id="${comida.comidaId}"></td>
+                    <td class="editable" contenteditable="false" data-nombre-campo="precio" th:text="${comida.precio}"></td>
+                    <td th:text="${comida.calificacion}"></td>
+                    <td class="editable" contenteditable="false" data-nombre-campo="cantidad" th:text="${comida.cantidad}"></td>
+                    <td>
+                        <button class="editar-btn"><span class="icon-edit material-icons-sharp">edit</span></button>
+                        <button class="guardar-btn "><span class="icon-save material-icons-sharp">save</span></button>
+                        <button class="borrar-btn"><span class="icon-delete material-icons-sharp">delete</span></button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div id="paginacionComida">
+                <button id="anteriorBtnComida" onclick="cambiarPagina(-1)"><span class="icon-payment material-icons-sharp">navigate_before</span></button>
+                <span id="paginaActualComida">1</span>
+                <button id="siguienteBtnComida" onclick="cambiarPagina(1)"><span class="icon-payment material-icons-sharp">navigate_next</span></button>
+            </div>
+        </div>
+
+        <div id="producto-form">
+
+            <div class="title">Añadir Comida</div>
+
+            <form action="/admin/guardarProducto" method="post" enctype="multipart/form-data">
+
+                <div class="food-detail">
+                    <div class="input-box">
+                        <span class="details">Nombre</span>
+                        <input type="text" name="nombre" placeholder="Ingresa el nombre del plato" required>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Precio</span>
+                        <input type="text" name="precio" placeholder="Ingresa el precio" required>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Cantidad</span>
+                        <input type="text" name="cantidad" placeholder="Ingresa el stock" required>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Tipo de comida</span>
+                        <select id="tipoComida" name="tipoComida" required>
+                            <option value="POSTRE">Postre</option>
+                            <option value="PLATO_PRINCIPAL">Plato Principal</option>
+                            <option value="FAST_FOOD">Fast Food</option>
+                        </select>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Seleccionar Imagen</span>
+                        <input type="file" id="imagen" name="imagen" accept="image/*" required>
+                    </div>
+                </div>
+                <div class="days">
+                    <span class="days-title">Días Disponibles</span>
+                    <div class="disponibilidad">
+                        <p>Lunes</p>
+                        <input type="checkbox" id="lunes" name="dias[]">
+                        <label for="lunes"></label>
+                        <input type="hidden" name="lunes" value="1">
+
+                        <p>Martes</p>
+                        <input type="checkbox" id="martes" name="dias[]">
+                        <label for="martes"></label>
+                        <input type="hidden" name="martes" value="1">
+
+                        <p>Miercoles</p>
+                        <input type="checkbox" id="miercoles" name="dias[]">
+                        <label for="miercoles"></label>
+                        <input type="hidden" name="miercoles" value="1">
+
+                        <p>Jueves</p>
+                        <input type="checkbox" id="jueves" name="dias[]">
+                        <label for="jueves"></label>
+                        <input type="hidden" name="jueves" value="1">
+
+                        <p>Viernes</p>
+                        <input type="checkbox" id="viernes" name="dias[]">
+                        <label for="viernes"></label>
+                        <input type="hidden" name="viernes" value="1">
+
+                        <p>Sabado</p>
+                        <input type="checkbox" id="sabado" name="dias[]">
+                        <label for="sabado"></label>
+                        <input type="hidden" name="sabado" value="1">
+                    </div>
+                </div>
+
+                <button type="submit" class="add-product">
+                    <div>
+                        <span class="material-icons-sharp active">add</span>
+                        <h3>Añadir Producto</h3>
+                    </div>
+                </button>
+            </form>
+        </div>
+
+
+
+        <div class="right">
+            <div class="top">
+                <button id="menu-btn">
+                    <span class="material-icons-sharp">menu</span>
+                </button>
+                <div class="theme-toggler">
+                    <span class="material-icons-sharp active">light_mode</span>
+                    <span class="material-icons-sharp">dark_mode</span>
+                </div>
+                <div class="profile">
+                    <div class="info">
+                        <p>Hey, <b> Daniel</b></p>
+                        <small class="text-muted">Admin</small>
+                    </div>
+                    <div class="profile-photo">
+                        <img src="../static/images/menu-1.png">
+                    </div>
+                </div>
+            </div>
+
+            <div class="recent-updates">
+                <h2>Actualizaciones recientes</h2>
+                <div class="updates">
+                    <div class="update">
+                        <div class="profile-photo">
+                            <img src="../static/images/menu-1.png">
+                        </div>
+                        <div class="message">
+                            <p><b>Carolina Medina</b> El domiciliario se comió
+                            mi pechuga y me entregó los huesos</p>
+                            <small class="text-muted">2 minutos</small>
+                        </div>
+                    </div>
+                    <div class="update">
+                        <div class="profile-photo">
+                            <img src="../static/images/menu-1.png">
+                        </div>
+                        <div class="message">
+                            <p><b>Carolina Medina</b> Habia un pelo en mi sopa
+                            y mi jugo.</p>
+                            <small class="text-muted">2 minutos</small>
+                        </div>
+                    </div>
+                    <div class="update">
+                        <div class="profile-photo">
+                            <img src="../static/images/menu-1.png">
+                        </div>
+                        <div class="message">
+                            <p><b>Carolina Medina</b> Estaba rico, pero podria
+                            estar mejor.</p>
+                            <small class="text-muted">2 minutos</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sales-analytics">
+                <h2>Anáslisis de ventas</h2>
+                <div class="item online">
+                    <div class="icon">
+                        <span class="material-icons-sharp active">shopping_cart</span>
+                    </div>
+                    <div class="info">
+                        <h3>PEDIDOS EXITOSOS</h3>
+                        <small class="text-muted">Últimas 24 Horas</small>
+                    </div>
+                    <h5 class="success">+39%</h5>
+                    <h3>3999</h3>
+                </div>
+                <div class="item failed">
+                    <div class="icon">
+                        <span class="material-icons-sharp active">money_off</span>
+                    </div>
+                    <div class="info">
+                        <h3>PEDIDOS FALLIDOS</h3>
+                        <small class="text-muted">Últimas 24 Horas</small>
+                    </div>
+                    <h5 class="danger">+39%</h5>
+                    <h3>3999</h3>
+                </div>
+                <div class="item customers">
+                    <div class="icon">
+                        <span class="material-icons-sharp active">person</span>
+                    </div>
+                    <div class="info">
+                        <h3>NUEVOS CLIENTES</h3>
+                        <small class="text-muted">Últimas 24 Horas</small>
+                    </div>
+                    <h5 class="success">+39%</h5>
+                    <h3>399</h3>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <script src="../static/js/admin.js"></script>
 </body>
 </html>
