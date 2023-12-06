@@ -1,67 +1,58 @@
 package co.edu.escuelaing.cvds.project;
+
 import co.edu.escuelaing.cvds.project.model.Categoria;
 import co.edu.escuelaing.cvds.project.model.Comida;
-import co.edu.escuelaing.cvds.project.model.Promocion;
-import co.edu.escuelaing.cvds.project.model.TipoDescuento;
 import co.edu.escuelaing.cvds.project.repository.ComidaRepository;
+import co.edu.escuelaing.cvds.project.repository.InsumoRepository;
+import co.edu.escuelaing.cvds.project.repository.SessionRepository;
+import co.edu.escuelaing.cvds.project.repository.UserRepository;
 import co.edu.escuelaing.cvds.project.repository.PromocionRepository;
+import co.edu.escuelaing.cvds.project.service.UserService;
+import co.edu.escuelaing.cvds.project.service.EncriptarService;
 import co.edu.escuelaing.cvds.project.service.ComidaService;
+import co.edu.escuelaing.cvds.project.service.InsumoService;
 import co.edu.escuelaing.cvds.project.service.PromocionService;
-import org.junit.Before;
-import org.junit.Test;
-
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import co.edu.escuelaing.cvds.project.model.Insumo;
+import co.edu.escuelaing.cvds.project.model.TipoInsumos;
 
-
-import java.time.LocalDateTime;
 import java.util.*;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-import co.edu.escuelaing.cvds.project.model.*;
-import co.edu.escuelaing.cvds.project.model.DetalleComidaInsumo;
-import co.edu.escuelaing.cvds.project.repository.InsumoRepository;
-import co.edu.escuelaing.cvds.project.repository.UserRepository;
-
-import co.edu.escuelaing.cvds.project.service.EncriptarService;
-import co.edu.escuelaing.cvds.project.service.InsumoService;
-import co.edu.escuelaing.cvds.project.service.UserService;
-
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.List;
+import co.edu.escuelaing.cvds.project.model.Rol;
+import co.edu.escuelaing.cvds.project.model.User;
+import org.mockito.junit.MockitoJUnitRunner;
+import co.edu.escuelaing.cvds.project.model.*;
+import java.time.LocalDateTime;
 
-import static org.junit.Assert.*;
 
-
-
-public class ProjectApplicationTest {
+@RunWith(MockitoJUnitRunner.class)
+class ProjectApplicationTest {
     @Mock
-    private DetalleComidaInsumo detalleComidaInsumo;
-
-    @Mock
-    private PromocionRepository promocionRepository;
-
-    @Mock
-    private ComidaRepository comidaRepository;
-
-    @Mock
-    private ComidaService comidaService;
-
-    @InjectMocks
-    private PromocionService promocionService;
-
+    private UserRepository userRepository;
 
     @Mock
     private EncriptarService encriptarService;
+
+    @Mock
+    private SessionRepository sessionRepository;
 
     @InjectMocks
     private UserService userService;
 
     @Mock
-    private UserRepository userRepository;
+    private ComidaRepository comidaRepository;
+
+    @InjectMocks
+    private ComidaService comidaService;
 
     @Mock
     private InsumoRepository insumoRepository;
@@ -69,107 +60,113 @@ public class ProjectApplicationTest {
     @InjectMocks
     private InsumoService insumoService;
 
-    @Before
-    public void setUp() {
-        MockitoAnnotations.initMocks(this);
+    @InjectMocks
+    private PromocionService promocionService;
+
+    @Mock
+    private PromocionRepository promocionRepository;
+
+    @Mock
+    private DetalleComidaInsumo detalleComidaInsumo;
+
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
     }
-
-    // Pruebas login en UserService
+    //TEST DE USER
     @Test
-    public void testLogin() {
-        // Arrange
-        String username = "johndoe";
-        String password = "password123";
-        //User mockUser = new Cliente();
-        //mockUser.setUsername(username);
-        //mockUser.setPassword(password);
-        //when(userRepository.findByUsername(username)).thenReturn(mockUser);
-
-        // Act
+    void login_ValidCredentials_ReturnsRole() throws NoSuchAlgorithmException {
+        String username = "testUser";
+        String password = "testPassword";
+        User expectedUser = new User();
+        expectedUser.setRol(Rol.ADMINISTRADOR);
+        expectedUser.setPassword(password); // Establecer una contraseña válida
+        // Agrega el usuario esperado al resultado del mock
+        when(userRepository.findByUsername(username)).thenReturn(expectedUser);
+        // Simula que las contraseñas coinciden
+        when(encriptarService.encriptar(password)).thenReturn(password);
         String result = userService.login(username, password);
 
-        // Assert
-        //assertEquals(mockUser.getRol(), result);
+        assertEquals(expectedUser.getRol().toString(), result);
+        // Verifica que los métodos del repositorio y del servicio de encriptación fueron llamados
+        verify(userRepository, times(1)).findByUsername(username);
+        //verify(encriptarService, times(1)).encriptar(password);
     }
 
     @Test
-    public void testLoginValidCredentials() {
-        // Arrange
-        //User mockUser = new Cliente("John", "Doe", "johndoe", "password123", "john.doe@example.com");
-        //when(userRepository.findByUsername("johndoe")).thenReturn(mockUser);
+    void login_InvalidCredentials_ReturnsNull() {
+        String username = "testUser";
+        String password = "testPassword";
+        // No agrega ningún usuario al resultado del mock (credenciales inválidas)
 
-        // Act
-        String role = userService.login("johndoe", "password123");
+        String result = userService.login(username, password);
 
-        // Assert
-        //assertEquals("CLIENTE", role);
+        assertNull(result);
+        // Verifica que el método del repositorio fue llamado
+        verify(userRepository, times(1)).findByUsername(username);
     }
 
     @Test
-    public void testLoginInvalidCredentials() {
-        // Arrange
-        when(userRepository.findByUsername("nonexistentuser")).thenReturn(null);
+    void credenciales_ValidCredentials_ReturnsTrue() throws NoSuchAlgorithmException {
+        String username = "testUser";
+        String password = "testPassword";
+        User expectedUser = new User();
+        expectedUser.setPassword(password); // Establecer una contraseña válida
+        // Agrega el usuario esperado al resultado del mock
+        when(userRepository.findByUsername(username)).thenReturn(expectedUser);
+        // Simula que las contraseñas coinciden
+        when(encriptarService.encriptar(password)).thenReturn(password);
 
-        // Act
-        String role = userService.login("nonexistentuser", "invalidpassword");
+        boolean result = userService.credenciales(username, password);
 
-        // Assert
-        assertNull(role);
+        assertTrue(result);
+        // Verifica que los métodos del repositorio y del servicio de encriptación fueron llamados
+        verify(userRepository, times(1)).findByUsername(username);
+        verify(encriptarService, times(1)).encriptar(password);
     }
 
     @Test
-    public void testCredencialesValidCredentials() throws NoSuchAlgorithmException {
-        // Arrange
-        //User mockUser = new Cliente("Jane", "Doe", "janedoe", "password456", "jane.doe@example.com");
-       // when(userRepository.findByUsername("janedoe")).thenReturn(mockUser);
+    void credenciales_InvalidCredentials_ReturnsFalse() throws NoSuchAlgorithmException {
+        String username = "testUser";
+        String password = "testPassword";
+        // No agrega ningún usuario al resultado del mock (credenciales inválidas)
 
-        // Act
-        boolean isValid = userService.credenciales("janedoe", "password456");
+        boolean result = userService.credenciales(username, password);
 
-        // Assert
-        assertFalse(isValid);
+        assertFalse(result);
+        // Verifica que el método del repositorio fue llamado
+        verify(userRepository, times(1)).findByUsername(username);
     }
 
     @Test
-    public void testCredencialesInvalidCredentials() throws NoSuchAlgorithmException {
-        // Arrange
-        when(userRepository.findByUsername("nonexistentuser")).thenReturn(null);
+    void getUser_ValidUsername_ReturnsUser() {
+        String username = "testUser";
+        User expectedUser = new User();
+        // Agrega el usuario esperado al resultado del mock
+        when(userRepository.findByUsername(username)).thenReturn(expectedUser);
 
-        // Act
-        boolean isValid = userService.credenciales("nonexistentuser", "invalidpassword");
+        User result = userService.getUser(username);
 
-        // Assert
-        assertFalse(isValid);
-    }
-    @Test
-    public void testEncriptarPassword() throws NoSuchAlgorithmException {
-        // Arrange
-        String originalPassword = "password123";
-        String hashedPassword = "hashedPassword123";
-        when(encriptarService.encriptar(originalPassword)).thenReturn(hashedPassword);
-
-        // Act
-        String result = encriptarService.encriptar(originalPassword);
-
-        // Assert
-        assertEquals(hashedPassword, result);
+        assertEquals(expectedUser, result);
+        // Verifica que el método del repositorio fue llamado
+        verify(userRepository, times(1)).findByUsername(username);
     }
 
     @Test
-    public void testCrearUsuario() {
-        // Arrange
+    void crearUsuario() {
         String firstName = "John";
         String lastName = "Doe";
         String username = "johndoe";
         String password = "password123";
         String email = "john.doe@example.com";
+        Rol rol = Rol.CLIENTE;
 
-        // Act
-        //userService.crearUsuario(firstName, lastName, username, password, email);
+        userService.crearUsuario(firstName, lastName, username, password, email, rol);
 
-        // Assert
-        //verify(userRepository, times(1)).save(any(Cliente.class)); // Ajusta según la implementación real
+        // Verifica que el método del repositorio fue llamado con los parámetros correctos
+        verify(userRepository, times(1)).save(any(User.class));
     }
+
 
     // Pruebas InsumoService
     @Test
