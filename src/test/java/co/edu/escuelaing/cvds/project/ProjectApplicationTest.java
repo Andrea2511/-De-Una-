@@ -167,7 +167,6 @@ class ProjectApplicationTest {
         verify(userRepository, times(1)).save(any(User.class));
     }
 
-
     // Pruebas InsumoService
     @Test
     void getAllInsumos() {
@@ -209,34 +208,45 @@ class ProjectApplicationTest {
         // Verifica que el método del repositorio fue llamado con los parámetros correctos
         verify(insumoRepository, times(1)).save(any(Insumo.class));
     }
-
-
-    // Prueba para el método eliminarComida en ComidaService
+    //TEST COMIDA
     @Test
-    public void testEliminarComida() {
-        // Arrange
-        Long comidaId = 1L;
-        Comida mockComida = new Comida();
-        when(comidaRepository.findById(comidaId)).thenReturn(java.util.Optional.ofNullable(mockComida));
-
-        // Act
-        comidaService.eliminarComida(comidaId);
-
-        // Assert
-        //verify(comidaRepository, times(1)).delete(mockComida);
-    }
-    @Test
-    public void testObtenerComidasPorCategoria() {
-        // Arrange
+    void obtenerComidasPorCategoria() {
         Categoria categoria = Categoria.PLATO_PRINCIPAL;
-        ArrayList<Comida> mockComidas = new ArrayList<>();
-        when(comidaRepository.findByCategoriaOrderByNombre(categoria)).thenReturn(mockComidas);
+        ArrayList<Comida> expectedComidas = new ArrayList<>();
+        // Agrega las comidas esperadas al resultado del mock
+        when(comidaRepository.findByCategoriaOrderByNombre(categoria)).thenReturn(expectedComidas);
 
-        // Act
-        List<Comida> result = comidaService.obtenerComidasPorCategoria(categoria);
+        ArrayList<Comida> result = comidaService.obtenerComidasPorCategoria(categoria);
 
-        // Assert
-        //assertSame(mockComidas, result);
+        assertEquals(expectedComidas, result);
+        // Verifica que el método del repositorio fue llamado
+        verify(comidaRepository, times(1)).findByCategoriaOrderByNombre(categoria);
+    }
+
+    @Test
+    void obtenerMejoresCalificados() {
+        ArrayList<Comida> expectedComidas = new ArrayList<>();
+        // Agrega las comidas esperadas al resultado del mock
+        when(comidaRepository.findTop5ByOrderByCalificacionDesc()).thenReturn(expectedComidas);
+
+        ArrayList<Comida> result = comidaService.obtenerMejoresCalificados();
+
+        assertEquals(expectedComidas, result);
+        // Verifica que el método del repositorio fue llamado
+        verify(comidaRepository, times(1)).findTop5ByOrderByCalificacionDesc();
+    }
+
+    @Test
+    void obtenerPromociones() {
+        ArrayList<Comida> expectedComidas = new ArrayList<>();
+        // Agrega las comidas esperadas al resultado del mock
+        when(comidaRepository.findByPromocionIsNotNull()).thenReturn(expectedComidas);
+
+        ArrayList<Comida> result = comidaService.obtenerPromociones();
+
+        assertEquals(expectedComidas, result);
+        // Verifica que el método del repositorio fue llamado
+        verify(comidaRepository, times(1)).findByPromocionIsNotNull();
     }
 
     @Test
