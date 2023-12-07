@@ -20,24 +20,28 @@ public class LineaPedidoService {
     private ComidaRepository comidaRepository;
 
     public LineaPedido crearLineaPedido(Pedido pedido, String bebida, String idComida, String[] ingredientes) {
-
         LineaPedido lineaPedido = new LineaPedido();
 
         long idComidaLong = Long.parseLong(idComida);
         Comida comida = obtenerComidaPorId(idComidaLong);
 
-        lineaPedido.setBebida(bebida);
-        lineaPedido.setComida(comida);
-        lineaPedido.setCantidad(1);
-        lineaPedido.setTotal(comida.getPrecio() * lineaPedido.getCantidad());
-        lineaPedido.setIngredientes(concatenarIngredientes(ingredientes));
+        if (comida != null) {  // Verificar si la comida no es null
+            lineaPedido.setBebida(bebida);
+            lineaPedido.setComida(comida);
+            lineaPedido.setCantidad(1);
+            lineaPedido.setTotal(comida.getPrecio() * lineaPedido.getCantidad());
+            lineaPedido.setIngredientes(concatenarIngredientes(ingredientes));
 
-        // Asignar la línea de pedido al pedido en proceso
-        lineaPedido.setPedido(pedido);
+            // Asignar la línea de pedido al pedido en proceso
+            lineaPedido.setPedido(pedido);
 
-        // Guardar la línea de pedido
-        lineaPedidoRepository.save(lineaPedido);
-        return lineaPedido;
+            // Guardar la línea de pedido
+            lineaPedidoRepository.save(lineaPedido);
+            return lineaPedido;
+        } else {
+            // Manejar el caso donde la comida no se encuentra
+            return null;
+        }
     }
 
     private Comida obtenerComidaPorId(Long idComida) {

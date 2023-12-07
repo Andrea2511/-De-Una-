@@ -95,12 +95,12 @@ public class PedidoService {
         pedidoRepository.save(pedido);
     }
 
-    private double calcularSubtotal(Pedido pedido) {
+    public double calcularSubtotal(Pedido pedido) {
 
         return pedido.getLineasPedido().stream().mapToDouble(LineaPedido::getTotal).sum();
     }
 
-    private double calcularCostoTotal(double subtotal) {
+    public double calcularCostoTotal(double subtotal) {
         return subtotal + (subtotal * 0.19);
     }
 
