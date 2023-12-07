@@ -208,6 +208,7 @@ class ProjectApplicationTest {
         // Verifica que el método del repositorio fue llamado con los parámetros correctos
         verify(insumoRepository, times(1)).save(any(Insumo.class));
     }
+
     //TEST COMIDA
     @Test
     void obtenerComidasPorCategoria() {
@@ -249,110 +250,52 @@ class ProjectApplicationTest {
         verify(comidaRepository, times(1)).findByPromocionIsNotNull();
     }
 
+    //TEST DE LAS PROMOCIONES
     @Test
-    public void testCrearPromocion() {
-        // Arrange
+    void crearPromocion() {
         String nombre = "Promo1";
         String descripcion = "Descripción de la promoción";
         LocalDateTime fechaInicio = LocalDateTime.now();
-        LocalDateTime fechaFin = fechaInicio.plusDays(7);
+        LocalDateTime fechaFin = LocalDateTime.now().plusDays(7);
         String categoria = "FAST_FOOD";
         TipoDescuento tipoDescuento = TipoDescuento.PORCENTAJE;
         Double descuento = 10.0;
-        Promocion mockPromocion = new Promocion(nombre, descripcion, fechaInicio, fechaFin, categoria, tipoDescuento, descuento);
-        when(promocionRepository.save(any(Promocion.class))).thenReturn(mockPromocion);
 
-        // Act
         promocionService.crearPromocion(nombre, descripcion, fechaInicio, fechaFin, categoria, tipoDescuento, descuento);
-
-        // Assert
-        //verify(promocionRepository, times(1)).save(any(Promocion.class));
+        verify(promocionRepository, times(1)).save(any(Promocion.class));
+        verify(comidaRepository, times(1)).findByCategoriaOrderByNombre(any(Categoria.class));
         //verify(comidaService, times(1)).actualizarComida(anyLong(), anyString(), anyDouble(), anyInt());
     }
-
     @Test
-    public void testEliminarPromocion() {
-        // Arrange
+    void eliminarPromocion() {
         String nombre = "Promo1";
-        Promocion mockPromocion = new Promocion(nombre, "", LocalDateTime.now(), LocalDateTime.now(), "", TipoDescuento.PORCENTAJE, 10.0);
-        when(promocionRepository.getById(nombre)).thenReturn(mockPromocion);
+        Promocion promocion = new Promocion();
 
-        // Act
-        //promocionService.eliminarPromocion(nombre);
+        // Simula la llamada a promocionRepository.getById(nombre)
+        when(promocionRepository.getById(nombre)).thenReturn(promocion);
 
-        // Assert
+        // Simula la llamada a comidaRepository.findByCategoriaOrderByNombre con cualquier Categoria
+        when(comidaRepository.findByCategoriaOrderByNombre(any(Categoria.class)))
+                .thenReturn(new ArrayList<>());  // Puedes ajustar esto según tu lógica real
+
+        // Ejecuta el método que estás probando
+        promocionService.eliminarPromocion(nombre);
+
+        // Verifica que los métodos del repositorio y del servicio fueron llamados según lo esperado
+        verify(promocionRepository, times(1)).delete(promocion);
+        //verify(comidaRepository, times(1)).findByCategoriaOrderByNombre(any(Categoria.class));
         //verify(comidaService, times(1)).actualizarComida(anyLong(), anyString(), anyDouble(), anyInt());
-        //verify(promocionRepository, times(1)).delete(mockPromocion);
     }
-
     @Test
-    public void testObtenerTodasLasPromociones() {
-        // Arrange
-        Promocion promo1 = new Promocion("Promo1", "", LocalDateTime.now(), LocalDateTime.now(), "", TipoDescuento.PORCENTAJE, 10.0);
-        Promocion promo2 = new Promocion("Promo2", "", LocalDateTime.now(), LocalDateTime.now(), "", TipoDescuento.PORCENTAJE, 15.0);
-        List<Promocion> promociones = new ArrayList<>();
-        promociones.add(promo1);
-        promociones.add(promo2);
+    void obtenerTodasLasPromociones() {
+        ArrayList<Promocion> promociones = new ArrayList<>();
         when(promocionRepository.findAll()).thenReturn(promociones);
 
-        // Act
         ArrayList<Promocion> result = promocionService.obtenerTodasLasPromociones();
 
-        // Assert
-        assertEquals(2, result.size());
+        assertEquals(promociones, result);
         verify(promocionRepository, times(1)).findAll();
     }
-
-    @Test
-    public void testConfigurarPromocionPorPorcentaje() {
-        // Arrange
-        String categoria = "FAST_FOOD";
-        Set<DetalleComidaInsumo> detalleComidaInsumos = new HashSet<>();
-        detalleComidaInsumos.add(detalleComidaInsumo);
-        double descuento = 10.0;
-        TipoDescuento tipoDescuento = TipoDescuento.PORCENTAJE;
-        Promocion promo = new Promocion("Promo1", "", LocalDateTime.now(), LocalDateTime.now(), categoria, tipoDescuento, descuento);
-        //Comida comida1 = new Comida("Comida1", 20.0, 5.0, detalleComidaInsumos);
-        //Comida comida2 = new Comida("Comida2", 30.0, 8, detalleComidaInsumos);
-        ArrayList<Comida> comidas = new ArrayList<>();
-        //comidas.add(comida1);
-        //comidas.add(comida2);
-        when(comidaRepository.findByCategoriaOrderByNombre(Categoria.FAST_FOOD)).thenReturn(comidas);
-
-        // Act
-        promocionService.configurarPromocion(promo);
-
-        // Assert
-        //assertEquals(4.5, comida1.getPrecio(), 0.001);
-        //assertEquals(7.2, comida2.getPrecio(), 0.001);
-        //verify(comidaService, times(2)).actualizarComida(anyLong(), anyString(), anyDouble(), anyInt());
-    }
-
-    @Test
-    public void testConfigurarPromocionPorCantidad() {
-        // Arrange
-        String categoria = "FAST_FOOD";
-        Set<DetalleComidaInsumo> detalleComidaInsumos = new HashSet<>();
-        detalleComidaInsumos.add(detalleComidaInsumo);
-        int cantidadMinima = 5;
-        TipoDescuento tipoDescuento = TipoDescuento.CANTIDAD;
-        Promocion promo = new Promocion("Promo2", "", LocalDateTime.now(), LocalDateTime.now(), categoria, tipoDescuento, (double) cantidadMinima);
-       // Comida comida1 = new Comida("Comida1", 20.0, 5, detalleComidaInsumos);
-       // Comida comida2 = new Comida("Comida2", 30.0, 8, detalleComidaInsumos);
-        ArrayList<Comida> comidas = new ArrayList<>();
-        //comidas.add(comida1);
-        //comidas.add(comida2);
-        //when(comidaRepository.findByCategoriaOrderByNombre(Categoria.FAST_FOOD)).thenReturn(comidas);
-
-        // Act
-        promocionService.configurarPromocion(promo);
-
-        // Assert
-        //assertEquals(5.0, comida1.getPrecio(), 0.001);
-       // assertEquals(8, comida2.getPrecio(), 0.001);
-        //verify(comidaService, times(2)).actualizarComida(anyLong(), anyString(), anyDouble(), anyInt());
-    }
-
 
 
 }

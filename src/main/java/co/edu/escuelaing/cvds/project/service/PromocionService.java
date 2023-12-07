@@ -50,14 +50,18 @@ public class PromocionService {
     public void borrarPromocion(Promocion promocion){
         TipoDescuento tipoDescuento = promocion.getTipoDescuento();
         String categoriaString = promocion.getCategoria();
-        Categoria categoria = Categoria.valueOf(categoriaString);
-        ArrayList<Comida> comidas = comidaRepository.findByCategoriaOrderByNombre(categoria);
-        if (tipoDescuento != TipoDescuento.CANTIDAD && tipoDescuento != TipoDescuento.COMPRA_MINIMA){
-            for (Comida c : comidas) {
-                double precio = c.getPrecio();
-                double descuento = precio * (promocion.getDescuento() / 100);
-                c.setPrecio(precio + descuento);
-                comidaService.actualizarComida(c.getComidaId(),c.getNombre(),c.getPrecio(),c.getCantidad());
+
+        // Verificar si la cadena es nula antes de usarla en valueOf
+        if (categoriaString != null) {
+            Categoria categoria = Categoria.valueOf(categoriaString);
+            ArrayList<Comida> comidas = comidaRepository.findByCategoriaOrderByNombre(categoria);
+            if (tipoDescuento != TipoDescuento.CANTIDAD && tipoDescuento != TipoDescuento.COMPRA_MINIMA){
+                for (Comida c : comidas) {
+                    double precio = c.getPrecio();
+                    double descuento = precio * (promocion.getDescuento() / 100);
+                    c.setPrecio(precio + descuento);
+                    comidaService.actualizarComida(c.getComidaId(),c.getNombre(),c.getPrecio(),c.getCantidad());
+                }
             }
         }
     }
