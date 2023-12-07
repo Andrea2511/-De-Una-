@@ -170,52 +170,44 @@ class ProjectApplicationTest {
 
     // Pruebas InsumoService
     @Test
-    public void testGetAllInsumos() {
-        // Simular el repositorio para devolver una lista de insumos
-        List<Insumo> insumos = new ArrayList<>();
-        //insumos.add(new Insumo("Insumo1", TipoInsumos.CARNES, 10, 5.0, new Date()));
-        //insumos.add(new Insumo("Insumo2", TipoInsumos.FRUTAS, 20, 3.0, new Date()));
+    void getAllInsumos() {
+        ArrayList<Insumo> expectedInsumos = new ArrayList<>();
+        // Agrega los insumos esperados al resultado del mock
+        when(insumoRepository.findAll()).thenReturn(expectedInsumos);
 
-        when(insumoRepository.findAll()).thenReturn(insumos);
-
-        // Llamar al método en el servicio y verificar el resultado
         List<Insumo> result = insumoService.getAllInsumos();
 
-        //assertEquals(2, result.size());
-        //assertEquals("Insumo1", result.get(0).getNombre());
-        //assertEquals("Insumo2", result.get(1).getNombre());
-
-        // Verificar que el método del repositorio fue llamado una vez
+        assertEquals(expectedInsumos, result);
+        // Verifica que el método del repositorio fue llamado
         verify(insumoRepository, times(1)).findAll();
     }
-    /**
 
-    public void testGetInsumoById() {
-        // Simular el repositorio para devolver un insumo con ID específico
+    @Test
+    void getInsumoById() {
         Long insumoId = 1L;
-        Insumo insumo = new Insumo("Insumo1", TipoInsumos.CARNES, 10, 5.0, new Date());
-        insumo.setInsumoId(insumoId);
+        Insumo expectedInsumo = new Insumo();
+        // Agrega el insumo esperado al resultado del mock
+        when(insumoRepository.findById(insumoId)).thenReturn(Optional.of(expectedInsumo));
 
-        // Asegurarse de que findById devuelva un Optional no vacío
-        when(insumoRepository.findById(insumoId)).thenReturn(Optional.of(insumo));
-
-        // Llamar al método en el servicio y verificar el resultado
         Insumo result = insumoService.getInsumoById(insumoId);
 
-        // Verificar que el resultado no es nulo antes de acceder a sus propiedades
-        if (result != null) {
-            assertEquals("Insumo1", result.getNombre());
-        } else {
-            fail("El resultado del servicio es nulo");
-        }
-
-        // Verificar que el método del repositorio fue llamado una vez
+        assertEquals(expectedInsumo, result);
+        // Verifica que el método del repositorio fue llamado
         verify(insumoRepository, times(1)).findById(insumoId);
     }
-     **/
-    @Test
-    public void testActualizarInsumo() {
 
+    @Test
+    void createInsumo() {
+        String nombre = "InsumoTest";
+        TipoInsumos tipo = TipoInsumos.CARNES;
+        int cantidad = 10;
+        double precio = 20.0;
+        Date fecha = new Date();
+
+        insumoService.createInsumo(nombre, tipo, cantidad, precio, fecha);
+
+        // Verifica que el método del repositorio fue llamado con los parámetros correctos
+        verify(insumoRepository, times(1)).save(any(Insumo.class));
     }
 
 
