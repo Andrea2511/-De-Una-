@@ -33,9 +33,9 @@ import org.mockito.junit.MockitoJUnitRunner;
 import co.edu.escuelaing.cvds.project.model.*;
 import java.time.LocalDateTime;
 
-
 @RunWith(MockitoJUnitRunner.class)
 class ProjectApplicationTest {
+  
     @Mock
     private UserRepository userRepository;
 
@@ -205,6 +205,7 @@ class ProjectApplicationTest {
 
         insumoService.createInsumo(nombre, tipo, cantidad, precio, fecha);
 
+
         // Verifica que el método del repositorio fue llamado con los parámetros correctos
         verify(insumoRepository, times(1)).save(any(Insumo.class));
     }
@@ -274,6 +275,7 @@ class ProjectApplicationTest {
         // Simula la llamada a promocionRepository.getById(nombre)
         when(promocionRepository.getById(nombre)).thenReturn(promocion);
 
+
         // Simula la llamada a comidaRepository.findByCategoriaOrderByNombre con cualquier Categoria
         when(comidaRepository.findByCategoriaOrderByNombre(any(Categoria.class)))
                 .thenReturn(new ArrayList<>());  // Puedes ajustar esto según tu lógica real
@@ -297,6 +299,4 @@ class ProjectApplicationTest {
         verify(promocionRepository, times(1)).findAll();
     }
 
-
 }
-
