@@ -53,4 +53,8 @@ public class User {
     @JoinColumn(name = "restaurante_nit")
     private Restaurante restaurante;
 
+    @OneToOne
+    @JoinColumn(name = "tarjeta")
+    private Tarjeta tarjeta;
+
 }
