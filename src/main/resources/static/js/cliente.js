@@ -16,6 +16,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const main = document.querySelector("main");
     const aside = document.querySelector("aside");
     const instantCard = document.querySelector(".instantCard-container");
+    const cuenta = document.querySelector(".cuenta-container");
+    const pqrs = document.querySelector(".pqrs-container");
 
 
     menuBtn.addEventListener('click', () => {
@@ -45,6 +47,15 @@ document.addEventListener('DOMContentLoaded', function() {
         themeToggler.querySelector('span:nth-child(2)').classList.toggle('active');
     })
 
+    document.getElementById('open-popup').addEventListener('click', function() {
+        document.getElementById('popup-overlay').style.display = 'flex';
+
+    });
+
+    document.getElementById('close-popup').addEventListener('click', function() {
+        document.getElementById('popup-overlay').style.display = 'none';
+    });
+
     function showElement(element) {
         element.style.display = 'block';
     }
@@ -59,36 +70,47 @@ document.addEventListener('DOMContentLoaded', function() {
             hideElement(instantCard);
             showElement(aside);
             showElement(main);
+            hideElement(cuenta);
+            hideElement(pqrs);
             break;
         case "instantCard":
             document.querySelector(".instantCard").classList.add("active");
             hideElement(main);
             showElement(aside);
             instantCard.style.display = 'flex';
-
+            hideElement(cuenta);
+            hideElement(pqrs);
             break;
         case "historial":
             document.querySelector(".historial").classList.add("active");
             showElement(aside);
             hideElement(main);
             hideElement(instantCard);
+            hideElement(cuenta);
+            hideElement(pqrs);
             break;
         case "cuenta":
             document.querySelector(".cuenta").classList.add("active");
             showElement(aside);
+            cuenta.style.display = 'flex';
             hideElement(main);
             hideElement(instantCard);
+            hideElement(pqrs);
             break;
         case "pqrs":
             document.querySelector(".pqrs").classList.add("active");
             showElement(aside);
+            showElement(pqrs);
             hideElement(main);
             hideElement(instantCard);
+            hideElement(cuenta);
             break;
         default:
             hideElement(aside);
             hideElement(main);
             hideElement(instantCard);
+            hideElement(cuenta);
+            hideElement(pqrs);
             break;
     }
 
@@ -169,6 +191,26 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    document.getElementById('btnPagar').addEventListener('click', function() {
+        // Realiza una solicitud al servidor para verificar si hay un pedido pendiente
+        fetch('/cliente/verificar-pedido')
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                if (data.mensaje === "El carrito está vacio") {
+
+                    alert("El carrito está vacío. Agrega productos antes de continuar.");
+
+                } else {
+
+                    window.location.href = '/cliente/pagos';
+                }
+            })
+            .catch(error => {
+                console.error('Error al verificar el carrito:', error);
+            });
+    });
+
 });
 
 function flipCard() {
@@ -215,5 +257,23 @@ function validateForm() {
     }
 
     return true;
+}
+
+function previewImage() {
+    var preview = document.getElementById('preview');
+    var fileInput = document.getElementById('profile-pic');
+    var file = fileInput.files[0];
+
+    if (file) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            preview.innerHTML = '<img src="' + e.target.result + '" alt="Vista previa">';
+        };
+
+        reader.readAsDataURL(file);
+    } else {
+        preview.innerHTML = '';
+    }
 }
 

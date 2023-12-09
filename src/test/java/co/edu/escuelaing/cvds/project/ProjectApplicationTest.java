@@ -77,6 +77,27 @@ class ProjectApplicationTest {
     }
     //TEST DE USER
     @Test
+    public void testLogin() {
+        // Arrange
+        String username = "johndoe";
+        String password = "password123";
+        //User mockUser = new Cliente();
+        //mockUser.setUsername(username);
+        //mockUser.setPassword(password);
+        //when(userRepository.findByUsername(username)).thenReturn(mockUser);
+
+        // Act
+        String result = userService.login(username, password);
+
+        // Assert
+        //assertEquals(mockUser.getRol(), result);
+    }
+
+    @Test
+    public void testLoginValidCredentials() {
+        // Arrange
+        //User mockUser = new Cliente("John", "Doe", "johndoe", "password123", "john.doe@example.com");
+        //when(userRepository.findByUsername("johndoe")).thenReturn(mockUser);
     void login_ValidCredentials_ReturnsRole() throws NoSuchAlgorithmException {
         String username = "testUser";
         String password = "testPassword";
@@ -128,11 +149,14 @@ class ProjectApplicationTest {
     }
 
     @Test
+    public void testCredencialesValidCredentials() throws NoSuchAlgorithmException {
+        // Arrange
+        //User mockUser = new Cliente("Jane", "Doe", "janedoe", "password456", "jane.doe@example.com");
+        //when(userRepository.findByUsername("janedoe")).thenReturn(mockUser);
     void credenciales_InvalidCredentials_ReturnsFalse() throws NoSuchAlgorithmException {
         String username = "testUser";
         String password = "testPassword";
         // No agrega ningún usuario al resultado del mock (credenciales inválidas)
-
         boolean result = userService.credenciales(username, password);
 
         assertFalse(result);
@@ -162,15 +186,25 @@ class ProjectApplicationTest {
         String password = "password123";
         String email = "john.doe@example.com";
         Rol rol = Rol.CLIENTE;
+        // Act
+        //userService.crearUsuario(firstName, lastName, username, password, email);
 
+        // Assert
+        //verify(userRepository, times(1)).save(any(Cliente.class)); // Ajusta según la implementación real
         userService.crearUsuario(firstName, lastName, username, password, email, rol);
 
         // Verifica que el método del repositorio fue llamado con los parámetros correctos
         verify(userRepository, times(1)).save(any(User.class));
+
     }
 
     // Pruebas InsumoService
     @Test
+    public void testGetAllInsumos() {
+        // Simular el repositorio para devolver una lista de insumos
+        List<Insumo> insumos = new ArrayList<>();
+        //insumos.add(new Insumo("Insumo1", TipoInsumos.CARNES, 10, 5.0, new Date()));
+        //insumos.add(new Insumo("Insumo2", TipoInsumos.FRUTAS, 20, 3.0, new Date()));
     void getAllInsumos() {
         ArrayList<Insumo> expectedInsumos = new ArrayList<>();
         // Agrega los insumos esperados al resultado del mock
@@ -448,6 +482,18 @@ class ProjectApplicationTest {
     @Test
     void calcularSubtotal_LineasPedidoExist_CalculatesSubtotal() {
         // Arrange
+        String categoria = "FAST_FOOD";
+        Set<DetalleComidaInsumo> detalleComidaInsumos = new HashSet<>();
+        detalleComidaInsumos.add(detalleComidaInsumo);
+        double descuento = 10.0;
+        TipoDescuento tipoDescuento = TipoDescuento.PORCENTAJE;
+        Promocion promo = new Promocion("Promo1", "", LocalDateTime.now(), LocalDateTime.now(), categoria, tipoDescuento, descuento);
+        //Comida comida1 = new Comida("Comida1", 20.0, 5.0, detalleComidaInsumos);
+        //Comida comida2 = new Comida("Comida2", 30.0, 8, detalleComidaInsumos);
+        ArrayList<Comida> comidas = new ArrayList<>();
+        //comidas.add(comida1);
+        //comidas.add(comida2);
+        when(comidaRepository.findByCategoriaOrderByNombre(Categoria.FAST_FOOD)).thenReturn(comidas);
         Pedido pedido = new Pedido();
         List<LineaPedido> lineasPedido = new ArrayList<>();
         lineasPedido.add(new LineaPedido(1L, 2, 10.0, "bebida1", "ingredientes1", null, null, null));
@@ -458,18 +504,36 @@ class ProjectApplicationTest {
         double subtotal = pedidoService.calcularSubtotal(pedido);
 
         // Assert
+        //assertEquals(4.5, comida1.getPrecio(), 0.001);
+        //assertEquals(7.2, comida2.getPrecio(), 0.001);
+        //verify(comidaService, times(2)).actualizarComida(anyLong(), anyString(), anyDouble(), anyInt());
         assertEquals(25.0, subtotal);
     }
 
     @Test
     void calcularCostoTotal_ValidSubtotal_CalculatesCostoTotal() {
         // Arrange
+        String categoria = "FAST_FOOD";
+        Set<DetalleComidaInsumo> detalleComidaInsumos = new HashSet<>();
+        detalleComidaInsumos.add(detalleComidaInsumo);
+        int cantidadMinima = 5;
+        TipoDescuento tipoDescuento = TipoDescuento.CANTIDAD;
+        Promocion promo = new Promocion("Promo2", "", LocalDateTime.now(), LocalDateTime.now(), categoria, tipoDescuento, (double) cantidadMinima);
+        //Comida comida1 = new Comida("Comida1", 20.0, 5, detalleComidaInsumos);
+        //Comida comida2 = new Comida("Comida2", 30.0, 8, detalleComidaInsumos);
+        ArrayList<Comida> comidas = new ArrayList<>();
+        //comidas.add(comida1);
+        //comidas.add(comida2);
+        when(comidaRepository.findByCategoriaOrderByNombre(Categoria.FAST_FOOD)).thenReturn(comidas);
         double subtotal = 25.0;
 
         // Act
         double costoTotal = pedidoService.calcularCostoTotal(subtotal);
 
         // Assert
+        //assertEquals(5.0, comida1.getPrecio(), 0.001);
+        //assertEquals(8, comida2.getPrecio(), 0.001);
+        //verify(comidaService, times(2)).actualizarComida(anyLong(), anyString(), anyDouble(), anyInt());
         assertEquals(29.75, costoTotal);
     }
 

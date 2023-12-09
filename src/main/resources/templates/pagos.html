@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>De Una - central de pagos </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/css/pagos.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+</head>
+<body>
+<div class="background-container">
+    <div class="info-pago">
+
+        <div id="process-info">
+            <h1>¡De Una!</h1>
+            <ul class="nav nav-underline">
+                <li class="nav-item">
+                    <a id="entrega" class="nav-link active disabled" aria-disabled="true">Entrega</a>
+                </li>
+                <li class="nav-item">
+                    <a id="pago" class="nav-link disabled" aria-current="page" >Pago</a>
+                </li>
+                <li class="nav-item">
+                    <a id="pedido"class="nav-link disabled" aria-disabled="true">Generación de pedido</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="entrega-container">
+            <div class="container text-center">
+                <div class="row align-items-start">
+                    <div class="col-md-6">
+                        <form>
+                            <div class="form-check form-switch">
+                                <div class="col-md-2 text-start">
+                                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked">
+                                </div>
+                                <div class="col-md-6 text-start">
+                                    <label class="form-check-label" for="flexSwitchCheckChecked">¿Desea domicilio?</label>
+                                </div>
+                            </div>
+                            <div class="accordion" id="accordionExample">
+                                <div class="accordion-item collapsed">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                            Recoge tu comida en la tienda
+                                        </button>
+                                    </h2>
+                                    <div id="collapseTwo" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            <div id="recogidaInfo">
+                                                <div>
+                                                    <div class="row align-items-center">
+                                                        <div class="col-md-6 text-start">
+                                                            <label for="diaRecogida">Día de recogida:</label>
+                                                        </div>
+                                                        <div class="col-md-6 mb-4 text-end">
+                                                            <select class="form-select" id="diaRecogida" aria-label="Default select diaRecogida" name="diaRecogida">
+                                                                <option value="lunes">Lunes</option>
+                                                                <option value="martes">Martes</option>
+                                                                <option value="miercoles">Miércoles</option>
+                                                                <option value="jueves">Jueves</option>
+                                                                <option value="viernes">Viernes</option>
+                                                                <option value="sabado">Sábado</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div>
+                                                    <div class="row align-items-center">
+                                                        <div class="col-md-6 text-start">
+                                                            <label for="horaRecogida">Hora de recogida:</label>
+                                                        </div>
+                                                        <div class="col-md-6 text-end">
+                                                            <select class="form-select" id="horaRecogida" aria-label="Default select horaRecogida" name="horaRecogida">
+                                                                <option value="07:00">7:00 AM</option>
+                                                                <option value="08:00">8:00 AM</option>
+                                                                <option value="09:00">9:00 AM</option>
+                                                                <option value="10:00">10:00 AM</option>
+                                                                <option value="11:00">11:00 AM</option>
+                                                                <option value="12:00">12:00 M</option>
+                                                                <option value="13:00">1:00 PM</option>
+                                                                <option value="14:00">2:00 PM</option>
+                                                                <option value="15:00">3:00 PM</option>
+                                                                <option value="16:00">4:00 PM</option>
+                                                                <option value="17:00">5:00 PM</option>
+                                                                <option value="18:00">6:00 PM</option>
+                                                                <option value="19:00">7:00 PM</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="alert alert-danger hidden" role="alert">
+                            Los domicilios son gestionados por Rappi. Ten en cuenta que estos costos son adicionales,
+                            y no nos hacemos responsables de problemas relacionados con la entrega.
+                            ¡Gracias por tu comprensión! :)"
+                        </div>
+
+                        <div class="alert alert-success" role="alert">
+                            Recuerda que con tu membresía, evitarás las filas, especialmente en horas pico,
+                            por un precio muy accesible, ¡y es válida durante todo el año!
+                            Aprovecha esta excelente opción para una experiencia más rápida y cómoda.
+                        </div>
+                        <div class="alert alert-warning" role="alert">
+                            Tu pedido estará listo a la hora indicada. Por favor,
+                            asegúrate de recogerlo a tiempo para garantizar la mejor calidad.
+                            Después de ese momento, no podemos garantizar la frescura óptima.
+                            Agradecemos tu comprensión y esperamos que disfrutes de tu deliciosa comida.
+                        </div>
+                    </div>
+                    <div class="container btn-delivery text-center">
+                        <div class="row">
+                            <div class="col-md-3 align-self-end">
+                                <button type="button" id="btn-back1" class="btn btn-outline-warning">Volver</button>
+                            </div>
+                            <div class="col-md-3 align-self-end">
+                                <button type="button" id="btn-next" class="btn btn-outline-warning">Continuar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="pago-container hidden">
+            <div class="container text-center">
+                <div class="row align-items-start">
+                    <div class="col-md-6">
+                        <div id="balance-info">
+                            <h2 class="pay-title">¡A un click del antidoto para el hambre!</h2>
+                            <div class="target">
+                                <h2>InstantCard</h2>
+                                <div class="row align-items-center">
+                                    <div class="col-md-6 text-start">
+                                        <p>Saldo disponible: </p>
+                                    </div>
+                                    <div class="col-md-6 text-end">
+                                        <p class="text-muted">$500.00</p>
+                                    </div>
+                                </div>
+                                <div class="row align-items-center">
+                                    <div class="col-md-6 text-start">
+                                        <p>Saldo restante: </p>
+                                    </div>
+                                    <div class="col-md-6 text-end">
+                                        <p class="text-muted">$500.00</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div id="cart">
+                            <div class="order-total">
+                                <div class="container text-center">
+                                    <div class="row align-items-center">
+                                        <div class="col-md-4 text-start">
+                                            <strong>Total</strong>
+                                        </div>
+                                        <div class="col-md-8 text-end">
+                                            <strong th:text="'$' + ${pedido.costoTotal}"></strong>
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-center">
+                                        <div class="col-md-4 text-start">
+                                            <p>Subtotal</p>
+                                        </div>
+                                        <div class="col-md-8 text-end">
+                                            <span th:text="'$' + ${pedido.subtotal}"></span>
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-center">
+                                        <div class="col-md-4 text-start">
+                                            <p>IVA</p>
+                                        </div>
+                                        <div class="col-md-8 text-end">
+                                            <span>19%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr class="divider">
+                            <div class="order-wrapper">
+
+                                <th:block th:each="lineaPedido , iterStat: ${lineasPedido}">
+                                    <div class="order-card">
+                                        <img class="order-image" th:src="|data:image/png;base64,${lineaPedido.comida.ruta}|">
+                                        <div class="order-detail">
+                                            <span class="car-item-detail" th:text="${lineaPedido.comida.nombre}"></span>
+                                            <div class="amount">
+                                                <span class="material-icons-sharp">close</span>
+                                                <input th:id="'amount-' + ${iterStat.index}" type="text" th:value="${lineaPedido.cantidad}" class="amount-input" disabled>
+                                                <h3 th:text="'$' + ${lineaPedido.total}"></h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </th:block>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container text-center">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <button type="button" id="btn-back" class="btn btn-outline-warning">Volver</button>
+                            </div>
+                            <div class="col-md-3">
+                                <button type="button" class="btn btn-outline-warning disabled">Pagar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+    <script src="../static/js/pagos.js"></script>
+</body>
+</html>

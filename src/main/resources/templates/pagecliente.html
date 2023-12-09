@@ -8,8 +8,8 @@
 
     <link rel="stylesheet" href="../static/css/swiper-bundle.min.css">
     <script src="../static/js/swiper-bundle.min.js"></script>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
     <link rel="stylesheet" href="../static/css/cliente.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
 </head>
 <body>
 <div class="container">
@@ -26,7 +26,7 @@
                     <img src="../static/images/menu-1.png">
                 </div>
                 <div class="info">
-                    <p>Hey, <b th:text="${nombreUsuario}"></b></p>
+                    <p>Hey, <b th:text="${usuario.username}"></b></p>
                     <small class="text-muted">Cliente</small>
                 </div>
             </div>
@@ -50,7 +50,7 @@
                 <h3>InstantCard</h3>
             </a>
 
-            <a href="/cliente/historial" class="history">
+            <a href="/cliente/historial" class="historial">
                 <span class="material-icons-sharp">history</span>
                 <h3>Historial</h3>
             </a>
@@ -106,6 +106,124 @@
             <div class="detail-transaction">
                 <h3>Detalle de Transacción</h3>
                 <!-- Detalles específicos de una transacción -->
+            </div>
+        </div>
+    </div>
+
+    <div class="cuenta-container">
+
+        <div class="actualizar-datos">
+            <h2>Actualiza tus Datos</h2>
+
+            <form action="" method="post" enctype="multipart/form-data">
+
+                <div id="preview"></div>
+
+                <label for="profile-pic">Foto de Perfil:</label>
+                <input type="file" id="profile-pic" name="profile-pic" onchange="previewImage()">
+
+                <!-- Nombre de usuario -->
+                <label for="username">Nombre de Usuario:</label>
+                <input type="text" id="username" name="username" required>
+
+                <!-- Correo -->
+                <label for="email">Correo:</label>
+                <input type="email" id="email" name="email" required>
+
+                <!-- Dirección -->
+                <label for="address">Dirección:</label>
+                <input type="text" id="address" name="address">
+
+                <!-- Teléfono -->
+                <label for="phone">Teléfono:</label>
+                <input type="tel" id="phone" name="phone">
+
+                <!-- Nombre -->
+                <label for="firstname">Nombres:</label>
+                <input type="text" id="firstname" name="firstname">
+
+                <!-- Apellido -->
+                <label for="lastname">Apellidos:</label>
+                <input type="text" id="lastname" name="lastname">
+
+
+                <button type="submit">Actualizar Datos</button>
+            </form>
+        </div>
+
+        <div class="aditional-changes">
+            <div class="change-password">
+                <h3>¿Deseas cambiar tu contraseña?</h3>
+                <button>¡De Una!</button>
+            </div>
+
+            <div class="instant-password">
+                <h3>Contraseña instantCard</h3>
+                <button>Cambiar contraseña</button>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="pqrs-container">
+
+        <div class="pqrs-info">
+            <h2>Tus solicitudes</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tipo</th>
+                    <th>Estado</th>
+                    <th>Respuesta</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Petición</td>
+                    <td>En Proceso</td>
+                    <td><a href="#">Ver Respuesta</a></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Queja</td>
+                    <td>Finalizado</td>
+                    <td><a href="#" class="active">Ver Respuesta</a></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Reclamo</td>
+                    <td>En proceso</td>
+                    <td><a href="#">Ver Respuesta</a></td>
+                </tr>
+                <!-- Agrega más filas según sea necesario -->
+                </tbody>
+            </table>
+
+            <button id="open-popup">Nuevo PQRS</button>
+        </div>
+
+        <div class="popup-overlay" id="popup-overlay">
+            <div class="popup-pqrs">
+                <button id="close-popup"><span class="close-btn material-icons-sharp">close</span></button>
+                <form action="" method="post">
+
+                    <h2>Formulario de PQRS</h2>
+
+                    <label for="type">Tipo de solicitud:</label>
+                    <select id="type" name="type" required>
+                        <option value="petition">Petición</option>
+                        <option value="complaint">Queja</option>
+                        <option value="claim">Reclamo</option>
+                        <option value="suggestion">Sugerencia</option>
+                    </select>
+
+                    <label for="message">Mensaje:</label>
+                    <textarea id="message" name="message" rows="4" required></textarea>
+
+                    <button id="send" type="submit">Enviar</button>
+                </form>
             </div>
         </div>
     </div>
@@ -211,6 +329,10 @@
         </div>
     </main>
 
+    <div class="historial">
+
+    </div>
+
     <div class="right">
         <div class="top">
             <div class="close" id="closeShop-btn">
@@ -218,13 +340,7 @@
             </div>
             <h3>Mi carrito</h3>
         </div>
-
-        <div class="order-address">
-            <p>Dirección de entrega</p>
-            <h4>lorem ipsum dolor sit amet</h4>
-        </div>
         <div class="order-time">
-            <small class="text-muted">30 mins</small>
             <small class="text-muted">¡Ya casi estamos!</small>
         </div>
 
