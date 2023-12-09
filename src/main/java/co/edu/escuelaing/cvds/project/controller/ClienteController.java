@@ -31,10 +31,9 @@ public class ClienteController {
     @Autowired
     private PedidoService pedidoService;
 
-    @ModelAttribute("nombreUsuario")  // Agregar un atributo global al modelo
-    public String nombreUsuario(HttpServletRequest request) {
-        User usuarioEnSesion = obtenerUsuarioEnSesion(request);
-        return (usuarioEnSesion != null) ? usuarioEnSesion.getUsername() : null;
+    @ModelAttribute("usuario")  // Agregar un atributo global al modelo
+    public User usuario(HttpServletRequest request) {
+        return obtenerUsuarioEnSesion(request);
     }
 
     @ModelAttribute("lineasPedido")
@@ -61,6 +60,11 @@ public class ClienteController {
     @GetMapping("/instantCard")
     public String instantCard() {
         return "pagecliente";
+    }
+
+    @GetMapping("/pagos")
+    public String pagos() {
+        return "pagos";
     }
 
     @GetMapping("/historial")
@@ -130,6 +134,34 @@ public class ClienteController {
                     response.put("mensaje", "Producto agregado al pedido con éxito.");
                 } else {
                     response.put("mensaje", "Ya tienes este producto en tu pedido.");
+                }
+
+                return ResponseEntity.ok(response);
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse("No se encontró la sesión para el token proporcionado"));
+            }
+        } catch (Exception e) {
+            // Manejar excepciones aquí y devolver una respuesta HTTP apropiada
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse("Error en el servidor"));
+        }
+    }
+
+    @GetMapping("/verificar-pedido")
+    public ResponseEntity<Map<String, String>> verificarPedido(HttpServletRequest request) {
+
+        try {
+            User usuarioEnSesion = obtenerUsuarioEnSesion(request);
+
+            if (usuarioEnSesion != null) {
+                Map<String, String> response = new HashMap<>();
+
+                System.out.println("lineapedidos: " + pedidoService.obtenerLineasPedido(obtenerUsuarioEnSesion(request)).isEmpty());
+                if (pedidoService.obtenerLineasPedido(obtenerUsuarioEnSesion(request)).isEmpty()) {
+
+                    response.put("mensaje", "El carrito está vacio");
+
+                } else {
+                    response.put("mensaje", "El carrito no está vacio");
                 }
 
                 return ResponseEntity.ok(response);
