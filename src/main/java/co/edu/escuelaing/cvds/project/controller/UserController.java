@@ -50,13 +50,15 @@ public class UserController {
         String username = credentials.get("username");
         System.out.println("username:" + username);
         String password = credentials.get("password");
-
+        System.out.println("password:" + password);
         boolean isUserValid = userService.credenciales(username, password);
+        System.out.println("password:" + isUserValid);
 
 
         if (isUserValid) {
             User user = userService.getUser(username);
             Rol rol = user.getRol();
+            System.out.println("rol:" + rol);
             Map<String, Object> responseBody = new HashMap<>();
 
             Session session = new Session(UUID.randomUUID(), Instant.now(), user);
@@ -78,6 +80,7 @@ public class UserController {
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Credenciales incorrectas");
         }
     }
+
 
     @PostMapping("/registrar-usuario")
     public ResponseEntity<Map<String, Object>> registrarUsuario(@RequestBody Map<String, String> credentials) {
