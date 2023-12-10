@@ -11,11 +11,14 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class ProjectApplication {
 
-	@Autowired
-	private UserService userService;
+	private final UserService userService;
+	private final EncriptarService encriptarService;
 
 	@Autowired
-	private EncriptarService encriptarService;
+	public ProjectApplication(UserService userService, EncriptarService encriptarService) {
+		this.userService = userService;
+		this.encriptarService = encriptarService;
+	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(ProjectApplication.class, args);

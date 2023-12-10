@@ -22,8 +22,11 @@ import java.util.UUID;
 @Component
 public class BasicAuthInterceptor implements HandlerInterceptor {
 
+    private final SessionRepository sessionRepository;
     @Autowired
-    private SessionRepository sessionRepository;
+    public BasicAuthInterceptor(SessionRepository sessionRepository) {
+        this.sessionRepository = sessionRepository;
+    }
 
     private String getCookieValue(HttpServletRequest req) {
         return Arrays.stream(req.getCookies())

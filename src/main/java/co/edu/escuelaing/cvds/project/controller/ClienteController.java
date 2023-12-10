@@ -18,14 +18,17 @@ import java.util.*;
 @RequestMapping("/cliente")
 public class ClienteController {
 
-    @Autowired
-    private ComidaService comidaService;
+    private final ComidaService comidaService;
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
+    private final PedidoService pedidoService;
     @Autowired
-    private PedidoService pedidoService;
+    public ClienteController(ComidaService comidaService, UserService userService, PedidoService pedidoService) {
+        this.comidaService = comidaService;
+        this.userService = userService;
+        this.pedidoService = pedidoService;
+    }
 
     @ModelAttribute("usuario")  // Agregar un atributo global al modelo
     public User usuario(HttpServletRequest request) {

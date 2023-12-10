@@ -1,7 +1,6 @@
 package co.edu.escuelaing.cvds.project.controller;
 
 import co.edu.escuelaing.cvds.project.model.*;
-import co.edu.escuelaing.cvds.project.repository.InsumoRepository;
 import co.edu.escuelaing.cvds.project.service.ComidaService;
 import co.edu.escuelaing.cvds.project.service.InsumoService;
 import co.edu.escuelaing.cvds.project.service.PromocionService;
@@ -18,15 +17,19 @@ import java.util.*;
 @RequestMapping("/admin")
 public class AdministradorController {
 
-    @Autowired
-    private ComidaService comidaService;
+    private final ComidaService comidaService;
 
-    @Autowired
+    final
     InsumoService insumoService;
 
+    private final PromocionService promocionService;
     @Autowired
-    private PromocionService promocionService;
-  
+    public AdministradorController(ComidaService comidaService, InsumoService insumoService, PromocionService promocionService) {
+        this.comidaService = comidaService;
+        this.insumoService = insumoService;
+        this.promocionService = promocionService;
+    }
+
     @GetMapping("/dashboard")
     public String mostrarFormulario() {
         return "admin";
