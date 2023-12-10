@@ -1,12 +1,9 @@
 package co.edu.escuelaing.cvds.project.service;
-
 import co.edu.escuelaing.cvds.project.model.Comida;
 import co.edu.escuelaing.cvds.project.model.LineaPedido;
 import co.edu.escuelaing.cvds.project.model.Pedido;
-import co.edu.escuelaing.cvds.project.model.User;
 import co.edu.escuelaing.cvds.project.repository.ComidaRepository;
 import co.edu.escuelaing.cvds.project.repository.LineaPedidoRepository;
-import co.edu.escuelaing.cvds.project.repository.PedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

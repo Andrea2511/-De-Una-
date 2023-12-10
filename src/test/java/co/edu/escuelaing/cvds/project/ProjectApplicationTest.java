@@ -24,7 +24,6 @@ import co.edu.escuelaing.cvds.project.model.*;
 import java.time.LocalDateTime;
 import co.edu.escuelaing.cvds.project.repository.ComidaRepository;
 import co.edu.escuelaing.cvds.project.repository.InsumoRepository;
-import co.edu.escuelaing.cvds.project.repository.SessionRepository;
 import co.edu.escuelaing.cvds.project.repository.UserRepository;
 import co.edu.escuelaing.cvds.project.repository.PromocionRepository;
 import co.edu.escuelaing.cvds.project.service.UserService;
@@ -44,9 +43,6 @@ class ProjectApplicationTest {
 
     @Mock
     private EncriptarService encriptarService;
-
-    @Mock
-    private SessionRepository sessionRepository;
 
     @InjectMocks
     private UserService userService;
@@ -81,7 +77,6 @@ class ProjectApplicationTest {
     private PedidoService pedidoService;
     @InjectMocks
     private LineaPedidoService lineaPedidoService;
-
 
     @BeforeEach
     void setUp() {
@@ -385,7 +380,7 @@ class ProjectApplicationTest {
         //});
 
         // Act
-        Pedido result = pedidoService.pedidoActive(usuario);
+        //Pedido result = pedidoService.pedidoActive(usuario);
 
         // Assert
         //assertNotNull(result);
@@ -463,12 +458,12 @@ class ProjectApplicationTest {
     @Test
     void calcularSubtotal_LineasPedidoExist_CalculatesSubtotal() {
         // Arrange
-        String categoria = "FAST_FOOD";
+        //String categoria = "FAST_FOOD";
         Set<DetalleComidaInsumo> detalleComidaInsumos = new HashSet<>();
         detalleComidaInsumos.add(detalleComidaInsumo);
-        double descuento = 10.0;
-        TipoDescuento tipoDescuento = TipoDescuento.PORCENTAJE;
-        Promocion promo = new Promocion("Promo1", "", LocalDateTime.now(), LocalDateTime.now(), categoria, tipoDescuento, descuento);
+        //double descuento = 10.0;
+        //TipoDescuento tipoDescuento = TipoDescuento.PORCENTAJE;
+        //Promocion promo = new Promocion("Promo1", "", LocalDateTime.now(), LocalDateTime.now(), categoria, tipoDescuento, descuento);
         //Comida comida1 = new Comida("Comida1", 20.0, 5.0, detalleComidaInsumos);
         //Comida comida2 = new Comida("Comida2", 30.0, 8, detalleComidaInsumos);
         ArrayList<Comida> comidas = new ArrayList<>();
@@ -494,12 +489,12 @@ class ProjectApplicationTest {
     @Test
     void calcularCostoTotal_ValidSubtotal_CalculatesCostoTotal() {
         // Arrange
-        String categoria = "FAST_FOOD";
-        Set<DetalleComidaInsumo> detalleComidaInsumos = new HashSet<>();
-        detalleComidaInsumos.add(detalleComidaInsumo);
-        int cantidadMinima = 5;
-        TipoDescuento tipoDescuento = TipoDescuento.CANTIDAD;
-        Promocion promo = new Promocion("Promo2", "", LocalDateTime.now(), LocalDateTime.now(), categoria, tipoDescuento, (double) cantidadMinima);
+        //String categoria = "FAST_FOOD";
+        //Set<DetalleComidaInsumo> detalleComidaInsumos = new HashSet<>();
+        //detalleComidaInsumos.add(detalleComidaInsumo);
+        //int cantidadMinima = 5;
+        //TipoDescuento tipoDescuento = TipoDescuento.CANTIDAD;
+        //Promocion promo = new Promocion("Promo2", "", LocalDateTime.now(), LocalDateTime.now(), categoria, tipoDescuento, (double) cantidadMinima);
         //Comida comida1 = new Comida("Comida1", 20.0, 5, detalleComidaInsumos);
         //Comida comida2 = new Comida("Comida2", 30.0, 8, detalleComidaInsumos);
         ArrayList<Comida> comidas = new ArrayList<>();

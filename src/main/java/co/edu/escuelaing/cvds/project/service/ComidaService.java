@@ -35,7 +35,7 @@ public class ComidaService {
     }
 
     public ArrayList<Comida> obtenerComidasConPromocion() {
-        return (ArrayList<Comida>) comidaRepository.findByPromocionIsNotNull();
+        return comidaRepository.findByPromocionIsNotNull();
     }
 
     public Comida crearComida(String nombre, double calificacion, double precio, int cantidad, Categoria categoria){

@@ -4,14 +4,14 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class EncriptacionContraseña {
+public class EncriptacionContrasena {
 
     private String password;
-    public EncriptacionContraseña() {
+    public EncriptacionContrasena() {
     }
 
     // Método para generar un hash a partir de una contraseña
-    public String setHashPassword(String password) {
+    public void setHashPassword(String password) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             byte[] encodedhash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
@@ -25,10 +25,8 @@ public class EncriptacionContraseña {
                 hexString.append(hex);
             }
             this.password =  hexString.toString();
-            return this.password;
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace(); // Manejo básico de la excepción
-            return  null;
         }
     }
 
