@@ -3,11 +3,7 @@ package co.edu.escuelaing.cvds.project.model;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
-
 import java.util.Date;
-import java.util.Random;
-import java.util.Objects;
-import java.util.Set;
 
 @Setter
 @Getter

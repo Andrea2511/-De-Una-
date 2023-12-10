@@ -22,8 +22,6 @@ import co.edu.escuelaing.cvds.project.model.User;
 import org.mockito.junit.MockitoJUnitRunner;
 import co.edu.escuelaing.cvds.project.model.*;
 import java.time.LocalDateTime;
-import co.edu.escuelaing.cvds.project.model.Categoria;
-import co.edu.escuelaing.cvds.project.model.Comida;
 import co.edu.escuelaing.cvds.project.repository.ComidaRepository;
 import co.edu.escuelaing.cvds.project.repository.InsumoRepository;
 import co.edu.escuelaing.cvds.project.repository.SessionRepository;
@@ -34,27 +32,10 @@ import co.edu.escuelaing.cvds.project.service.EncriptarService;
 import co.edu.escuelaing.cvds.project.service.ComidaService;
 import co.edu.escuelaing.cvds.project.service.InsumoService;
 import co.edu.escuelaing.cvds.project.service.PromocionService;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import co.edu.escuelaing.cvds.project.model.Insumo;
-import co.edu.escuelaing.cvds.project.model.TipoInsumos;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-import java.security.NoSuchAlgorithmException;
-import co.edu.escuelaing.cvds.project.model.Rol;
-import co.edu.escuelaing.cvds.project.model.User;
-import org.mockito.junit.MockitoJUnitRunner;
-import co.edu.escuelaing.cvds.project.model.*;
-import java.time.LocalDateTime;
 
 @RunWith(MockitoJUnitRunner.class)
 class ProjectApplicationTest {

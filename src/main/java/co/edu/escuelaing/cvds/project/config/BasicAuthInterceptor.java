@@ -3,7 +3,6 @@ package co.edu.escuelaing.cvds.project.config;
 import co.edu.escuelaing.cvds.project.model.Rol;
 import co.edu.escuelaing.cvds.project.model.Session;
 import co.edu.escuelaing.cvds.project.repository.SessionRepository;
-import co.edu.escuelaing.cvds.project.repository.UserRepository;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

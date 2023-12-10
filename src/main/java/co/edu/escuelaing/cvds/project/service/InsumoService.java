@@ -1,12 +1,9 @@
 package co.edu.escuelaing.cvds.project.service;
-
-import co.edu.escuelaing.cvds.project.model.Comida;
 import co.edu.escuelaing.cvds.project.model.Insumo;
 import co.edu.escuelaing.cvds.project.model.TipoInsumos;
 import co.edu.escuelaing.cvds.project.repository.InsumoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

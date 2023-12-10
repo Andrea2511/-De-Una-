@@ -1,7 +1,5 @@
 package co.edu.escuelaing.cvds.project.model;
 import jakarta.persistence.*;
-import net.bytebuddy.asm.Advice;
-
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Set;

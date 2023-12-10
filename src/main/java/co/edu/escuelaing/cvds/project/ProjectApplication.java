@@ -7,9 +7,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-
 
 @SpringBootApplication
 public class ProjectApplication {
@@ -27,15 +24,12 @@ public class ProjectApplication {
 	@Bean
 	public CommandLineRunner run() throws Exception {
 		return (args) -> {
-
-
 			if (!userService.credenciales("admin", "admin")) {
 					userService.crearUsuario("admin", "admin", "admin", encriptarService.encriptar("admin") , "deuna@gmail.com", Rol.ADMINISTRADOR);
 				}
-
 			if (!userService.credenciales("supervisor", "supervisor")) {
 				userService.crearUsuario("supervisor", "supervisor", "supervisor", encriptarService.encriptar("supervisor") , "supervisordeuna@gmail.com", Rol.SUPERVISOR);
 			}
 		};
-	};
+	}
 }

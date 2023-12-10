@@ -3,8 +3,6 @@ package co.edu.escuelaing.cvds.project.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.*;
-
 @Setter
 @Getter
 @NoArgsConstructor

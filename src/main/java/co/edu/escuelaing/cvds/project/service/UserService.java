@@ -2,12 +2,10 @@ package co.edu.escuelaing.cvds.project.service;
 import co.edu.escuelaing.cvds.project.model.Rol;
 import co.edu.escuelaing.cvds.project.model.Session;
 import co.edu.escuelaing.cvds.project.model.User;
-import co.edu.escuelaing.cvds.project.repository.PedidoRepository;
 import co.edu.escuelaing.cvds.project.repository.SessionRepository;
 import co.edu.escuelaing.cvds.project.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.security.NoSuchAlgorithmException;
 import java.util.UUID;
 
