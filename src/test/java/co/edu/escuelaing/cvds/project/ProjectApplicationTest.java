@@ -1,7 +1,6 @@
 package co.edu.escuelaing.cvds.project;
 
-import co.edu.escuelaing.cvds.project.model.Categoria;
-import co.edu.escuelaing.cvds.project.model.Comida;
+import co.edu.escuelaing.cvds.project.model.*;
 import co.edu.escuelaing.cvds.project.repository.*;
 import co.edu.escuelaing.cvds.project.service.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,30 +9,13 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import co.edu.escuelaing.cvds.project.model.Insumo;
-import co.edu.escuelaing.cvds.project.model.TipoInsumos;
+import org.mockito.junit.MockitoJUnitRunner;
+
+import java.time.LocalDateTime;
 import java.util.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-import co.edu.escuelaing.cvds.project.model.Rol;
-import co.edu.escuelaing.cvds.project.model.User;
-import org.mockito.junit.MockitoJUnitRunner;
-import co.edu.escuelaing.cvds.project.model.*;
-import java.time.LocalDateTime;
-import co.edu.escuelaing.cvds.project.repository.ComidaRepository;
-import co.edu.escuelaing.cvds.project.repository.InsumoRepository;
-import co.edu.escuelaing.cvds.project.repository.UserRepository;
-import co.edu.escuelaing.cvds.project.repository.PromocionRepository;
-import co.edu.escuelaing.cvds.project.service.UserService;
-import co.edu.escuelaing.cvds.project.service.EncriptarService;
-import co.edu.escuelaing.cvds.project.service.ComidaService;
-import co.edu.escuelaing.cvds.project.service.InsumoService;
-import co.edu.escuelaing.cvds.project.service.PromocionService;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
 
 @RunWith(MockitoJUnitRunner.class)
 class ProjectApplicationTest {
@@ -76,6 +58,11 @@ class ProjectApplicationTest {
     private PedidoService pedidoService;
     @InjectMocks
     private LineaPedidoService lineaPedidoService;
+    @Mock
+    private TarjetaRepository tarjetaRepository;
+
+    @InjectMocks
+    private TarjetaService tarjetaService;
 
     @BeforeEach
     void setUp() {
@@ -541,5 +528,35 @@ class ProjectApplicationTest {
         // Assert
         assertNotNull(result);
         assertTrue(result.isEmpty());
+    }
+
+    //TEST TARJETA
+    @Test
+    void crearTarjeta_SaveTarjetaInRepository() {
+        // Arrange
+        String password = "password";
+
+        // Act
+        tarjetaService.crearTarjeta(password);
+
+        // Assert
+        verify(tarjetaRepository, times(1)).save(any(Tarjeta.class));
+    }
+
+    @Test
+    void obtenerTodasLasTarjetas_TarjetasExist_ReturnsListOfTarjetas() {
+        // Arrange
+        List<Tarjeta> tarjetas = new ArrayList<>();
+        tarjetas.add(new Tarjeta("password1"));
+        tarjetas.add(new Tarjeta("password2"));
+
+        when(tarjetaRepository.findAll()).thenReturn(tarjetas);
+
+        // Act
+        ArrayList<Tarjeta> result = tarjetaService.obtenerTodasLasTarjetas();
+
+        // Assert
+        assertNotNull(result);
+        assertEquals(2, result.size());
     }
 }
