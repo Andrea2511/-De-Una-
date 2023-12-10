@@ -5,7 +5,7 @@ import java.security.NoSuchAlgorithmException;
 
 @Service
 public class EncriptarService {
-    public String encriptar(String password) throws NoSuchAlgorithmException {
+    public String encriptar(String password) {
         EncriptacionContrasena encriptacionContrasena = new EncriptacionContrasena();
         encriptacionContrasena.setHashPassword(password);
         return encriptacionContrasena.getPassword();

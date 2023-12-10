@@ -25,14 +25,9 @@ public class BasicAuthInterceptor implements HandlerInterceptor {
     @Autowired
     private SessionRepository sessionRepository;
 
-    private static final String USERNAME = "admin";
-    private static final String PASSWORD = "admin";
-
-
-
-    private String getCookieValue(HttpServletRequest req, String cookieName) {
+    private String getCookieValue(HttpServletRequest req) {
         return Arrays.stream(req.getCookies())
-                .filter(c -> c.getName().equals(cookieName))
+                .filter(c -> c.getName().equals("authToken"))
                 .findFirst()
                 .map(Cookie::getValue)
                 .orElse(null);
@@ -43,7 +38,7 @@ public class BasicAuthInterceptor implements HandlerInterceptor {
         log.info("BasicAuthInterceptor::preHandle()");
         String path = request.getRequestURI();
         log.info("Path:" + path);
-        String authToken = getCookieValue(request, "authToken");
+        String authToken = getCookieValue(request);
         log.info("AuthToken: " + authToken);
         if (authToken != null) {
             Session session = sessionRepository.findByToken(UUID.fromString(authToken));
@@ -79,12 +74,12 @@ public class BasicAuthInterceptor implements HandlerInterceptor {
     }
 
     @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) {
         log.info("BasicAuthInterceptor::postHandle()");
     }
 
     @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
         log.info("BasicAuthInterceptor::afterCompletion()");
     }
 }

@@ -6,7 +6,6 @@ import co.edu.escuelaing.cvds.project.repository.SessionRepository;
 import co.edu.escuelaing.cvds.project.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.security.NoSuchAlgorithmException;
 import java.util.UUID;
 
 @Service
@@ -30,7 +29,7 @@ public class UserService {
         return null; // En caso de credenciales incorrectas
     }
 
-    public boolean credenciales(String username, String password) throws NoSuchAlgorithmException {
+    public boolean credenciales(String username, String password) {
         User user = userRepository.findByUsername(username);
         System.out.println("user:" + user);
         String pw = encriptarService.encriptar(password);
