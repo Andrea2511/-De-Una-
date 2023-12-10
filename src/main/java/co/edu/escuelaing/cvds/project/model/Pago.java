@@ -9,8 +9,6 @@ public class Pago {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String descripcion;
-    private double monto;
     // Otros campos relevantes para tu aplicación
 
     // Getters y setters
