@@ -48,13 +48,14 @@ public class TarjetaService {
         return tarjetaRepository.save(tarjeta);
     }
 
-    public void recarga(double monto, LocalDateTime fechaPago, Tarjeta tarjeta) {
+    public void recarga(double monto, LocalDateTime fechaPago, Tarjeta tarjeta, String descripcion) {
 
         Transaccion transaccion = new Transaccion();
         transaccion.setTipoTransaccion(TipoTransaccion.RECARGA);
         transaccion.setMonto(monto);
         transaccion.setFechaPago(fechaPago);
         transaccion.setTarjeta(tarjeta);
+        transaccion.setDescripcion(descripcion);
 
         tarjeta.getTransacciones().add(transaccion);
         tarjeta.setSaldoT(tarjeta.getSaldoT() + monto);

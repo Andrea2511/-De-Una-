@@ -113,7 +113,7 @@
                     </div>
                     <div class="mensaje-warning">
                         <h2>¡Protege tu dinero!</h2>
-                        <p>Recuerda cambiar tu clave de acceso a tu cuenta lo antes posible.
+                        <p>Recuerda cambiar tu instantclave.
                             Al registrarte, tu tarjeta tiene la clave predeterminada: <strong>0000</strong>.</p>
                         <p>La seguridad de tu información financiera es nuestra prioridad.
                             Cambiar tu clave regularmente ayuda a proteger tu dinero y garantizar
@@ -126,7 +126,24 @@
         <div class="more-details">
             <div class="card-history">
                 <h3>Historial de Transacciones</h3>
-                <!-- Lista o tabla de historial de transacciones -->
+                <table id="transaction-table">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Fecha</th>
+                        <th>Monto</th>
+                        <th>Tipo</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="transaccion : ${transacciones}" th:attr="data-transaccion-id=${transaccion.id}" th:onclick="'showTransactionDetails(' + ${transaccion.id} + ')'" class="transaction-row">
+                        <td th:text="${transaccion.id}"></td>
+                        <td th:text="${transaccion.fechaPago}"></td>
+                        <td th:text="${transaccion.monto}"></td>
+                        <td th:text="${transaccion.getTipoTransaccion()}"></td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
             <div class="detail-transaction">
                 <h3>Detalle de Transacción</h3>

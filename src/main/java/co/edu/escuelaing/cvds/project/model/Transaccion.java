@@ -26,6 +26,9 @@ public class Transaccion {
     @Column(name = "monto", nullable = false)
     private double monto;
 
+    @Column(name = "descripcion", nullable = false)
+    private String descripcion;
+
     @Column(name = "fechapago", nullable = false)
     private LocalDateTime fechaPago;
 

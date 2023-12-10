@@ -46,6 +46,11 @@ public class ClienteController {
         return obtenerUsuarioEnSesion(request).getTarjeta();
     }
 
+    @ModelAttribute("transacciones")  // Agregar un atributo global al modelo
+    public List<Transaccion> transacciones(HttpServletRequest request) {
+        return obtenerUsuarioEnSesion(request).getTarjeta().getTransacciones();
+    }
+
     @ModelAttribute("lineasPedido")
     public List<LineaPedido> addGlobalLineasPedidos(HttpServletRequest request, Model model) {
         List<LineaPedido> lineasPedidos = obtenerLineasPedidos(request);
@@ -185,13 +190,14 @@ public class ClienteController {
     }
 
     @PostMapping("/redimir")
+    @ResponseBody
     public Map<String, Object> redimirPuntos(HttpServletRequest request, @RequestBody String puntosRedimibles) {
         Map<String, Object> response = new HashMap<>();
 
         try {
             double montoRedimido = Double.parseDouble(puntosRedimibles);
             // Realiza la lógica de redención de puntos
-            tarjetaService.recarga(montoRedimido, LocalDateTime.now(), obtenerUsuarioEnSesion(request).getTarjeta());
+            tarjetaService.recarga(montoRedimido, LocalDateTime.now(), obtenerUsuarioEnSesion(request).getTarjeta(), "Redencion de puntos");
             tarjetaService.modificarPuntos(obtenerUsuarioEnSesion(request).getTarjeta());
 
             response.put("success", true);

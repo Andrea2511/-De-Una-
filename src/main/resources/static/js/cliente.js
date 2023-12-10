@@ -237,7 +237,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         var confirmacion = window.confirm("¿Estás seguro de que deseas redimir tus puntos?");
         if (confirmacion) {
-            // Realizar la solicitud Fetch al controlador
+
             fetch("/cliente/redimir", {
                 method: "POST",
                 headers: {
@@ -248,9 +248,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        window.location.reload(true);
                         console.log("Éxito:", data.message);
-
+                        window.location.reload(true);
                     } else {
                         // La redención no fue exitosa, manejar el error
                         console.error("Error:", data.message);
@@ -262,7 +261,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
         }
     }
-
 });
 
 function flipCard() {
@@ -366,3 +364,10 @@ function actualizarValorEnPesos() {
     document.getElementById("valor-en-pesos").textContent = '$ ' + valorEnPesos;
 }
 
+function showTransactionDetails(transactionId) {
+    // Aquí puedes realizar una solicitud AJAX para obtener los detalles de la transacción
+    // y luego mostrarlos en el elemento con la clase "detail-transaction"
+    // Por ahora, simplemente mostramos un mensaje de ejemplo
+    const detailsContainer = document.querySelector('.detail-transaction');
+    detailsContainer.innerHTML = `<p>Detalles de la transacción con ID: ${transactionId}</p>`;
+}
