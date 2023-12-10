@@ -12,9 +12,40 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import co.edu.escuelaing.cvds.project.model.Insumo;
 import co.edu.escuelaing.cvds.project.model.TipoInsumos;
-
 import java.util.*;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+import java.security.NoSuchAlgorithmException;
+import co.edu.escuelaing.cvds.project.model.Rol;
+import co.edu.escuelaing.cvds.project.model.User;
+import org.mockito.junit.MockitoJUnitRunner;
+import co.edu.escuelaing.cvds.project.model.*;
+import java.time.LocalDateTime;
+import co.edu.escuelaing.cvds.project.model.Categoria;
+import co.edu.escuelaing.cvds.project.model.Comida;
+import co.edu.escuelaing.cvds.project.repository.ComidaRepository;
+import co.edu.escuelaing.cvds.project.repository.InsumoRepository;
+import co.edu.escuelaing.cvds.project.repository.SessionRepository;
+import co.edu.escuelaing.cvds.project.repository.UserRepository;
+import co.edu.escuelaing.cvds.project.repository.PromocionRepository;
+import co.edu.escuelaing.cvds.project.service.UserService;
+import co.edu.escuelaing.cvds.project.service.EncriptarService;
+import co.edu.escuelaing.cvds.project.service.ComidaService;
+import co.edu.escuelaing.cvds.project.service.InsumoService;
+import co.edu.escuelaing.cvds.project.service.PromocionService;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import co.edu.escuelaing.cvds.project.model.Insumo;
+import co.edu.escuelaing.cvds.project.model.TipoInsumos;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -27,7 +58,6 @@ import java.time.LocalDateTime;
 
 @RunWith(MockitoJUnitRunner.class)
 class ProjectApplicationTest {
-
     @Mock
     private UserRepository userRepository;
 
@@ -71,33 +101,14 @@ class ProjectApplicationTest {
     @InjectMocks
     private LineaPedidoService lineaPedidoService;
 
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
     }
+
     //TEST DE USER
     @Test
-    public void testLogin() {
-        // Arrange
-        String username = "johndoe";
-        String password = "password123";
-        //User mockUser = new Cliente();
-        //mockUser.setUsername(username);
-        //mockUser.setPassword(password);
-        //when(userRepository.findByUsername(username)).thenReturn(mockUser);
-
-        // Act
-        String result = userService.login(username, password);
-
-        // Assert
-        //assertEquals(mockUser.getRol(), result);
-    }
-
-    @Test
-    public void testLoginValidCredentials() {
-        // Arrange
-        //User mockUser = new Cliente("John", "Doe", "johndoe", "password123", "john.doe@example.com");
-        //when(userRepository.findByUsername("johndoe")).thenReturn(mockUser);
     void login_ValidCredentials_ReturnsRole() throws NoSuchAlgorithmException {
         String username = "testUser";
         String password = "testPassword";
@@ -108,6 +119,7 @@ class ProjectApplicationTest {
         when(userRepository.findByUsername(username)).thenReturn(expectedUser);
         // Simula que las contraseñas coinciden
         when(encriptarService.encriptar(password)).thenReturn(password);
+
         String result = userService.login(username, password);
 
         assertEquals(expectedUser.getRol().toString(), result);
@@ -149,14 +161,11 @@ class ProjectApplicationTest {
     }
 
     @Test
-    public void testCredencialesValidCredentials() throws NoSuchAlgorithmException {
-        // Arrange
-        //User mockUser = new Cliente("Jane", "Doe", "janedoe", "password456", "jane.doe@example.com");
-        //when(userRepository.findByUsername("janedoe")).thenReturn(mockUser);
     void credenciales_InvalidCredentials_ReturnsFalse() throws NoSuchAlgorithmException {
         String username = "testUser";
         String password = "testPassword";
         // No agrega ningún usuario al resultado del mock (credenciales inválidas)
+
         boolean result = userService.credenciales(username, password);
 
         assertFalse(result);
@@ -186,64 +195,11 @@ class ProjectApplicationTest {
         String password = "password123";
         String email = "john.doe@example.com";
         Rol rol = Rol.CLIENTE;
-        // Act
-        //userService.crearUsuario(firstName, lastName, username, password, email);
 
-        // Assert
-        //verify(userRepository, times(1)).save(any(Cliente.class)); // Ajusta según la implementación real
         userService.crearUsuario(firstName, lastName, username, password, email, rol);
 
         // Verifica que el método del repositorio fue llamado con los parámetros correctos
         verify(userRepository, times(1)).save(any(User.class));
-
-    }
-
-    // Pruebas InsumoService
-    @Test
-    public void testGetAllInsumos() {
-        // Simular el repositorio para devolver una lista de insumos
-        List<Insumo> insumos = new ArrayList<>();
-        //insumos.add(new Insumo("Insumo1", TipoInsumos.CARNES, 10, 5.0, new Date()));
-        //insumos.add(new Insumo("Insumo2", TipoInsumos.FRUTAS, 20, 3.0, new Date()));
-    void getAllInsumos() {
-        ArrayList<Insumo> expectedInsumos = new ArrayList<>();
-        // Agrega los insumos esperados al resultado del mock
-        when(insumoRepository.findAll()).thenReturn(expectedInsumos);
-
-        List<Insumo> result = insumoService.getAllInsumos();
-
-        assertEquals(expectedInsumos, result);
-        // Verifica que el método del repositorio fue llamado
-        verify(insumoRepository, times(1)).findAll();
-    }
-
-    @Test
-    void getInsumoById() {
-        Long insumoId = 1L;
-        Insumo expectedInsumo = new Insumo();
-        // Agrega el insumo esperado al resultado del mock
-        when(insumoRepository.findById(insumoId)).thenReturn(Optional.of(expectedInsumo));
-
-        Insumo result = insumoService.getInsumoById(insumoId);
-
-        assertEquals(expectedInsumo, result);
-        // Verifica que el método del repositorio fue llamado
-        verify(insumoRepository, times(1)).findById(insumoId);
-    }
-
-    @Test
-    void createInsumo() {
-        String nombre = "InsumoTest";
-        TipoInsumos tipo = TipoInsumos.CARNES;
-        int cantidad = 10;
-        double precio = 20.0;
-        Date fecha = new Date();
-
-        insumoService.createInsumo(nombre, tipo, cantidad, precio, fecha);
-
-
-        // Verifica que el método del repositorio fue llamado con los parámetros correctos
-        verify(insumoRepository, times(1)).save(any(Insumo.class));
     }
 
     //TEST COMIDA
@@ -287,6 +243,48 @@ class ProjectApplicationTest {
         verify(comidaRepository, times(1)).findByPromocionIsNotNull();
     }
 
+    // TEST INSUMO
+    @Test
+    void getAllInsumos() {
+        ArrayList<Insumo> expectedInsumos = new ArrayList<>();
+        // Agrega los insumos esperados al resultado del mock
+        when(insumoRepository.findAll()).thenReturn(expectedInsumos);
+
+        List<Insumo> result = insumoService.getAllInsumos();
+
+        assertEquals(expectedInsumos, result);
+        // Verifica que el método del repositorio fue llamado
+        verify(insumoRepository, times(1)).findAll();
+    }
+
+    @Test
+    void getInsumoById() {
+        Long insumoId = 1L;
+        Insumo expectedInsumo = new Insumo();
+        // Agrega el insumo esperado al resultado del mock
+        when(insumoRepository.findById(insumoId)).thenReturn(Optional.of(expectedInsumo));
+
+        Insumo result = insumoService.getInsumoById(insumoId);
+
+        assertEquals(expectedInsumo, result);
+        // Verifica que el método del repositorio fue llamado
+        verify(insumoRepository, times(1)).findById(insumoId);
+    }
+
+    @Test
+    void createInsumo() {
+        String nombre = "InsumoTest";
+        TipoInsumos tipo = TipoInsumos.CARNES;
+        int cantidad = 10;
+        double precio = 20.0;
+        Date fecha = new Date();
+
+        insumoService.createInsumo(nombre, tipo, cantidad, precio, fecha);
+
+        // Verifica que el método del repositorio fue llamado con los parámetros correctos
+        verify(insumoRepository, times(1)).save(any(Insumo.class));
+    }
+
     //TEST DE LAS PROMOCIONES
     @Test
     void crearPromocion() {
@@ -311,7 +309,6 @@ class ProjectApplicationTest {
         // Simula la llamada a promocionRepository.getById(nombre)
         when(promocionRepository.getById(nombre)).thenReturn(promocion);
 
-
         // Simula la llamada a comidaRepository.findByCategoriaOrderByNombre con cualquier Categoria
         when(comidaRepository.findByCategoriaOrderByNombre(any(Categoria.class)))
                 .thenReturn(new ArrayList<>());  // Puedes ajustar esto según tu lógica real
@@ -324,6 +321,8 @@ class ProjectApplicationTest {
         //verify(comidaRepository, times(1)).findByCategoriaOrderByNombre(any(Categoria.class));
         //verify(comidaService, times(1)).actualizarComida(anyLong(), anyString(), anyDouble(), anyInt());
     }
+
+
     @Test
     void obtenerTodasLasPromociones() {
         ArrayList<Promocion> promociones = new ArrayList<>();
@@ -334,6 +333,7 @@ class ProjectApplicationTest {
         assertEquals(promociones, result);
         verify(promocionRepository, times(1)).findAll();
     }
+
     //TEST PEDIDOS
 
 

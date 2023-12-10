@@ -69,7 +69,6 @@ public class UserService {
 
     public Session getSession(String authToken) {
 
-        Session session = sessionRepository.findByToken(UUID.fromString(authToken));
-
-        return session;
+        return sessionRepository.findByToken(UUID.fromString(authToken));
     }
+}
