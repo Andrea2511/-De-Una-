@@ -80,6 +80,7 @@ public class PedidoService {
                 .fechaInicio(LocalDateTime.now())
                 .estado(EstadoPedido.EN_PROCESO)
                 .user(usuarioEnSesion)
+                .domicilio(false)
                 .build();
 
         //agrega el pedido al usuario

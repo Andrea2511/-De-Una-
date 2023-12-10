@@ -20,6 +20,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const pqrs = document.querySelector(".pqrs-container");
 
 
+    generarNuevoCodigo();
+
+    window.onload = function () {
+        actualizarCodigoPeriodicamente();
+        actualizarValorEnPesos();
+    };
+
     menuBtn.addEventListener('click', () => {
         sideMenu.style.display = 'block';
         menuBtn.style.display = 'none';
@@ -54,6 +61,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById('close-popup').addEventListener('click', function() {
         document.getElementById('popup-overlay').style.display = 'none';
+    });
+
+    document.getElementById('btn-recargar').addEventListener('click', function() {
+        document.getElementById('popup-overlay-redimir').style.display = 'flex';
+
+    });
+
+    document.getElementById('close-popup-recargar').addEventListener('click', function() {
+        document.getElementById('popup-overlay-redimir').style.display = 'none';
+
     });
 
     function showElement(element) {
@@ -211,6 +228,41 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     });
 
+    document.getElementById("btn-redimir").addEventListener("click", redimirPuntos);
+
+    function redimirPuntos() {
+
+        var valorEnPesosString = document.getElementById("valor-en-pesos").textContent.replace('$ ', '');
+        var valorEnPesos = parseFloat(valorEnPesosString);
+
+        var confirmacion = window.confirm("¿Estás seguro de que deseas redimir tus puntos?");
+        if (confirmacion) {
+            // Realizar la solicitud Fetch al controlador
+            fetch("/cliente/redimir", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(valorEnPesos),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        window.location.reload(true);
+                        console.log("Éxito:", data.message);
+
+                    } else {
+                        // La redención no fue exitosa, manejar el error
+                        console.error("Error:", data.message);
+                    }
+                })
+                .catch(error => {
+                    // Manejar errores (opcional)
+                    console.error(error);
+                });
+        }
+    }
+
 });
 
 function flipCard() {
@@ -275,5 +327,42 @@ function previewImage() {
     } else {
         preview.innerHTML = '';
     }
+
+}
+
+function generarCodigo() {
+    return Math.floor(Math.random() * 9000) + 1000;
+}
+
+function actualizarCodigoPeriodicamente() {
+    generarNuevoCodigo();
+    setInterval(generarNuevoCodigo, 30 * 60 * 1000);
+}
+
+function generarNuevoCodigo() {
+    var nuevoCodigo = generarCodigo();
+    document.getElementById("codigo-recarga").textContent = nuevoCodigo;
+}
+
+function calcularValorEnPesos(puntos) {
+    if (puntos >= 50000) {
+        return 70000;
+    } else if (puntos >= 10000) {
+        return 20000;
+    } else if (puntos >= 5000) {
+        return 10000;
+    } else if (puntos >= 1000) {
+        return 5000;
+    } else {
+        return 0;
+    }
+}
+
+function actualizarValorEnPesos() {
+
+    var puntosUsuario = parseInt(document.querySelector("#puntosRedimibles").textContent);
+    var valorEnPesos = calcularValorEnPesos(puntosUsuario);
+
+    document.getElementById("valor-en-pesos").textContent = '$ ' + valorEnPesos;
 }
 

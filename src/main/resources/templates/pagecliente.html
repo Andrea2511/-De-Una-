@@ -5,11 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cliente</title>
-
-    <link rel="stylesheet" href="../static/css/swiper-bundle.min.css">
-    <script src="../static/js/swiper-bundle.min.js"></script>
-    <link rel="stylesheet" href="../static/css/cliente.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/cliente.css">
 </head>
 <body>
 <div class="container">
@@ -77,26 +74,54 @@
             <div class="value-info">
                 <div class="balance">
                     <small class="text-muted">Saldo Total</small>
-                    <h3>$ 20.000</h3>
+                    <h3 th:text="${'$ ' + tarjeta.saldoT}"></h3>
                 </div>
-                <button>Recargar</button>
+                <button id="btn-recargar">Recargar</button>
             </div>
+
             <div class="card" onclick="flipCard()">
                 <div class="background-card"></div>
                 <div class="content">
                     <p class="front">¡De Una!</p>
                     <div class="franja"></div>
-                    <p class="back">Andrea Torres Tobar</p>
+                    <p class="back" th:text="${usuario.firstName + ' ' + usuario.lastName}"></p>
                 </div>
             </div>
+
             <div class="redeem">
                 <div class="info-points">
                     <h3>Redime Tus Puntos, ¡De Una!</h3>
                     <small class="text-muted">Puntos Totales</small>
-                    <h2>100</h2>
+                    <h2 th:text="${tarjeta.puntosRedimibles}" id="puntosRedimibles"></h2>
+                    <small class="text-muted">Dinero redimido <span id="valor-en-pesos"></span></small>
                 </div>
-                <button>Redimir</button>
+                <button id="btn-redimir">Redimir</button>
             </div>
+
+            <div class="popup-overlay" id="popup-overlay-redimir">
+                <div class="popup-recargar">
+                    <button id="close-popup-recargar"><span class="close-btn material-icons-sharp">close</span></button>
+                    <div class="codigo-section">
+                        <div id="codigo-recarga"></div>
+                    </div>
+                    <div class="mensaje-section">
+                        <p>Ten en cuente que al realizar la recarga,
+                            debes dar este codigo, este codigo tiene una duración de
+                            30 minutos, puedes recargar el valor que desees
+                            en cualquier punto efecty y Pagatodo.
+                        </p>
+                    </div>
+                    <div class="mensaje-warning">
+                        <h2>¡Protege tu dinero!</h2>
+                        <p>Recuerda cambiar tu clave de acceso a tu cuenta lo antes posible.
+                            Al registrarte, tu tarjeta tiene la clave predeterminada: <strong>0000</strong>.</p>
+                        <p>La seguridad de tu información financiera es nuestra prioridad.
+                            Cambiar tu clave regularmente ayuda a proteger tu dinero y garantizar
+                            la confidencialidad de tus transacciones.</p>
+                    </div>
+                </div>
+            </div>
+
         </div>
         <div class="more-details">
             <div class="card-history">

@@ -4,6 +4,7 @@ import co.edu.escuelaing.cvds.project.model.*;
 import co.edu.escuelaing.cvds.project.repository.SessionRepository;
 import co.edu.escuelaing.cvds.project.service.ComidaService;
 import co.edu.escuelaing.cvds.project.service.PedidoService;
+import co.edu.escuelaing.cvds.project.service.TarjetaService;
 import co.edu.escuelaing.cvds.project.service.UserService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.ui.Model;
 
 import java.time.Clock;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Controller
@@ -29,11 +31,19 @@ public class ClienteController {
     private UserService userService;
 
     @Autowired
+    private TarjetaService tarjetaService;
+
+    @Autowired
     private PedidoService pedidoService;
 
     @ModelAttribute("usuario")  // Agregar un atributo global al modelo
     public User usuario(HttpServletRequest request) {
         return obtenerUsuarioEnSesion(request);
+    }
+
+    @ModelAttribute("tarjeta")  // Agregar un atributo global al modelo
+    public Tarjeta target(HttpServletRequest request) {
+        return obtenerUsuarioEnSesion(request).getTarjeta();
     }
 
     @ModelAttribute("lineasPedido")
@@ -172,6 +182,27 @@ public class ClienteController {
             // Manejar excepciones aquí y devolver una respuesta HTTP apropiada
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse("Error en el servidor"));
         }
+    }
+
+    @PostMapping("/redimir")
+    public Map<String, Object> redimirPuntos(HttpServletRequest request, @RequestBody String puntosRedimibles) {
+        Map<String, Object> response = new HashMap<>();
+
+        try {
+            double montoRedimido = Double.parseDouble(puntosRedimibles);
+            // Realiza la lógica de redención de puntos
+            tarjetaService.recarga(montoRedimido, LocalDateTime.now(), obtenerUsuarioEnSesion(request).getTarjeta());
+            tarjetaService.modificarPuntos(obtenerUsuarioEnSesion(request).getTarjeta());
+
+            response.put("success", true);
+            response.put("message", "Puntos redimidos correctamente");
+
+        } catch (NumberFormatException e) {
+            response.put("success", false);
+            response.put("message", "Error al procesar la redención de puntos");
+        }
+
+        return response;
     }
 
     private User obtenerUsuarioEnSesion(HttpServletRequest request) {

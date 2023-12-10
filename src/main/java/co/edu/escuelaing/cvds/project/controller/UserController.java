@@ -5,6 +5,7 @@ import co.edu.escuelaing.cvds.project.model.User;
 import co.edu.escuelaing.cvds.project.repository.PedidoRepository;
 import co.edu.escuelaing.cvds.project.repository.SessionRepository;
 import co.edu.escuelaing.cvds.project.service.EncriptarService;
+import co.edu.escuelaing.cvds.project.service.TarjetaService;
 import co.edu.escuelaing.cvds.project.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletResponse;

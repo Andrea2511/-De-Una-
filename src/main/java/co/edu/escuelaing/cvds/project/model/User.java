@@ -53,8 +53,8 @@ public class User {
     @JoinColumn(name = "restaurante_nit")
     private Restaurante restaurante;
 
-    @OneToOne
-    @JoinColumn(name = "tarjeta")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "tarjeta_id", referencedColumnName = "id")
     private Tarjeta tarjeta;
 
 }

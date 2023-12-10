@@ -1,8 +1,16 @@
 package co.edu.escuelaing.cvds.project.model;
 
 import jakarta.persistence.*;
+import lombok.*;
 
+import java.util.List;
+
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
+@Table(name = "TARJETA")
 public class Tarjeta {
 
     @Id
@@ -11,7 +19,7 @@ public class Tarjeta {
 
     @Lob
     @Column(name = "SaldoTotal",nullable = false)
-    private Integer saldoT;
+    private double saldoT;
 
     @Column(name = "PuntosRedimibles")
     private Integer puntosRedimibles;
@@ -19,54 +27,10 @@ public class Tarjeta {
     @Column(name = "password", nullable = false)
     private String password;
 
-    public Tarjeta() {
-    }
+    @OneToMany(mappedBy = "tarjeta", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Transaccion> transacciones;
 
-    public Tarjeta(String password) {
-        this.password = password;
-        this.puntosRedimibles = 0;
-        this.saldoT = 0;
-    }
+    @OneToOne(mappedBy = "tarjeta")
+    private User usuario;
 
-    public Long getId() {
-        return id;
-    }
-
-    public Integer getSaldoT() {
-        return saldoT;
-    }
-
-    public Integer getPuntosRedimibles() {
-        return puntosRedimibles;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-
-    }
-
-    public void setSaldoT(Integer saldoT) {
-        this.saldoT = saldoT;
-    }
-
-    public void setPuntosRedimibles(Integer puntosRedimibles) {;
-        this.puntosRedimibles = puntosRedimibles;
-    }
-
-    public void redimirPuntos() {
-        Integer puntosAredimir = (puntosRedimibles / 100) ;
-        this.puntosRedimibles = puntosRedimibles - (puntosAredimir * 100);
-        Integer saldo = puntosAredimir * 2000;
-        if(saldo > 0){
-            setSaldoT(saldoT + saldo);
-        }
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }

@@ -28,7 +28,6 @@ public class ProjectApplication {
 	public CommandLineRunner run() throws Exception {
 		return (args) -> {
 
-
 			if (!userService.credenciales("admin", "admin")) {
 					userService.crearUsuario("admin", "admin", "admin", encriptarService.encriptar("admin") , "deuna@gmail.com", Rol.ADMINISTRADOR);
 				}
