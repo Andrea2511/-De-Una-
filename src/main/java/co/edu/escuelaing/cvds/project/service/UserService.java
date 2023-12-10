@@ -68,8 +68,15 @@ public class UserService {
         user.setRol(rol);
 
         userRepository.save(user);
-
         adicionarTarjeta(user);
+    }
+    public void actualizarDatos(User user,String email, String address, String phone, String firstname, String lastname){
+        user.setEmail(email != null ? email : user.getEmail());
+        user.setDireccion(address != null ? address : user.getDireccion());
+        user.setTelefono(phone != null ? phone : user.getTelefono());
+        user.setFirstName(firstname != null ? firstname : user.getFirstName());
+        user.setLastName(lastname != null ? lastname : user.getLastName());
+        userRepository.save(user);
     }
 
     public void adicionarTarjeta(User user) {

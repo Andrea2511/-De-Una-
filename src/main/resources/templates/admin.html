@@ -448,8 +448,6 @@
                 <label for="tipoDescuento" class="label">Tipo de Descuento:</label>
                 <select id="tipoDescuento" name="tipoDescuento" class="select">
                     <option value="PORCENTAJE" class="textarea">Porcentaje</option>
-                    <option value="COMPRA_MINIMA" class="textarea">Compra Mínima</option>
-                    <option value="CANTIDAD" class="textarea">Cantidad</option>
                     <option value="TEMPORADA_EVENTO" class="textarea">Temporada/Evento</option>
                 </select><br>
 
@@ -462,33 +460,6 @@
 
                 <button type="submit" class="button">Guardar Promoción</button>
             </form>
-            <hr class="separator-line">
-            <table id = "tablaPromociones">
-                <thead>
-                <tr>
-                    <th><span class="icon-tag material-icons-sharp">tag</span>ID</th>
-                    <th>Nombre de la Promoción</th>
-                    <th>Descripción</th>
-                    <th>Fecha de Inicio</th>
-                    <th>Fecha de Fin</th>
-                    <th>Categoría</th>
-                    <th>Tipo de Descuento</th>
-                    <th>Descuento</th>
-                </tr>
-                </thead>
-                <tbody id="cuerpoTablaPromocion">
-                <tr th:each="promocion : ${promociones}" th:attr="data-promocion-id=${promocion.id}">
-                    <td th:text="${promocion.id}"></td>
-                    <td th:text="${promocion.nombre}"></td>
-                    <td th:text="${promocion.descripcion}"></td>
-                    <td th:text="${#dates.format(promocion.fechaInicio, 'yyyy-MM-dd HH:mm:ss')}"></td>
-                    <td th:text="${#dates.format(promocion.fechaFin, 'yyyy-MM-dd HH:mm:ss')}"></td>
-                    <td th:text="${promocion.categoria}"></td>
-                    <td th:text="${promocion.tipoDescuento}"></td>
-                    <td th:text="${promocion.descuento}"></td>
-                </tr>
-                </tbody>
-            </table>
         </div>
 
         <div class="right">

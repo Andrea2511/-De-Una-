@@ -88,7 +88,9 @@ public class ClienteController {
     }
 
     @GetMapping("/cuenta")
-    public String cuenta() {
+    public String cuenta(HttpServletRequest request, Model model) {
+        User user = obtenerUsuarioEnSesion(request);
+        model.addAttribute("user",user);
         return "pagecliente";
     }
 
@@ -129,6 +131,16 @@ public class ClienteController {
     public String mostrarFastFood(Model model) {
         List<Comida> fastFood = comidaService.obtenerComidasPorCategoria(Categoria.FAST_FOOD);
         model.addAttribute("comidas", fastFood);
+        return "pagecliente";
+    }
+
+    @PostMapping("/cuenta")
+    public String actuzalizarDatos(@RequestParam(required = false) String email,@RequestParam(required = false) String address,
+                               @RequestParam(required = false) String phone,@RequestParam(required = false) String firstname,@RequestParam(required = false) String lastname,HttpServletRequest request) {
+        User user = obtenerUsuarioEnSesion(request);
+        if(user!= null) {
+            userService.actualizarDatos(user, email, address, phone, firstname, lastname);
+        }
         return "pagecliente";
     }
 
