@@ -8,10 +8,15 @@ import java.util.ArrayList;
 @Service
 public class TarjetaService {
 
-    @Autowired
+    final
     UserService userService;
-    @Autowired
+    final
     TarjetaRepository tarjetaRepository;
+    @Autowired
+    public TarjetaService(UserService userService, TarjetaRepository tarjetaRepository) {
+        this.userService = userService;
+        this.tarjetaRepository = tarjetaRepository;
+    }
 
     public void crearTarjeta(String password){
         Tarjeta tarjeta = new Tarjeta(password);

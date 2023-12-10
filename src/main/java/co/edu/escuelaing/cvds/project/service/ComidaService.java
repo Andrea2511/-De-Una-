@@ -12,8 +12,11 @@ import java.util.Set;
 @Service
 public class ComidaService {
 
+    private final ComidaRepository comidaRepository;
     @Autowired
-    private ComidaRepository comidaRepository;
+    public ComidaService(ComidaRepository comidaRepository) {
+        this.comidaRepository = comidaRepository;
+    }
 
     public ArrayList<Comida> obtenerComidasPorCategoria(Categoria categoria) {
         // Implementa la lógica para obtener comidas por categoría desde el repositorio

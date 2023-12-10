@@ -10,12 +10,19 @@ import java.util.ArrayList;
 @Service
 public class PromocionService {
 
-    @Autowired
+    final
     PromocionRepository promocionRepository;
-    @Autowired
+    final
     ComidaRepository comidaRepository;
-    @Autowired
+    final
     ComidaService comidaService;
+    @Autowired
+    public PromocionService(PromocionRepository promocionRepository, ComidaRepository comidaRepository, ComidaService comidaService) {
+        this.promocionRepository = promocionRepository;
+        this.comidaRepository = comidaRepository;
+        this.comidaService = comidaService;
+    }
+
     public void crearPromocion(String nombre, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin, String categoria, TipoDescuento tipoDescuento, Double descuento){
         Promocion promocion = new Promocion(nombre,descripcion,fechaInicio,fechaFin,categoria,tipoDescuento,descuento);
         promocionRepository.save(promocion);

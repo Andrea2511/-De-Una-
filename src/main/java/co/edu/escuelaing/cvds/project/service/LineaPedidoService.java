@@ -10,11 +10,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class LineaPedidoService {
 
-    @Autowired
-    private LineaPedidoRepository lineaPedidoRepository;
+    private final LineaPedidoRepository lineaPedidoRepository;
 
+    private final ComidaRepository comidaRepository;
     @Autowired
-    private ComidaRepository comidaRepository;
+    public LineaPedidoService(LineaPedidoRepository lineaPedidoRepository, ComidaRepository comidaRepository) {
+        this.lineaPedidoRepository = lineaPedidoRepository;
+        this.comidaRepository = comidaRepository;
+    }
 
     public LineaPedido crearLineaPedido(Pedido pedido, String bebida, String idComida, String[] ingredientes) {
         LineaPedido lineaPedido = new LineaPedido();

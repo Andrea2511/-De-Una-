@@ -25,9 +25,6 @@ public class AdministradorController {
     InsumoService insumoService;
 
     @Autowired
-    private InsumoRepository insumoRepository;
-
-    @Autowired
     private PromocionService promocionService;
   
     @GetMapping("/dashboard")
@@ -51,7 +48,7 @@ public class AdministradorController {
     }
 
     @GetMapping("/guardarPromociones")
-    public String addPromocion(Model model) {;
+    public String addPromocion(Model model) {
         ArrayList<Promocion> promociones = promocionService.obtenerTodasLasPromociones();
         model.addAttribute("promociones", promociones);
         return "admin";

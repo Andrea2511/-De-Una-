@@ -11,14 +11,17 @@ import java.util.List;
 @Service
 public class PedidoService {
 
-    @Autowired
-    private PedidoRepository pedidoRepository;
+    private final PedidoRepository pedidoRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
+    private final LineaPedidoService lineaPedidoService;
     @Autowired
-    private LineaPedidoService lineaPedidoService;
+    public PedidoService(PedidoRepository pedidoRepository, UserRepository userRepository, LineaPedidoService lineaPedidoService) {
+        this.pedidoRepository = pedidoRepository;
+        this.userRepository = userRepository;
+        this.lineaPedidoService = lineaPedidoService;
+    }
 
     public Pedido pedidoActive(User usuarioEnSesion) {
 

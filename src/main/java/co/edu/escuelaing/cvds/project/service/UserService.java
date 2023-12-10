@@ -11,14 +11,17 @@ import java.util.UUID;
 @Service
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private EncriptarService encriptarService;
+    private final EncriptarService encriptarService;
 
+    private final SessionRepository sessionRepository;
     @Autowired
-    private SessionRepository sessionRepository;
+    public UserService(UserRepository userRepository, EncriptarService encriptarService, SessionRepository sessionRepository) {
+        this.userRepository = userRepository;
+        this.encriptarService = encriptarService;
+        this.sessionRepository = sessionRepository;
+    }
 
     public String login(String username, String password){
         User user = userRepository.findByUsername(username);

@@ -53,7 +53,7 @@ public class Tarjeta {
         this.saldoT = saldoT;
     }
 
-    public void setPuntosRedimibles(Integer puntosRedimibles) {;
+    public void setPuntosRedimibles(Integer puntosRedimibles) {
         this.puntosRedimibles = puntosRedimibles;
     }
 
