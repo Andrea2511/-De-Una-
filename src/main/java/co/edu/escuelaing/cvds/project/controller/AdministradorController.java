@@ -4,6 +4,7 @@ import co.edu.escuelaing.cvds.project.model.*;
 import co.edu.escuelaing.cvds.project.repository.ComidaRepository;
 import co.edu.escuelaing.cvds.project.repository.InsumoRepository;
 import co.edu.escuelaing.cvds.project.repository.PromocionRepository;
+import co.edu.escuelaing.cvds.project.service.AdministradorService;
 import co.edu.escuelaing.cvds.project.service.ComidaService;
 import co.edu.escuelaing.cvds.project.service.InsumoService;
 import co.edu.escuelaing.cvds.project.service.PromocionService;
@@ -39,9 +40,18 @@ public class AdministradorController {
 
     @Autowired
     private PromocionService promocionService;
+
+    @Autowired
+    private AdministradorService administradorService;
   
     @GetMapping("/dashboard")
-    public String mostrarFormulario() {
+    public String mostrarFormulario(Model model) {
+        String ventasTotales = administradorService.calcularVentasTotales();
+        String gastosTotales = administradorService.calcularGastosTotales();
+        String ingresosTotales = administradorService.calcularIngresosTotales();
+        model.addAttribute("ventasTotales",ventasTotales);
+        model.addAttribute("gastosTotales",gastosTotales);
+        model.addAttribute("ingresosTotales",ingresosTotales);
         return "admin";
     }
 
@@ -71,7 +81,6 @@ public class AdministradorController {
     public String inventario(Model model) {
         ArrayList<Insumo> insumos = insumoService.obtenerTodosLosInsumos();
         model.addAttribute("insumos", insumos);
-
         return "admin";
     }
 
