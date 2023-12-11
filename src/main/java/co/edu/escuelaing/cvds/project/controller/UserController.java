@@ -127,7 +127,7 @@ public class UserController {
                 return new ResponseEntity<>(responseBody, HttpStatus.UNAUTHORIZED);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
 
             responseBody.put("success", false);
             responseBody.put("error", e.getMessage());

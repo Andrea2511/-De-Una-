@@ -280,7 +280,7 @@ public class ClienteController {
 
         } catch (Exception e) {
             // En caso de error, devuelve un código de estado 500 (Internal Server Error)
-            e.printStackTrace();
+            //e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No se pudo completar el pago: " + e.getMessage());
         }
     }

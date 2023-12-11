@@ -26,7 +26,7 @@ public class EncriptacionContrasena {
             }
             this.password =  hexString.toString();
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace(); // Manejo básico de la excepción
+            //e.printStackTrace(); // Manejo básico de la excepción
         }
     }
 

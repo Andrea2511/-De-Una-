@@ -48,7 +48,7 @@ public class BasicAuthInterceptor implements HandlerInterceptor {
             log.info("Session: " + session);
             if (session != null) {
                 Duration duration = Duration.between(Instant.now(), session.getTimestamp());
-                long oneHour = 60 * 60;
+                long oneHour = (long)60 * 60;
                 log.info("time: " + duration.getSeconds());
                 if(duration.getSeconds() > oneHour) {
                     sessionRepository.delete(session);
