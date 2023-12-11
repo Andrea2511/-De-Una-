@@ -1,24 +1,28 @@
 package co.edu.escuelaing.cvds.project.service;
-
 import co.edu.escuelaing.cvds.project.model.*;
 import co.edu.escuelaing.cvds.project.repository.ComidaRepository;
 import co.edu.escuelaing.cvds.project.repository.PromocionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Optional;
 
 @Service
 public class PromocionService {
 
-    @Autowired
+    final
     PromocionRepository promocionRepository;
-    @Autowired
+    final
     ComidaRepository comidaRepository;
-    @Autowired
+    final
     ComidaService comidaService;
+    @Autowired
+    public PromocionService(PromocionRepository promocionRepository, ComidaRepository comidaRepository, ComidaService comidaService) {
+        this.promocionRepository = promocionRepository;
+        this.comidaRepository = comidaRepository;
+        this.comidaService = comidaService;
+    }
+
     public void crearPromocion(String nombre, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin, String categoria, TipoDescuento tipoDescuento, Double descuento){
         Promocion promocion = new Promocion();
         promocion.setNombre(nombre);

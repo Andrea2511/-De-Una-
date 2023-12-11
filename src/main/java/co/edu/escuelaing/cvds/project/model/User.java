@@ -1,9 +1,6 @@
 package co.edu.escuelaing.cvds.project.model;
 import jakarta.persistence.*;
 import lombok.*;
-
-import javax.management.relation.Role;
-import java.util.ArrayList;
 import java.util.List;
 
 @Setter

@@ -1,4 +1,5 @@
 package co.edu.escuelaing.cvds.project.controller;
+
 import co.edu.escuelaing.cvds.project.model.Rol;
 import co.edu.escuelaing.cvds.project.model.Session;
 import co.edu.escuelaing.cvds.project.model.User;
@@ -13,13 +14,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 import java.time.Instant;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -28,17 +30,23 @@ import java.util.UUID;
 @Controller
 public class UserController {
 
-    @Autowired
+    final
     UserService userService;
 
-    @Autowired
+    final
     PedidoRepository pedidoRepository;
 
-    @Autowired
+    final
     SessionRepository sessionRepository;
 
+    private final EncriptarService encriptarService;
     @Autowired
-    private EncriptarService encriptarService;
+    public UserController(UserService userService, PedidoRepository pedidoRepository, SessionRepository sessionRepository, EncriptarService encriptarService) {
+        this.userService = userService;
+        this.pedidoRepository = pedidoRepository;
+        this.sessionRepository = sessionRepository;
+        this.encriptarService = encriptarService;
+    }
 
     @GetMapping("/login")
     public ModelAndView loginPage() {
@@ -46,7 +54,7 @@ public class UserController {
     }
 
     @PostMapping("/verificar-usuario")
-    public void verificarUsuario(@RequestBody Map<String, String> credentials, HttpServletResponse response) throws IOException, NoSuchAlgorithmException {
+    public void verificarUsuario(@RequestBody Map<String, String> credentials, HttpServletResponse response) throws IOException {
         // Obtiene el usuario y la contraseña del cuerpo de la solicitud
         String username = credentials.get("username");
         System.out.println("username:" + username);

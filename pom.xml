@@ -16,6 +16,8 @@
 	<properties>
 		<java.version>17</java.version>
 		<persistence.configLocation>src/main/resources/persistence.xml</persistence.configLocation>
+		<sonar.organization>andrea2511</sonar.organization>
+  		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
 	<dependencies>
 		<dependency>

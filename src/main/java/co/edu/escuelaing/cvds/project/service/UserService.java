@@ -3,22 +3,21 @@ import co.edu.escuelaing.cvds.project.model.Rol;
 import co.edu.escuelaing.cvds.project.model.Session;
 import co.edu.escuelaing.cvds.project.model.Tarjeta;
 import co.edu.escuelaing.cvds.project.model.User;
-import co.edu.escuelaing.cvds.project.repository.PedidoRepository;
 import co.edu.escuelaing.cvds.project.repository.SessionRepository;
 import co.edu.escuelaing.cvds.project.repository.TarjetaRepository;
 import co.edu.escuelaing.cvds.project.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.security.NoSuchAlgorithmException;
 import java.util.UUID;
 
 @Service
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
+    private final EncriptarService encriptarService;
+
+    private final SessionRepository sessionRepository;
     @Autowired
     private EncriptarService encriptarService;
 
@@ -30,24 +29,28 @@ public class UserService {
 
     @Autowired
     private SessionRepository sessionRepository;
+    public UserService(UserRepository userRepository, EncriptarService encriptarService, SessionRepository sessionRepository) {
+        this.userRepository = userRepository;
+        this.encriptarService = encriptarService;
+        this.sessionRepository = sessionRepository;
+    }
 
-    public String login(String username, String password) {
+    public String login(String username, String password){
         User user = userRepository.findByUsername(username);
         if (user != null && user.getPassword().equals(password)) {
-            String role = user.getRol().toString();
-            return role; // Retorna el nombre del rol
+            return user.getRol().toString(); // Retorna el nombre del rol
         }
 
         return null; // En caso de credenciales incorrectas
     }
 
-    public boolean credenciales(String username, String password) throws NoSuchAlgorithmException {
+    public boolean credenciales(String username, String password) {
         User user = userRepository.findByUsername(username);
         System.out.println("user:" + user);
         String pw = encriptarService.encriptar(password);
         boolean exist = false;
-        if (user != null) {
-            if (user.getPassword().equals(pw)) {
+        if(user != null){
+            if (user.getPassword().equals(pw)){
                 exist = true;
             }
         }
@@ -58,7 +61,7 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
-    public void crearUsuario(String firstName, String lastName, String username, String password, String email, Rol rol) {
+    public void crearUsuario(String firstName, String lastName, String username, String password, String email, Rol rol){
         User user = new User();
         user.setFirstName(firstName);
         user.setLastName(lastName);
@@ -86,8 +89,6 @@ public class UserService {
 
     public Session getSession(String authToken) {
 
-        Session session = sessionRepository.findByToken(UUID.fromString(authToken));
-
-        return session;
+        return sessionRepository.findByToken(UUID.fromString(authToken));
     }
 }

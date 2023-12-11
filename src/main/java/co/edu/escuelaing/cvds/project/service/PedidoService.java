@@ -1,30 +1,27 @@
 package co.edu.escuelaing.cvds.project.service;
 import co.edu.escuelaing.cvds.project.model.*;
-import co.edu.escuelaing.cvds.project.repository.ComidaRepository;
-import co.edu.escuelaing.cvds.project.repository.LineaPedidoRepository;
 import co.edu.escuelaing.cvds.project.repository.PedidoRepository;
 import co.edu.escuelaing.cvds.project.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class PedidoService {
 
-    @Autowired
-    private PedidoRepository pedidoRepository;
+    private final PedidoRepository pedidoRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
+    private final LineaPedidoService lineaPedidoService;
     @Autowired
-    private LineaPedidoService lineaPedidoService;
+    public PedidoService(PedidoRepository pedidoRepository, UserRepository userRepository, LineaPedidoService lineaPedidoService) {
+        this.pedidoRepository = pedidoRepository;
+        this.userRepository = userRepository;
+        this.lineaPedidoService = lineaPedidoService;
+    }
 
     public Pedido pedidoActive(User usuarioEnSesion) {
 

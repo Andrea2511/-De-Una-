@@ -1,26 +1,15 @@
 package co.edu.escuelaing.cvds.project.controller;
 
 import co.edu.escuelaing.cvds.project.model.*;
-import co.edu.escuelaing.cvds.project.repository.ComidaRepository;
-import co.edu.escuelaing.cvds.project.repository.InsumoRepository;
-import co.edu.escuelaing.cvds.project.repository.PromocionRepository;
 import co.edu.escuelaing.cvds.project.service.ComidaService;
 import co.edu.escuelaing.cvds.project.service.InsumoService;
 import co.edu.escuelaing.cvds.project.service.PromocionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -28,18 +17,19 @@ import java.util.*;
 @RequestMapping("/admin")
 public class AdministradorController {
 
-    @Autowired
-    private ComidaService comidaService;
+    private final ComidaService comidaService;
 
-    @Autowired
+    final
     InsumoService insumoService;
 
+    private final PromocionService promocionService;
     @Autowired
-    private InsumoRepository insumoRepository;
+    public AdministradorController(ComidaService comidaService, InsumoService insumoService, PromocionService promocionService) {
+        this.comidaService = comidaService;
+        this.insumoService = insumoService;
+        this.promocionService = promocionService;
+    }
 
-    @Autowired
-    private PromocionService promocionService;
-  
     @GetMapping("/dashboard")
     public String mostrarFormulario() {
         return "admin";
@@ -61,7 +51,7 @@ public class AdministradorController {
     }
 
     @GetMapping("/guardarPromociones")
-    public String addPromocion(Model model) {;
+    public String addPromocion(Model model) {
         ArrayList<Promocion> promociones = promocionService.obtenerTodasLasPromociones();
         model.addAttribute("promociones", promociones);
         return "admin";

@@ -1,23 +1,22 @@
 package co.edu.escuelaing.cvds.project.service;
-
 import co.edu.escuelaing.cvds.project.model.Categoria;
 import co.edu.escuelaing.cvds.project.model.Comida;
 import co.edu.escuelaing.cvds.project.model.DetalleComidaInsumo;
-import co.edu.escuelaing.cvds.project.model.Promocion;
 import co.edu.escuelaing.cvds.project.repository.ComidaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 
 @Service
 public class ComidaService {
 
+    private final ComidaRepository comidaRepository;
     @Autowired
-    private ComidaRepository comidaRepository;
+    public ComidaService(ComidaRepository comidaRepository) {
+        this.comidaRepository = comidaRepository;
+    }
 
     public ArrayList<Comida> obtenerComidasPorCategoria(Categoria categoria) {
         // Implementa la lógica para obtener comidas por categoría desde el repositorio
@@ -39,7 +38,7 @@ public class ComidaService {
     }
 
     public ArrayList<Comida> obtenerComidasConPromocion() {
-        return (ArrayList<Comida>) comidaRepository.findByPromocionIsNotNull();
+        return comidaRepository.findByPromocionIsNotNull();
     }
 
     public Comida crearComida(String nombre, double calificacion, double precio, int cantidad, Categoria categoria){
