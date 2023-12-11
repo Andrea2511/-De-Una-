@@ -124,12 +124,7 @@ class ProjectApplicationTest {
     }
     @Test
     void crearUsuario() {
-        String firstName = "John";
-        String lastName = "Doe";
-        String username = "johndoe";
-        String password = "password123";
-        String email = "john.doe@example.com";
-        Rol rol = Rol.CLIENTE;
+
 
         //userService.crearUsuario(firstName, lastName, username, password, email, rol);
         //tarjetaService.crearTarjeta(userService.getUser("John"));
@@ -441,12 +436,12 @@ class ProjectApplicationTest {
     @Test
     void crearTarjeta_SaveTarjetaInRepository() {
         // Arrange
-        String firstName = "John";
-        String lastName = "Doe";
-        String username = "johndoe";
-        String password = "password123";
-        String email = "john.doe@example.com";
-        Rol rol = Rol.CLIENTE;
+        //String firstName = "John";
+        //String lastName = "Doe";
+        //String username = "johndoe";
+        //String password = "password123";
+        //String email = "john.doe@example.com";
+        //Rol rol = Rol.CLIENTE;
         // Act
         //tarjetaService.crearTarjeta(userService.getUser("John"));
         //userService.crearUsuario(firstName, lastName, username, password, email, rol);

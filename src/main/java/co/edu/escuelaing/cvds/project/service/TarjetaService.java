@@ -1,8 +1,9 @@
 package co.edu.escuelaing.cvds.project.service;
 
-import co.edu.escuelaing.cvds.project.model.*;
-import co.edu.escuelaing.cvds.project.repository.ComidaRepository;
-import co.edu.escuelaing.cvds.project.repository.PromocionRepository;
+import co.edu.escuelaing.cvds.project.model.Tarjeta;
+import co.edu.escuelaing.cvds.project.model.TipoTransaccion;
+import co.edu.escuelaing.cvds.project.model.Transaccion;
+import co.edu.escuelaing.cvds.project.model.User;
 import co.edu.escuelaing.cvds.project.repository.TarjetaRepository;
 import co.edu.escuelaing.cvds.project.repository.TransaccionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +16,14 @@ import java.util.List;
 @Service
 public class TarjetaService {
 
-    @Autowired
-    private TarjetaRepository tarjetaRepository;
+    private final TarjetaRepository tarjetaRepository;
 
+    private final TransaccionRepository transaccionRepository;
     @Autowired
-    private TransaccionRepository transaccionRepository;
+    public TarjetaService(TarjetaRepository tarjetaRepository, TransaccionRepository transaccionRepository) {
+        this.tarjetaRepository = tarjetaRepository;
+        this.transaccionRepository = transaccionRepository;
+    }
 
     public Tarjeta obtenerTarjetaPorUser(User titular) {
         return tarjetaRepository.findByUsuario(titular);

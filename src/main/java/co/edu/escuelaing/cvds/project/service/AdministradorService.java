@@ -1,6 +1,8 @@
 package co.edu.escuelaing.cvds.project.service;
 
-import co.edu.escuelaing.cvds.project.model.*;
+import co.edu.escuelaing.cvds.project.model.EstadoPedido;
+import co.edu.escuelaing.cvds.project.model.Insumo;
+import co.edu.escuelaing.cvds.project.model.Pedido;
 import co.edu.escuelaing.cvds.project.repository.ComidaRepository;
 import co.edu.escuelaing.cvds.project.repository.InsumoRepository;
 import co.edu.escuelaing.cvds.project.repository.PedidoRepository;
@@ -8,23 +10,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 @Service
 public class AdministradorService {
 
+    private final ComidaRepository comidaRepository;
+    private final PedidoRepository pedidoRepository;
+    private final InsumoRepository insumoRepository;
     @Autowired
-    private ComidaRepository comidaRepository;
-    @Autowired
-    private PedidoRepository pedidoRepository;
-    @Autowired
-    private InsumoRepository insumoRepository;
+    public AdministradorService(ComidaRepository comidaRepository, PedidoRepository pedidoRepository, InsumoRepository insumoRepository) {
+        this.comidaRepository = comidaRepository;
+        this.pedidoRepository = pedidoRepository;
+        this.insumoRepository = insumoRepository;
+    }
 
     public String calcularVentasTotales(){
         ArrayList<Pedido> pedidos = (ArrayList<Pedido>) pedidoRepository.findAll();
         double ventasTotales = 0;
-        String ventasT = "";
+        String ventasT;
         for(Pedido p: pedidos){
             if(p.getEstado() == EstadoPedido.FINALIZADO){
                 ventasTotales += p.getCostoTotal();
@@ -37,7 +40,7 @@ public class AdministradorService {
     public String calcularGastosTotales(){
         ArrayList<Insumo> insumos = (ArrayList<Insumo>) insumoRepository.findAll();
         double gastosTotales = 0;
-        String gastosT = "";
+        String gastosT;
         for(Insumo i: insumos){
            gastosTotales += i.getPrecio();
         }

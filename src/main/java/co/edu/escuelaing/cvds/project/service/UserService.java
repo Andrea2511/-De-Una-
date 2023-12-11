@@ -13,15 +13,10 @@ import java.util.UUID;
 public class UserService {
 
     private final UserRepository userRepository;
-
     private final EncriptarService encriptarService;
-     private final TarjetaService tarjetaService;
-
-  
-   
-
+    private final TarjetaService tarjetaService;
+    private final SessionRepository sessionRepository;
     @Autowired
-    private SessionRepository sessionRepository;
     public UserService(UserRepository userRepository, EncriptarService encriptarService, SessionRepository sessionRepository,TarjetaService tarjetaService) {
         this.userRepository = userRepository;
         this.encriptarService = encriptarService;

@@ -1,7 +1,6 @@
 package co.edu.escuelaing.cvds.project.controller;
 
 import co.edu.escuelaing.cvds.project.model.*;
-import co.edu.escuelaing.cvds.project.repository.SessionRepository;
 import co.edu.escuelaing.cvds.project.service.*;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -9,12 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
-import java.time.Clock;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -23,20 +19,23 @@ import java.util.*;
 @RequestMapping("/cliente")
 public class ClienteController {
 
-    @Autowired
-    private ComidaService comidaService;
+    private final ComidaService comidaService;
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
-    @Autowired
-    private TarjetaService tarjetaService;
+    private final TarjetaService tarjetaService;
 
-    @Autowired
-    private TransaccionesService transaccionesService;
+    //@Autowired
+    //private TransaccionesService transaccionesService;
 
+    private final PedidoService pedidoService;
     @Autowired
-    private PedidoService pedidoService;
+    public ClienteController(ComidaService comidaService, UserService userService, TarjetaService tarjetaService, PedidoService pedidoService) {
+        this.comidaService = comidaService;
+        this.userService = userService;
+        this.tarjetaService = tarjetaService;
+        this.pedidoService = pedidoService;
+    }
 
     @ModelAttribute("usuario")  // Agregar un atributo global al modelo
     public User usuario(HttpServletRequest request) {
@@ -45,12 +44,12 @@ public class ClienteController {
 
     @ModelAttribute("tarjeta")  // Agregar un atributo global al modelo
     public Tarjeta target(HttpServletRequest request) {
-        return obtenerUsuarioEnSesion(request).getTarjeta();
+        return Objects.requireNonNull(obtenerUsuarioEnSesion(request)).getTarjeta();
     }
 
     @ModelAttribute("transacciones")  // Agregar un atributo global al modelo
     public List<Transaccion> transacciones(HttpServletRequest request) {
-        return obtenerUsuarioEnSesion(request).getTarjeta().getTransacciones();
+        return Objects.requireNonNull(obtenerUsuarioEnSesion(request)).getTarjeta().getTransacciones();
     }
 
     @ModelAttribute("lineasPedido")
@@ -77,7 +76,7 @@ public class ClienteController {
     @GetMapping("/instantCard")
     public String instantCard(Model model, HttpServletRequest request) {
 
-        List<Transaccion> transacciones = tarjetaService.obtenerTransacciones(obtenerUsuarioEnSesion(request).getTarjeta());
+        List<Transaccion> transacciones = tarjetaService.obtenerTransacciones(Objects.requireNonNull(obtenerUsuarioEnSesion(request)).getTarjeta());
         model.addAttribute("transacciones", transacciones);
         return "pagecliente";
     }
@@ -219,8 +218,8 @@ public class ClienteController {
         try {
             double montoRedimido = Double.parseDouble(puntosRedimibles);
             // Realiza la lógica de redención de puntos
-            tarjetaService.recarga(montoRedimido, LocalDateTime.now(), obtenerUsuarioEnSesion(request).getTarjeta(), "Redencion de puntos");
-            tarjetaService.modificarPuntos(obtenerUsuarioEnSesion(request).getTarjeta());
+            tarjetaService.recarga(montoRedimido, LocalDateTime.now(), Objects.requireNonNull(obtenerUsuarioEnSesion(request)).getTarjeta(), "Redencion de puntos");
+            tarjetaService.modificarPuntos(Objects.requireNonNull(obtenerUsuarioEnSesion(request)).getTarjeta());
 
             response.put("success", true);
             response.put("message", "Puntos redimidos correctamente");
