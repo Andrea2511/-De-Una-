@@ -33,4 +33,6 @@ public class Tarjeta {
     @OneToOne(mappedBy = "tarjeta")
     private User usuario;
 
+    public Tarjeta(String password1) {
+    }
 }
