@@ -39,14 +39,18 @@ public class UserController {
     final
     SessionRepository sessionRepository;
 
+    final
+     TarjetaService tarjetaService;
+
     private final EncriptarService encriptarService;
     @Autowired
-    public UserController(UserService userService, PedidoRepository pedidoRepository, SessionRepository sessionRepository, EncriptarService encriptarService) {
+    public UserController(UserService userService, PedidoRepository pedidoRepository, SessionRepository sessionRepository, EncriptarService encriptarService, TarjetaService tarjetaService ) {
         this.userService = userService;
         this.pedidoRepository = pedidoRepository;
         this.sessionRepository = sessionRepository;
         this.encriptarService = encriptarService;
-    }
+        this.tarjetaService = tarjetaService;
+    }   
 
     @GetMapping("/login")
     public ModelAndView loginPage() {
