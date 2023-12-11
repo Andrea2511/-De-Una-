@@ -116,4 +116,17 @@ public class PedidoService {
 
         return new ArrayList<>();
     }
+
+    public void completarDatos(boolean deseaDomicilio, LocalDateTime fechaRecogidaConvertida, Pedido pedido) {
+
+        pedido.setDomicilio(deseaDomicilio);
+        pedido.setFechaEntrega(fechaRecogidaConvertida);
+
+        pedidoRepository.save(pedido);
+    }
+
+
+    public void actualizarPedido(Pedido pedido) {
+        pedidoRepository.save(pedido);
+    }
 }

@@ -747,7 +747,6 @@ main .card-time{
 
 .card-history table tr:hover {
     background-color: var(--color-primary-ligth);
-    cursor: pointer;
 }
 
 .cuenta-container {

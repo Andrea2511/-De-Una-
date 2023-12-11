@@ -25,6 +25,10 @@ public class TarjetaService {
         return tarjetaRepository.findByUsuario(titular);
     }
 
+    public List<Transaccion> obtenerTransacciones(Tarjeta tarjeta) {
+        return transaccionRepository.findByTarjeta(tarjeta);
+    }
+
     public List<Tarjeta> obtenerTodasLasTarjetas() {
         return tarjetaRepository.findAll();
     }
@@ -65,24 +69,36 @@ public class TarjetaService {
 
     }
 
-    public void paga(double monto, LocalDateTime fechaPago, Tarjeta tarjeta) {
+    public Transaccion paga(double monto, LocalDateTime fechaPago, Tarjeta tarjeta, String descripcion) {
 
         Transaccion transaccion = new Transaccion();
         transaccion.setTipoTransaccion(TipoTransaccion.PAGO);
         transaccion.setMonto(monto);
         transaccion.setFechaPago(fechaPago);
         transaccion.setTarjeta(tarjeta);
+        transaccion.setDescripcion(descripcion);
 
         tarjeta.getTransacciones().add(transaccion);
-        tarjeta.setSaldoT(tarjeta.getSaldoT() - monto);
 
-        transaccionRepository.save(transaccion);
+        double montoNuevo = tarjeta.getSaldoT() - monto;
+        tarjeta.setSaldoT(montoNuevo);
+
+        double montoPuntosRedimibles = monto * 0.02;
+        tarjeta.setPuntosRedimibles((int) montoPuntosRedimibles);
+
         tarjetaRepository.save(tarjeta);
+        transaccionRepository.save(transaccion);
+
+        return transaccion;
 
     }
 
     public void modificarPuntos(Tarjeta tarjeta) {
         tarjeta.setPuntosRedimibles(0);
+        tarjetaRepository.save(tarjeta);
+    }
+
+    public void actualizarTarjeta(Tarjeta tarjeta) {
         tarjetaRepository.save(tarjeta);
     }
 }

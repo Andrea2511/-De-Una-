@@ -136,18 +136,17 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="transaccion : ${transacciones}" th:attr="data-transaccion-id=${transaccion.id}" th:onclick="'showTransactionDetails(' + ${transaccion.id} + ')'" class="transaction-row">
+                    <tr th:each="transaccion : ${transacciones}">
                         <td th:text="${transaccion.id}"></td>
                         <td th:text="${transaccion.fechaPago}"></td>
                         <td th:text="${transaccion.monto}"></td>
-                        <td th:text="${transaccion.getTipoTransaccion()}"></td>
+                        <td th:text="${transaccion.tipoTransaccion}"></td>
                     </tr>
                     </tbody>
                 </table>
             </div>
-            <div class="detail-transaction">
-                <h3>Detalle de Transacción</h3>
-                <!-- Detalles específicos de una transacción -->
+            <div class="detail-transaction" id="transaction-details-container">
+
             </div>
         </div>
     </div>

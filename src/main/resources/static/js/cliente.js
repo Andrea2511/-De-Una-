@@ -19,7 +19,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const cuenta = document.querySelector(".cuenta-container");
     const pqrs = document.querySelector(".pqrs-container");
 
-
     generarNuevoCodigo();
 
     window.onload = function () {
@@ -261,6 +260,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
         }
     }
+
 });
 
 function flipCard() {
@@ -362,12 +362,4 @@ function actualizarValorEnPesos() {
     var valorEnPesos = calcularValorEnPesos(puntosUsuario);
 
     document.getElementById("valor-en-pesos").textContent = '$ ' + valorEnPesos;
-}
-
-function showTransactionDetails(transactionId) {
-    // Aquí puedes realizar una solicitud AJAX para obtener los detalles de la transacción
-    // y luego mostrarlos en el elemento con la clase "detail-transaction"
-    // Por ahora, simplemente mostramos un mensaje de ejemplo
-    const detailsContainer = document.querySelector('.detail-transaction');
-    detailsContainer.innerHTML = `<p>Detalles de la transacción con ID: ${transactionId}</p>`;
 }

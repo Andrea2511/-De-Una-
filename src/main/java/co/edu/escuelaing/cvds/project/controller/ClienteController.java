@@ -2,10 +2,7 @@ package co.edu.escuelaing.cvds.project.controller;
 
 import co.edu.escuelaing.cvds.project.model.*;
 import co.edu.escuelaing.cvds.project.repository.SessionRepository;
-import co.edu.escuelaing.cvds.project.service.ComidaService;
-import co.edu.escuelaing.cvds.project.service.PedidoService;
-import co.edu.escuelaing.cvds.project.service.TarjetaService;
-import co.edu.escuelaing.cvds.project.service.UserService;
+import co.edu.escuelaing.cvds.project.service.*;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +13,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.ui.Model;
 
+import java.math.BigDecimal;
 import java.time.Clock;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Controller
@@ -32,6 +31,9 @@ public class ClienteController {
 
     @Autowired
     private TarjetaService tarjetaService;
+
+    @Autowired
+    private TransaccionesService transaccionesService;
 
     @Autowired
     private PedidoService pedidoService;
@@ -73,7 +75,10 @@ public class ClienteController {
     }
 
     @GetMapping("/instantCard")
-    public String instantCard() {
+    public String instantCard(Model model, HttpServletRequest request) {
+
+        List<Transaccion> transacciones = tarjetaService.obtenerTransacciones(obtenerUsuarioEnSesion(request).getTarjeta());
+        model.addAttribute("transacciones", transacciones);
         return "pagecliente";
     }
 
@@ -90,6 +95,11 @@ public class ClienteController {
     @GetMapping("/cuenta")
     public String cuenta() {
         return "pagecliente";
+    }
+
+    @GetMapping("/detallePago")
+    public String detallePago() {
+        return "detallePago";
     }
 
     @GetMapping("/pqrs")
@@ -209,6 +219,59 @@ public class ClienteController {
         }
 
         return response;
+    }
+
+    @PostMapping("/datosPedido")
+    @ResponseBody
+    public Map<String, Object> actualizarPedido(HttpServletRequest request, @RequestBody Map<String, Object> datos) {
+
+        Map<String, Object> response = new HashMap<>();
+
+        try {
+            boolean deseaDomicilio = (boolean) datos.get("deseaDomicilio");
+            String fechaRecogidaStr = datos.get("fechaRecogida").toString();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+            LocalDateTime fechaRecogidaConvertida = LocalDateTime.parse(fechaRecogidaStr, formatter);
+
+            pedidoService.completarDatos(deseaDomicilio, fechaRecogidaConvertida, pedidoService.pedidoActive(obtenerUsuarioEnSesion(request)));
+
+            response.put("success", true);
+            response.put("message", "actualizó datos correctamente");
+
+        } catch (NumberFormatException e) {
+            response.put("success", false);
+            response.put("message", "Error al actualizar datos");
+        }
+
+        return response;
+    }
+
+    @PostMapping("/detallePago")
+    @ResponseBody
+    public ResponseEntity<String> finalizarPago(HttpServletRequest request) {
+
+        try {
+
+            User usuario = obtenerUsuarioEnSesion(request);
+            Pedido pedido = pedidoService.pedidoActive(usuario);
+            Tarjeta tarjeta = tarjetaService.obtenerTarjetaPorUser(usuario);
+
+            double montoPago = pedido.getCostoTotal();
+            LocalDateTime fechaPago = LocalDateTime.now();
+
+            Transaccion pago = tarjetaService.paga(montoPago, fechaPago, tarjeta, "pago del pedido # " + pedido.getPedidoId());
+            pedido.setPago(pago);
+            pedido.setEstado(EstadoPedido.FINALIZADO);
+
+            pedidoService.actualizarPedido(pedido);
+
+            return ResponseEntity.ok("Pago finalizado correctamente");
+
+        } catch (Exception e) {
+            // En caso de error, devuelve un código de estado 500 (Internal Server Error)
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No se pudo completar el pago: " + e.getMessage());
+        }
     }
 
     private User obtenerUsuarioEnSesion(HttpServletRequest request) {
