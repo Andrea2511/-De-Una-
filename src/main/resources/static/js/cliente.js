@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const main = document.querySelector("main");
     const aside = document.querySelector("aside");
     const instantCard = document.querySelector(".instantCard-container");
+    const historialContainer = document.querySelector(".historial-container");
     const cuenta = document.querySelector(".cuenta-container");
     const pqrs = document.querySelector(".pqrs-container");
 
@@ -88,6 +89,7 @@ document.addEventListener('DOMContentLoaded', function() {
             showElement(main);
             hideElement(cuenta);
             hideElement(pqrs);
+            hideElement(historialContainer);
             break;
         case "instantCard":
             document.querySelector(".instantCard").classList.add("active");
@@ -96,10 +98,12 @@ document.addEventListener('DOMContentLoaded', function() {
             instantCard.style.display = 'flex';
             hideElement(cuenta);
             hideElement(pqrs);
+            hideElement(historialContainer);
             break;
         case "historial":
             document.querySelector(".historial").classList.add("active");
             showElement(aside);
+            showElement(historialContainer);
             hideElement(main);
             hideElement(instantCard);
             hideElement(cuenta);
@@ -112,6 +116,7 @@ document.addEventListener('DOMContentLoaded', function() {
             hideElement(main);
             hideElement(instantCard);
             hideElement(pqrs);
+            hideElement(historialContainer);
             break;
         case "pqrs":
             document.querySelector(".pqrs").classList.add("active");
@@ -120,6 +125,7 @@ document.addEventListener('DOMContentLoaded', function() {
             hideElement(main);
             hideElement(instantCard);
             hideElement(cuenta);
+            hideElement(historialContainer);
             break;
         default:
             hideElement(aside);
@@ -127,6 +133,7 @@ document.addEventListener('DOMContentLoaded', function() {
             hideElement(instantCard);
             hideElement(cuenta);
             hideElement(pqrs);
+            hideElement(historialContainer);
             break;
     }
 

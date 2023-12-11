@@ -66,6 +66,37 @@
         </div>
     </aside>
 
+    <div class="historial-container">
+        <h2>Historial de Pedidos</h2>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th>ID del Pedido</th>
+                <th>Costo Total</th>
+                <th>Estado</th>
+                <th>Fecha de Realización</th>
+                <th>Fecha de Recogida</th>
+                <th>Calificación</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Utiliza Thymeleaf para iterar sobre la lista de pedidos -->
+            <tr th:each="pedido : ${pedidos}">
+                <td th:text="${pedido.pedidoId}"></td>
+                <td th:text="'$' + ${pedido.costoTotal}"></td>
+                <td th:text="${pedido.estado}"></td>
+                <td th:text="${pedido.fechaInicio}"></td>
+                <td th:text="${pedido.fechaEntrega}"></td>
+                <td>
+                    <!-- Agrega un botón de calificación para cada pedido -->
+                    <button type="button" class="btn btn-outline-warning">Calificar</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
     <div class="instantCard-container">
         <div class="general">
             <h1>InstantCard</h1>
@@ -369,10 +400,6 @@
             </div>
         </div>
     </main>
-
-    <div class="historial">
-
-    </div>
 
     <div class="right">
         <div class="top">

@@ -53,6 +53,11 @@ public class ClienteController {
         return obtenerUsuarioEnSesion(request).getTarjeta().getTransacciones();
     }
 
+    @ModelAttribute("pedidos")  // Agregar un atributo global al modelo
+    public List<Pedido> pedidos(HttpServletRequest request) {
+        return obtenerUsuarioEnSesion(request).getPedidos();
+    }
+
     @ModelAttribute("lineasPedido")
     public List<LineaPedido> addGlobalLineasPedidos(HttpServletRequest request, Model model) {
         List<LineaPedido> lineasPedidos = obtenerLineasPedidos(request);
