@@ -568,4 +568,131 @@ class ProjectApplicationTest {
         assertNotNull(result);
         assertTrue(result.isEmpty());
     }
+
+
+
+    //TEST TARJETA
+    @Test
+    void crearTarjeta_SaveTarjetaInRepository() {
+        // Arrange
+        String password = "password";
+
+        // Act
+        tarjetaService.crearTarjeta(password);
+
+        // Assert
+        verify(tarjetaRepository, times(1)).save(any(Tarjeta.class));
+    }
+
+    @Test
+    void obtenerTodasLasTarjetas_TarjetasExist_ReturnsListOfTarjetas() {
+        // Arrange
+        List<Tarjeta> tarjetas = new ArrayList<>();
+        tarjetas.add(new Tarjeta("password1"));
+        tarjetas.add(new Tarjeta("password2"));
+
+        when(tarjetaRepository.findAll()).thenReturn(tarjetas);
+
+        // Act
+        ArrayList<Tarjeta> result = tarjetaService.obtenerTodasLasTarjetas();
+
+        // Assert
+        assertNotNull(result);
+        assertEquals(2, result.size());
+    }
+
+    @Test
+    void testEquals() {
+        // Arrange
+        LocalDateTime fechaInicio = LocalDateTime.of(2023, 1, 1, 0, 0);
+        LocalDateTime fechaFin = LocalDateTime.of(2023, 1, 2, 0, 0);
+
+        Promocion promocion1 = new Promocion("Promo1", "Descripción", fechaInicio, fechaFin,
+                "Categoria", TipoDescuento.PORCENTAJE, 10.0);
+
+        Promocion promocion2 = new Promocion("Promo1", "Descripción", fechaInicio, fechaFin,
+                "Categoria", TipoDescuento.PORCENTAJE, 10.0);
+
+        // Act + Assert
+        assertEquals(promocion1, promocion2);
+    }
+
+    @Test
+    void testNotEquals() {
+        // Arrange
+        LocalDateTime fechaInicio1 = LocalDateTime.of(2023, 1, 1, 0, 0);
+        LocalDateTime fechaFin1 = LocalDateTime.of(2023, 1, 2, 0, 0);
+
+        LocalDateTime fechaInicio2 = LocalDateTime.of(2023, 1, 3, 0, 0);
+        LocalDateTime fechaFin2 = LocalDateTime.of(2023, 1, 4, 0, 0);
+
+        Promocion promocion1 = new Promocion("Promo1", "Descripción", fechaInicio1, fechaFin1,
+                "Categoria", TipoDescuento.PORCENTAJE, 10.0);
+
+        Promocion promocion2 = new Promocion("Promo2", "Otra descripción", fechaInicio2, fechaFin2,
+                "OtraCategoria", TipoDescuento.MONTO_FIJO, 5.0);
+
+        // Act + Assert
+        assertNotEquals(promocion1, promocion2);
+    }
+
+    @Test
+    void testHashCode() {
+        // Arrange
+        LocalDateTime fechaInicio = LocalDateTime.of(2023, 1, 1, 0, 0);
+        LocalDateTime fechaFin = LocalDateTime.of(2023, 1, 2, 0, 0);
+
+        Promocion promocion1 = new Promocion("Promo1", "Descripción", fechaInicio, fechaFin,
+                "Categoria", TipoDescuento.PORCENTAJE, 10.0);
+
+        Promocion promocion2 = new Promocion("Promo1", "Descripción", fechaInicio, fechaFin,
+                "Categoria", TipoDescuento.PORCENTAJE, 10.0);
+
+        // Act + Assert
+        assertEquals(promocion1.hashCode(), promocion2.hashCode());
+    }
+
+    @Test
+    void testNotEqualsHashCode() {
+        // Arrange
+        LocalDateTime fechaInicio1 = LocalDateTime.of(2023, 1, 1, 0, 0);
+        LocalDateTime fechaFin1 = LocalDateTime.of(2023, 1, 2, 0, 0);
+
+        LocalDateTime fechaInicio2 = LocalDateTime.of(2023, 1, 3, 0, 0);
+        LocalDateTime fechaFin2 = LocalDateTime.of(2023, 1, 4, 0, 0);
+
+        Promocion promocion1 = new Promocion("Promo1", "Descripción", fechaInicio1, fechaFin1,
+                "Categoria", TipoDescuento.PORCENTAJE, 10.0);
+
+        Promocion promocion2 = new Promocion("Promo2", "Otra descripción", fechaInicio2, fechaFin2,
+                "OtraCategoria", TipoDescuento.MONTO_FIJO, 5.0);
+
+        // Act + Assert
+        assertNotEquals(promocion1.hashCode(), promocion2.hashCode());
+    }
+
+    @Test
+    void testToString() {
+        // Arrange
+        LocalDateTime fechaInicio = LocalDateTime.of(2023, 1, 1, 0, 0);
+        LocalDateTime fechaFin = LocalDateTime.of(2023, 1, 2, 0, 0);
+
+        Promocion promocion = new Promocion("Promo1", "Descripción", fechaInicio, fechaFin,
+                "Categoria", TipoDescuento.PORCENTAJE, 10.0);
+
+        // Act
+        String result = promocion.toString();
+
+        // Assert
+        assertNotNull(result);
+        assertTrue(result.contains("Promo1"));
+        assertTrue(result.contains("Descripción"));
+        assertTrue(result.contains("Categoria"));
+        assertTrue(result.contains("10.0"));
+    }
+
+
+
+
 }
+
