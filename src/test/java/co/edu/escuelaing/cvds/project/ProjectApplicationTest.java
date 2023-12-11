@@ -1,12 +1,5 @@
 package co.edu.escuelaing.cvds.project;
-import co.edu.escuelaing.cvds.project.model.*;
-import org.junit.jupiter.api.Test;
 
-import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
-
-import static org.junit.jupiter.api.Assertions.*;
 import co.edu.escuelaing.cvds.project.model.*;
 import co.edu.escuelaing.cvds.project.repository.*;
 import co.edu.escuelaing.cvds.project.service.*;
@@ -614,7 +607,7 @@ class ProjectApplicationTest {
                 "Categoria", TipoDescuento.PORCENTAJE, 10.0);
 
         Promocion promocion2 = new Promocion("Promo2", "Otra descripción", LocalDateTime.now(), LocalDateTime.now().plusDays(1),
-                "OtraCategoria", TipoDescuento.MONTO_FIJO, 5.0);
+                "OtraCategoria", TipoDescuento.PORCENTAJE, 5.0);
 
         // Act + Assert
         assertNotEquals(promocion1.hashCode(), promocion2.hashCode());
