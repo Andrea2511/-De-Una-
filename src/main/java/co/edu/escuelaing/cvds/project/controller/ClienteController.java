@@ -1,9 +1,8 @@
 package co.edu.escuelaing.cvds.project.controller;
 
 import co.edu.escuelaing.cvds.project.model.*;
-import co.edu.escuelaing.cvds.project.service.ComidaService;
-import co.edu.escuelaing.cvds.project.service.PedidoService;
-import co.edu.escuelaing.cvds.project.service.UserService;
+import co.edu.escuelaing.cvds.project.repository.SessionRepository;
+import co.edu.escuelaing.cvds.project.service.*;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,28 +10,47 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.ui.Model;
+
+import java.math.BigDecimal;
+import java.time.Clock;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Controller
 @RequestMapping("/cliente")
 public class ClienteController {
 
-    private final ComidaService comidaService;
-
-    private final UserService userService;
-
-    private final PedidoService pedidoService;
     @Autowired
-    public ClienteController(ComidaService comidaService, UserService userService, PedidoService pedidoService) {
-        this.comidaService = comidaService;
-        this.userService = userService;
-        this.pedidoService = pedidoService;
-    }
+    private ComidaService comidaService;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private TarjetaService tarjetaService;
+
+    @Autowired
+    private TransaccionesService transaccionesService;
+
+    @Autowired
+    private PedidoService pedidoService;
 
     @ModelAttribute("usuario")  // Agregar un atributo global al modelo
     public User usuario(HttpServletRequest request) {
         return obtenerUsuarioEnSesion(request);
+    }
+
+    @ModelAttribute("tarjeta")  // Agregar un atributo global al modelo
+    public Tarjeta target(HttpServletRequest request) {
+        return obtenerUsuarioEnSesion(request).getTarjeta();
+    }
+
+    @ModelAttribute("transacciones")  // Agregar un atributo global al modelo
+    public List<Transaccion> transacciones(HttpServletRequest request) {
+        return obtenerUsuarioEnSesion(request).getTarjeta().getTransacciones();
     }
 
     @ModelAttribute("lineasPedido")
@@ -57,7 +75,10 @@ public class ClienteController {
     }
 
     @GetMapping("/instantCard")
-    public String instantCard() {
+    public String instantCard(Model model, HttpServletRequest request) {
+
+        List<Transaccion> transacciones = tarjetaService.obtenerTransacciones(obtenerUsuarioEnSesion(request).getTarjeta());
+        model.addAttribute("transacciones", transacciones);
         return "pagecliente";
     }
 
@@ -72,8 +93,15 @@ public class ClienteController {
     }
 
     @GetMapping("/cuenta")
-    public String cuenta() {
+    public String cuenta(HttpServletRequest request, Model model) {
+        User user = obtenerUsuarioEnSesion(request);
+        model.addAttribute("user",user);
         return "pagecliente";
+    }
+
+    @GetMapping("/detallePago")
+    public String detallePago() {
+        return "detallePago";
     }
 
     @GetMapping("/pqrs")
@@ -113,6 +141,16 @@ public class ClienteController {
     public String mostrarFastFood(Model model) {
         List<Comida> fastFood = comidaService.obtenerComidasPorCategoria(Categoria.FAST_FOOD);
         model.addAttribute("comidas", fastFood);
+        return "pagecliente";
+    }
+
+    @PostMapping("/cuenta")
+    public String actuzalizarDatos(@RequestParam(required = false) String email,@RequestParam(required = false) String address,
+                               @RequestParam(required = false) String phone,@RequestParam(required = false) String firstname,@RequestParam(required = false) String lastname,HttpServletRequest request) {
+        User user = obtenerUsuarioEnSesion(request);
+        if(user!= null) {
+            userService.actualizarDatos(user, email, address, phone, firstname, lastname);
+        }
         return "pagecliente";
     }
 
@@ -170,6 +208,81 @@ public class ClienteController {
         } catch (Exception e) {
             // Manejar excepciones aquí y devolver una respuesta HTTP apropiada
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse("Error en el servidor"));
+        }
+    }
+
+    @PostMapping("/redimir")
+    @ResponseBody
+    public Map<String, Object> redimirPuntos(HttpServletRequest request, @RequestBody String puntosRedimibles) {
+        Map<String, Object> response = new HashMap<>();
+
+        try {
+            double montoRedimido = Double.parseDouble(puntosRedimibles);
+            // Realiza la lógica de redención de puntos
+            tarjetaService.recarga(montoRedimido, LocalDateTime.now(), obtenerUsuarioEnSesion(request).getTarjeta(), "Redencion de puntos");
+            tarjetaService.modificarPuntos(obtenerUsuarioEnSesion(request).getTarjeta());
+
+            response.put("success", true);
+            response.put("message", "Puntos redimidos correctamente");
+
+        } catch (NumberFormatException e) {
+            response.put("success", false);
+            response.put("message", "Error al procesar la redención de puntos");
+        }
+
+        return response;
+    }
+
+    @PostMapping("/datosPedido")
+    @ResponseBody
+    public Map<String, Object> actualizarPedido(HttpServletRequest request, @RequestBody Map<String, Object> datos) {
+
+        Map<String, Object> response = new HashMap<>();
+
+        try {
+            boolean deseaDomicilio = (boolean) datos.get("deseaDomicilio");
+            String fechaRecogidaStr = datos.get("fechaRecogida").toString();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+            LocalDateTime fechaRecogidaConvertida = LocalDateTime.parse(fechaRecogidaStr, formatter);
+
+            pedidoService.completarDatos(deseaDomicilio, fechaRecogidaConvertida, pedidoService.pedidoActive(obtenerUsuarioEnSesion(request)));
+
+            response.put("success", true);
+            response.put("message", "actualizó datos correctamente");
+
+        } catch (NumberFormatException e) {
+            response.put("success", false);
+            response.put("message", "Error al actualizar datos");
+        }
+
+        return response;
+    }
+
+    @PostMapping("/detallePago")
+    @ResponseBody
+    public ResponseEntity<String> finalizarPago(HttpServletRequest request) {
+
+        try {
+
+            User usuario = obtenerUsuarioEnSesion(request);
+            Pedido pedido = pedidoService.pedidoActive(usuario);
+            Tarjeta tarjeta = tarjetaService.obtenerTarjetaPorUser(usuario);
+
+            double montoPago = pedido.getCostoTotal();
+            LocalDateTime fechaPago = LocalDateTime.now();
+
+            Transaccion pago = tarjetaService.paga(montoPago, fechaPago, tarjeta, "pago del pedido # " + pedido.getPedidoId());
+            pedido.setPago(pago);
+            pedido.setEstado(EstadoPedido.FINALIZADO);
+
+            pedidoService.actualizarPedido(pedido);
+
+            return ResponseEntity.ok("Pago finalizado correctamente");
+
+        } catch (Exception e) {
+            // En caso de error, devuelve un código de estado 500 (Internal Server Error)
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No se pudo completar el pago: " + e.getMessage());
         }
     }
 

@@ -1,6 +1,7 @@
 package co.edu.escuelaing.cvds.project.service;
 import co.edu.escuelaing.cvds.project.model.Rol;
 import co.edu.escuelaing.cvds.project.model.Session;
+import co.edu.escuelaing.cvds.project.model.Tarjeta;
 import co.edu.escuelaing.cvds.project.model.User;
 import co.edu.escuelaing.cvds.project.repository.SessionRepository;
 import co.edu.escuelaing.cvds.project.repository.UserRepository;
@@ -14,13 +15,18 @@ public class UserService {
     private final UserRepository userRepository;
 
     private final EncriptarService encriptarService;
+     private final TarjetaService tarjetaService;
 
-    private final SessionRepository sessionRepository;
+  
+   
+
     @Autowired
-    public UserService(UserRepository userRepository, EncriptarService encriptarService, SessionRepository sessionRepository) {
+    private SessionRepository sessionRepository;
+    public UserService(UserRepository userRepository, EncriptarService encriptarService, SessionRepository sessionRepository,TarjetaService tarjetaService) {
         this.userRepository = userRepository;
         this.encriptarService = encriptarService;
         this.sessionRepository = sessionRepository;
+        this.tarjetaService=tarjetaService;
     }
 
     public String login(String username, String password){
@@ -58,6 +64,22 @@ public class UserService {
         user.setEmail(email);
         user.setRol(rol);
 
+        userRepository.save(user);
+        adicionarTarjeta(user);
+    }
+    public void actualizarDatos(User user,String email, String address, String phone, String firstname, String lastname){
+        user.setEmail(email != null ? email : user.getEmail());
+        user.setDireccion(address != null ? address : user.getDireccion());
+        user.setTelefono(phone != null ? phone : user.getTelefono());
+        user.setFirstName(firstname != null ? firstname : user.getFirstName());
+        user.setLastName(lastname != null ? lastname : user.getLastName());
+        userRepository.save(user);
+    }
+
+    public void adicionarTarjeta(User user) {
+
+        Tarjeta tarjeta = tarjetaService.crearTarjeta(user);
+        user.setTarjeta(tarjeta);
         userRepository.save(user);
     }
 

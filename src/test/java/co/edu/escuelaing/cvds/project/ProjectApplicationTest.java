@@ -1,6 +1,7 @@
 package co.edu.escuelaing.cvds.project;
 
-import co.edu.escuelaing.cvds.project.model.*;
+import co.edu.escuelaing.cvds.project.model.Categoria;
+import co.edu.escuelaing.cvds.project.model.Comida;
 import co.edu.escuelaing.cvds.project.repository.*;
 import co.edu.escuelaing.cvds.project.service.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,21 +10,32 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.MockitoJUnitRunner;
+import co.edu.escuelaing.cvds.project.model.Insumo;
+import co.edu.escuelaing.cvds.project.model.TipoInsumos;
 
-import java.time.LocalDateTime;
 import java.util.*;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
+import java.security.NoSuchAlgorithmException;
+import co.edu.escuelaing.cvds.project.model.Rol;
+import co.edu.escuelaing.cvds.project.model.User;
+import org.mockito.junit.MockitoJUnitRunner;
+import co.edu.escuelaing.cvds.project.model.*;
+import java.time.LocalDateTime;
 
 @RunWith(MockitoJUnitRunner.class)
 class ProjectApplicationTest {
+
     @Mock
     private UserRepository userRepository;
 
     @Mock
     private EncriptarService encriptarService;
+
+    @Mock
+    private SessionRepository sessionRepository;
 
     @InjectMocks
     private UserService userService;
@@ -58,20 +70,35 @@ class ProjectApplicationTest {
     private PedidoService pedidoService;
     @InjectMocks
     private LineaPedidoService lineaPedidoService;
-    @Mock
-    private TarjetaRepository tarjetaRepository;
-
-    @InjectMocks
-    private TarjetaService tarjetaService;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
     }
-
     //TEST DE USER
     @Test
-    void login_ValidCredentials_ReturnsRole() {
+    public void testLogin() {
+        // Arrange
+        String username = "johndoe";
+        String password = "password123";
+        //User mockUser = new Cliente();
+        //mockUser.setUsername(username);
+        //mockUser.setPassword(password);
+        //when(userRepository.findByUsername(username)).thenReturn(mockUser);
+
+        // Act
+        String result = userService.login(username, password);
+
+        // Assert
+        //assertEquals(mockUser.getRol(), result);
+    }
+
+    @Test
+    public void testLoginValidCredentials() {
+        // Arrange
+        //User mockUser = new Cliente("John", "Doe", "johndoe", "password123", "john.doe@example.com");
+        //when(userRepository.findByUsername("johndoe")).thenReturn(mockUser);
+    void login_ValidCredentials_ReturnsRole() throws NoSuchAlgorithmException {
         String username = "testUser";
         String password = "testPassword";
         User expectedUser = new User();
@@ -81,7 +108,6 @@ class ProjectApplicationTest {
         when(userRepository.findByUsername(username)).thenReturn(expectedUser);
         // Simula que las contraseñas coinciden
         when(encriptarService.encriptar(password)).thenReturn(password);
-
         String result = userService.login(username, password);
 
         assertEquals(expectedUser.getRol().toString(), result);
@@ -104,7 +130,7 @@ class ProjectApplicationTest {
     }
 
     @Test
-    void credenciales_ValidCredentials_ReturnsTrue() {
+    void credenciales_ValidCredentials_ReturnsTrue() throws NoSuchAlgorithmException {
         String username = "testUser";
         String password = "testPassword";
         User expectedUser = new User();
@@ -123,11 +149,14 @@ class ProjectApplicationTest {
     }
 
     @Test
-    void credenciales_InvalidCredentials_ReturnsFalse() {
+    public void testCredencialesValidCredentials() throws NoSuchAlgorithmException {
+        // Arrange
+        //User mockUser = new Cliente("Jane", "Doe", "janedoe", "password456", "jane.doe@example.com");
+        //when(userRepository.findByUsername("janedoe")).thenReturn(mockUser);
+    void credenciales_InvalidCredentials_ReturnsFalse() throws NoSuchAlgorithmException {
         String username = "testUser";
         String password = "testPassword";
         // No agrega ningún usuario al resultado del mock (credenciales inválidas)
-
         boolean result = userService.credenciales(username, password);
 
         assertFalse(result);
@@ -157,11 +186,64 @@ class ProjectApplicationTest {
         String password = "password123";
         String email = "john.doe@example.com";
         Rol rol = Rol.CLIENTE;
+        // Act
+        //userService.crearUsuario(firstName, lastName, username, password, email);
 
+        // Assert
+        //verify(userRepository, times(1)).save(any(Cliente.class)); // Ajusta según la implementación real
         userService.crearUsuario(firstName, lastName, username, password, email, rol);
 
         // Verifica que el método del repositorio fue llamado con los parámetros correctos
         verify(userRepository, times(1)).save(any(User.class));
+
+    }
+
+    // Pruebas InsumoService
+    @Test
+    public void testGetAllInsumos() {
+        // Simular el repositorio para devolver una lista de insumos
+        List<Insumo> insumos = new ArrayList<>();
+        //insumos.add(new Insumo("Insumo1", TipoInsumos.CARNES, 10, 5.0, new Date()));
+        //insumos.add(new Insumo("Insumo2", TipoInsumos.FRUTAS, 20, 3.0, new Date()));
+    void getAllInsumos() {
+        ArrayList<Insumo> expectedInsumos = new ArrayList<>();
+        // Agrega los insumos esperados al resultado del mock
+        when(insumoRepository.findAll()).thenReturn(expectedInsumos);
+
+        List<Insumo> result = insumoService.getAllInsumos();
+
+        assertEquals(expectedInsumos, result);
+        // Verifica que el método del repositorio fue llamado
+        verify(insumoRepository, times(1)).findAll();
+    }
+
+    @Test
+    void getInsumoById() {
+        Long insumoId = 1L;
+        Insumo expectedInsumo = new Insumo();
+        // Agrega el insumo esperado al resultado del mock
+        when(insumoRepository.findById(insumoId)).thenReturn(Optional.of(expectedInsumo));
+
+        Insumo result = insumoService.getInsumoById(insumoId);
+
+        assertEquals(expectedInsumo, result);
+        // Verifica que el método del repositorio fue llamado
+        verify(insumoRepository, times(1)).findById(insumoId);
+    }
+
+    @Test
+    void createInsumo() {
+        String nombre = "InsumoTest";
+        TipoInsumos tipo = TipoInsumos.CARNES;
+        int cantidad = 10;
+        double precio = 20.0;
+        Date fecha = new Date();
+
+        insumoService.createInsumo(nombre, tipo, cantidad, precio, fecha);
+
+
+        // Verifica que el método del repositorio fue llamado con los parámetros correctos
+        verify(insumoRepository, times(1)).save(any(Insumo.class));
     }
 
     //TEST COMIDA
@@ -205,48 +287,6 @@ class ProjectApplicationTest {
         verify(comidaRepository, times(1)).findByPromocionIsNotNull();
     }
 
-    // TEST INSUMO
-    @Test
-    void getAllInsumos() {
-        ArrayList<Insumo> expectedInsumos = new ArrayList<>();
-        // Agrega los insumos esperados al resultado del mock
-        when(insumoRepository.findAll()).thenReturn(expectedInsumos);
-
-        List<Insumo> result = insumoService.getAllInsumos();
-
-        assertEquals(expectedInsumos, result);
-        // Verifica que el método del repositorio fue llamado
-        verify(insumoRepository, times(1)).findAll();
-    }
-
-    @Test
-    void getInsumoById() {
-        Long insumoId = 1L;
-        Insumo expectedInsumo = new Insumo();
-        // Agrega el insumo esperado al resultado del mock
-        when(insumoRepository.findById(insumoId)).thenReturn(Optional.of(expectedInsumo));
-
-        Insumo result = insumoService.getInsumoById(insumoId);
-
-        assertEquals(expectedInsumo, result);
-        // Verifica que el método del repositorio fue llamado
-        verify(insumoRepository, times(1)).findById(insumoId);
-    }
-
-    @Test
-    void createInsumo() {
-        String nombre = "InsumoTest";
-        TipoInsumos tipo = TipoInsumos.CARNES;
-        int cantidad = 10;
-        double precio = 20.0;
-        Date fecha = new Date();
-
-        insumoService.createInsumo(nombre, tipo, cantidad, precio, fecha);
-
-        // Verifica que el método del repositorio fue llamado con los parámetros correctos
-        verify(insumoRepository, times(1)).save(any(Insumo.class));
-    }
-
     //TEST DE LAS PROMOCIONES
     @Test
     void crearPromocion() {
@@ -271,6 +311,7 @@ class ProjectApplicationTest {
         // Simula la llamada a promocionRepository.getById(nombre)
         when(promocionRepository.getById(nombre)).thenReturn(promocion);
 
+
         // Simula la llamada a comidaRepository.findByCategoriaOrderByNombre con cualquier Categoria
         when(comidaRepository.findByCategoriaOrderByNombre(any(Categoria.class)))
                 .thenReturn(new ArrayList<>());  // Puedes ajustar esto según tu lógica real
@@ -283,8 +324,6 @@ class ProjectApplicationTest {
         //verify(comidaRepository, times(1)).findByCategoriaOrderByNombre(any(Categoria.class));
         //verify(comidaService, times(1)).actualizarComida(anyLong(), anyString(), anyDouble(), anyInt());
     }
-
-
     @Test
     void obtenerTodasLasPromociones() {
         ArrayList<Promocion> promociones = new ArrayList<>();
@@ -295,7 +334,6 @@ class ProjectApplicationTest {
         assertEquals(promociones, result);
         verify(promocionRepository, times(1)).findAll();
     }
-
     //TEST PEDIDOS
 
 
@@ -354,11 +392,11 @@ class ProjectApplicationTest {
         assertNull(resultado);
     }
     //ARREGLAR
-    //@Test
-    //void pedidoActive_NewUser_CreatesNewPedido() {
+    @Test
+    void pedidoActive_NewUser_CreatesNewPedido() {
         // Arrange
-        //User usuario = new User();
-        //when(pedidoRepository.findByUserAndEstado(usuario, EstadoPedido.EN_PROCESO)).thenReturn(null);
+        User usuario = new User();
+        when(pedidoRepository.findByUserAndEstado(usuario, EstadoPedido.EN_PROCESO)).thenReturn(null);
         //when(pedidoRepository.save(any(Pedido.class))).thenAnswer(invocation -> {
         //Pedido pedidoGuardado = invocation.getArgument(0);
         //pedidoGuardado.setId(1L); // Simulando la asignación de un ID al pedido guardado
@@ -366,15 +404,16 @@ class ProjectApplicationTest {
         //});
 
         // Act
-        //Pedido result = pedidoService.pedidoActive(usuario);
+        Pedido result = pedidoService.pedidoActive(usuario);
 
         // Assert
         //assertNotNull(result);
         //assertEquals(usuario, result.getUser());
         //assertEquals(EstadoPedido.EN_PROCESO, result.getEstado());
-        //verify(pedidoRepository, times(1)).save(any(Pedido.class));
-        //verify(userRepository, times(1)).save(usuario);
-    //}
+        verify(pedidoRepository, times(1)).save(any(Pedido.class));
+        verify(userRepository, times(1)).save(usuario);
+    }
+
 
     @Test
     void pedidoActive_ExistingPedido_ReturnsExistingPedido() {
@@ -395,14 +434,14 @@ class ProjectApplicationTest {
         verify(userRepository, never()).save(usuario);
     }
     //ARREGLAR
-    //@Test
-    //void addLineaPedido_NewLineaPedido_ReturnsTrue() {
+    @Test
+    void addLineaPedido_NewLineaPedido_ReturnsTrue() {
         // Arrange
-        //User usuario = new User();
-        //Pedido pedido = new Pedido();
-        //pedido.setUser(usuario);
-        //pedido.setEstado(EstadoPedido.EN_PROCESO);
-        //when(pedidoRepository.findByUserAndEstado(usuario, EstadoPedido.EN_PROCESO)).thenReturn(pedido);
+        User usuario = new User();
+        Pedido pedido = new Pedido();
+        pedido.setUser(usuario);
+        pedido.setEstado(EstadoPedido.EN_PROCESO);
+        when(pedidoRepository.findByUserAndEstado(usuario, EstadoPedido.EN_PROCESO)).thenReturn(pedido);
         //when(lineaPedidoService.crearLineaPedido(eq(pedido), anyString(), anyString(), any(String[].class))).thenReturn(new LineaPedido());
 
         // Act
@@ -412,23 +451,23 @@ class ProjectApplicationTest {
         //assertTrue(result);
         //verify(pedidoRepository, times(1)).save(pedido);
         //verify(lineaPedidoService, times(1)).crearLineaPedido(eq(pedido), anyString(), anyString(), any(String[].class));
-    //}
+    }
     //ARREGLAR
-    //@Test
-    //void addLineaPedido_ExistingLineaPedido_ReturnsFalse() {
+    @Test
+    void addLineaPedido_ExistingLineaPedido_ReturnsFalse() {
         // Arrange
-        //User usuario = new User();
-        //Pedido pedido = new Pedido();
-        //pedido.setUser(usuario);
-        //pedido.setEstado(EstadoPedido.EN_PROCESO);
+        User usuario = new User();
+        Pedido pedido = new Pedido();
+        pedido.setUser(usuario);
+        pedido.setEstado(EstadoPedido.EN_PROCESO);
 
         // Inicializa la lista lineasPedido antes de agregar elementos
-        //pedido.setLineasPedido(new ArrayList<>());
+        pedido.setLineasPedido(new ArrayList<>());
 
-        //LineaPedido existingLineaPedido = new LineaPedido();
-        //existingLineaPedido.setComida(new Comida());
-        //pedido.getLineasPedido().add(existingLineaPedido);
-        //when(pedidoRepository.findByUserAndEstado(usuario, EstadoPedido.EN_PROCESO)).thenReturn(pedido);
+        LineaPedido existingLineaPedido = new LineaPedido();
+        existingLineaPedido.setComida(new Comida());
+        pedido.getLineasPedido().add(existingLineaPedido);
+        when(pedidoRepository.findByUserAndEstado(usuario, EstadoPedido.EN_PROCESO)).thenReturn(pedido);
 
         // Act
         // result = pedidoService.addLineaPedido(usuario, "Bebida", "1", new String[]{"Ing1", "Ing2"});
@@ -437,18 +476,18 @@ class ProjectApplicationTest {
         //assertFalse(result);
         //verify(pedidoRepository, never()).save(pedido);
         //verify(lineaPedidoService, never()).crearLineaPedido(eq(pedido), anyString(), anyString(), any(String[].class));
-    //}
+    }
 
 
     @Test
     void calcularSubtotal_LineasPedidoExist_CalculatesSubtotal() {
         // Arrange
-        //String categoria = "FAST_FOOD";
+        String categoria = "FAST_FOOD";
         Set<DetalleComidaInsumo> detalleComidaInsumos = new HashSet<>();
         detalleComidaInsumos.add(detalleComidaInsumo);
-        //double descuento = 10.0;
-        //TipoDescuento tipoDescuento = TipoDescuento.PORCENTAJE;
-        //Promocion promo = new Promocion("Promo1", "", LocalDateTime.now(), LocalDateTime.now(), categoria, tipoDescuento, descuento);
+        double descuento = 10.0;
+        TipoDescuento tipoDescuento = TipoDescuento.PORCENTAJE;
+        Promocion promo = new Promocion("Promo1", "", LocalDateTime.now(), LocalDateTime.now(), categoria, tipoDescuento, descuento);
         //Comida comida1 = new Comida("Comida1", 20.0, 5.0, detalleComidaInsumos);
         //Comida comida2 = new Comida("Comida2", 30.0, 8, detalleComidaInsumos);
         ArrayList<Comida> comidas = new ArrayList<>();
@@ -474,12 +513,12 @@ class ProjectApplicationTest {
     @Test
     void calcularCostoTotal_ValidSubtotal_CalculatesCostoTotal() {
         // Arrange
-        //String categoria = "FAST_FOOD";
-        //Set<DetalleComidaInsumo> detalleComidaInsumos = new HashSet<>();
-        //detalleComidaInsumos.add(detalleComidaInsumo);
-        //int cantidadMinima = 5;
-        //TipoDescuento tipoDescuento = TipoDescuento.CANTIDAD;
-        //Promocion promo = new Promocion("Promo2", "", LocalDateTime.now(), LocalDateTime.now(), categoria, tipoDescuento, (double) cantidadMinima);
+        String categoria = "FAST_FOOD";
+        Set<DetalleComidaInsumo> detalleComidaInsumos = new HashSet<>();
+        detalleComidaInsumos.add(detalleComidaInsumo);
+        int cantidadMinima = 5;
+        TipoDescuento tipoDescuento = TipoDescuento.CANTIDAD;
+        Promocion promo = new Promocion("Promo2", "", LocalDateTime.now(), LocalDateTime.now(), categoria, tipoDescuento, (double) cantidadMinima);
         //Comida comida1 = new Comida("Comida1", 20.0, 5, detalleComidaInsumos);
         //Comida comida2 = new Comida("Comida2", 30.0, 8, detalleComidaInsumos);
         ArrayList<Comida> comidas = new ArrayList<>();
@@ -529,6 +568,8 @@ class ProjectApplicationTest {
         assertNotNull(result);
         assertTrue(result.isEmpty());
     }
+
+
 
     //TEST TARJETA
     @Test
@@ -649,6 +690,7 @@ class ProjectApplicationTest {
         assertTrue(result.contains("Categoria"));
         assertTrue(result.contains("10.0"));
     }
+
 
 
 

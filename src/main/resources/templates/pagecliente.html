@@ -5,11 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cliente</title>
-
-    <link rel="stylesheet" href="../static/css/swiper-bundle.min.css">
-    <script src="../static/js/swiper-bundle.min.js"></script>
-    <link rel="stylesheet" href="../static/css/cliente.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/cliente.css">
 </head>
 <body>
 <div class="container">
@@ -77,35 +74,79 @@
             <div class="value-info">
                 <div class="balance">
                     <small class="text-muted">Saldo Total</small>
-                    <h3>$ 20.000</h3>
+                    <h3 th:text="${'$ ' + tarjeta.saldoT}"></h3>
                 </div>
-                <button>Recargar</button>
+                <button id="btn-recargar">Recargar</button>
             </div>
+
             <div class="card" onclick="flipCard()">
                 <div class="background-card"></div>
                 <div class="content">
                     <p class="front">¡De Una!</p>
                     <div class="franja"></div>
-                    <p class="back">Andrea Torres Tobar</p>
+                    <p class="back" th:text="${usuario.firstName + ' ' + usuario.lastName}"></p>
                 </div>
             </div>
+
             <div class="redeem">
                 <div class="info-points">
                     <h3>Redime Tus Puntos, ¡De Una!</h3>
                     <small class="text-muted">Puntos Totales</small>
-                    <h2>100</h2>
+                    <h2 th:text="${tarjeta.puntosRedimibles}" id="puntosRedimibles"></h2>
+                    <small class="text-muted">Dinero redimido <span id="valor-en-pesos"></span></small>
                 </div>
-                <button>Redimir</button>
+                <button id="btn-redimir">Redimir</button>
             </div>
+
+            <div class="popup-overlay" id="popup-overlay-redimir">
+                <div class="popup-recargar">
+                    <button id="close-popup-recargar"><span class="close-btn material-icons-sharp">close</span></button>
+                    <div class="codigo-section">
+                        <div id="codigo-recarga"></div>
+                    </div>
+                    <div class="mensaje-section">
+                        <p>Ten en cuente que al realizar la recarga,
+                            debes dar este codigo, este codigo tiene una duración de
+                            30 minutos, puedes recargar el valor que desees
+                            en cualquier punto efecty y Pagatodo.
+                        </p>
+                    </div>
+                    <div class="mensaje-warning">
+                        <h2>¡Protege tu dinero!</h2>
+                        <p>Recuerda cambiar tu instantclave.
+                            Al registrarte, tu tarjeta tiene la clave predeterminada: <strong>0000</strong>.</p>
+                        <p>La seguridad de tu información financiera es nuestra prioridad.
+                            Cambiar tu clave regularmente ayuda a proteger tu dinero y garantizar
+                            la confidencialidad de tus transacciones.</p>
+                    </div>
+                </div>
+            </div>
+
         </div>
         <div class="more-details">
             <div class="card-history">
                 <h3>Historial de Transacciones</h3>
-                <!-- Lista o tabla de historial de transacciones -->
+                <table id="transaction-table">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Fecha</th>
+                        <th>Monto</th>
+                        <th>Tipo</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="transaccion : ${transacciones}">
+                        <td th:text="${transaccion.id}"></td>
+                        <td th:text="${transaccion.fechaPago}"></td>
+                        <td th:text="${transaccion.monto}"></td>
+                        <td th:text="${transaccion.tipoTransaccion}"></td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
-            <div class="detail-transaction">
-                <h3>Detalle de Transacción</h3>
-                <!-- Detalles específicos de una transacción -->
+            <div class="detail-transaction" id="transaction-details-container">
+
             </div>
         </div>
     </div>
@@ -122,29 +163,25 @@
                 <label for="profile-pic">Foto de Perfil:</label>
                 <input type="file" id="profile-pic" name="profile-pic" onchange="previewImage()">
 
-                <!-- Nombre de usuario -->
-                <label for="username">Nombre de Usuario:</label>
-                <input type="text" id="username" name="username" required>
-
                 <!-- Correo -->
                 <label for="email">Correo:</label>
-                <input type="email" id="email" name="email" required>
+                <input type="email" id="email" name="email" placeholder= "Aquí debe ingresar su correo" th:if="${user != null}" th:attr="placeholder=${user.email}" required>
 
                 <!-- Dirección -->
                 <label for="address">Dirección:</label>
-                <input type="text" id="address" name="address">
+                <input type="text" id="address" name="address" placeholder= "Aquí debe ingresar su dirección" th:if="${user != null}" th:attr="placeholder=${user.direccion}">
 
                 <!-- Teléfono -->
                 <label for="phone">Teléfono:</label>
-                <input type="tel" id="phone" name="phone">
+                <input type="tel" id="phone" name="phone" placeholder= "Aquí debe ingresar su teléfono" th:if="${user != null}" th:attr="placeholder=${user.telefono}">
 
                 <!-- Nombre -->
                 <label for="firstname">Nombres:</label>
-                <input type="text" id="firstname" name="firstname">
+                <input type="text" id="firstname" name="firstname" placeholder= "Aquí debe ingresar sus nombres" th:if="${user != null}" th:attr="placeholder=${user.firstName}">
 
                 <!-- Apellido -->
                 <label for="lastname">Apellidos:</label>
-                <input type="text" id="lastname" name="lastname">
+                <input type="text" id="lastname" name="lastname" placeholder= "Aquí debe ingresar sus apellidos" th:if="${user != null}" th:attr="placeholder=${user.lastName}">
 
 
                 <button type="submit">Actualizar Datos</button>

@@ -35,6 +35,9 @@ public class Pedido {
     @Column(name = "estado")
     private EstadoPedido estado;
 
+    @Column(name = "domicilio")
+    private boolean domicilio;
+
     //Relaciones
 
     @ManyToOne
@@ -49,8 +52,8 @@ public class Pedido {
     @JoinColumn(name = "promocion_id")
     private Promocion promocion;
 
-    @OneToOne
-    @JoinColumn(name = "domicilio_id")
-    private Domicilio domicilio;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "pago_id", referencedColumnName = "id")
+    private Transaccion pago;
 
 }

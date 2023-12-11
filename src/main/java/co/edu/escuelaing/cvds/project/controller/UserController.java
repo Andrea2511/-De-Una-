@@ -6,6 +6,7 @@ import co.edu.escuelaing.cvds.project.model.User;
 import co.edu.escuelaing.cvds.project.repository.PedidoRepository;
 import co.edu.escuelaing.cvds.project.repository.SessionRepository;
 import co.edu.escuelaing.cvds.project.service.EncriptarService;
+import co.edu.escuelaing.cvds.project.service.TarjetaService;
 import co.edu.escuelaing.cvds.project.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletResponse;
@@ -38,14 +39,18 @@ public class UserController {
     final
     SessionRepository sessionRepository;
 
+    final
+     TarjetaService tarjetaService;
+
     private final EncriptarService encriptarService;
     @Autowired
-    public UserController(UserService userService, PedidoRepository pedidoRepository, SessionRepository sessionRepository, EncriptarService encriptarService) {
+    public UserController(UserService userService, PedidoRepository pedidoRepository, SessionRepository sessionRepository, EncriptarService encriptarService, TarjetaService tarjetaService ) {
         this.userService = userService;
         this.pedidoRepository = pedidoRepository;
         this.sessionRepository = sessionRepository;
         this.encriptarService = encriptarService;
-    }
+        this.tarjetaService = tarjetaService;
+    }   
 
     @GetMapping("/login")
     public ModelAndView loginPage() {

@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap");
 
-:root{
+:root {
     --color-primary: #edb572;
     --color-danger: #ff7782;
     --color-succes: #41f1b6;
@@ -12,6 +12,7 @@
     --color-primary-variant: #677483;
     --color-dark-variant: #fe6c00;
     --color-background: #f6f6f9;
+    --color-primary-ligth: #efddd6;
 
     --card-border-radius: 2rem;
     --border-radius-1: 0.4rem;
@@ -534,6 +535,7 @@ main .card-time{
     box-shadow: var(--box-shadow);
     padding: 20px;
     margin-bottom: 20px;
+    background-color: var(--color-white);
 }
 
 .general .value-info h3 {
@@ -571,7 +573,7 @@ main .card-time{
 }
 
 .card .background-card {
-    background: linear-gradient(45deg, var(--color-dark), var(--color-primary));
+    background: linear-gradient(to right, #ff6699, #edb572);
     height: 100%;
     width: 100%;
     position: absolute;
@@ -608,6 +610,8 @@ main .card-time{
 
 .card .back {
     transform: rotateX(180deg);
+    font-size: 20px;
+    margin-bottom: 10px;
 }
 
 .card .franja {
@@ -616,7 +620,7 @@ main .card-time{
     left: 0;
     width: 100%;
     height: 40px;
-    background-color: var(--color-info-dark);
+    background-color: var(--color-dark);
     transform: rotateX(180deg);
     display: none;
 }
@@ -635,6 +639,13 @@ main .card-time{
     border-radius: var(--card-border-radius);
     box-shadow: var(--box-shadow);
     padding: 20px;
+    background-color: var(--color-white);
+    margin-top: 20px;
+}
+
+.instantCard-container .redeem small span{
+    color: var(--color-dark-variant);
+    font-size: 15px;
 }
 
 .redeem button{
@@ -651,9 +662,91 @@ main .card-time{
     background-color: var(--color-dark-variant);
 }
 
+.popup-recargar {
+    background-color: var(--color-white);
+    padding: 30px;
+    z-index: 999;
+    width: 500px;
+    height: auto;
+}
+
+#close-popup-recargar{
+    background-color: transparent;
+    color: var(--color-dark-variant);
+}
+
+.codigo-section {
+    margin: 20px 70px;
+}
+
+#codigo-recarga {
+    padding: 5px;
+    border: 2px dashed var(--color-primary);
+    font-family: monospace;
+    font-size: 5rem;
+    text-align: center;
+}
+
+.mensaje-section {
+    margin: 20px;
+}
+
+.mensaje-section p{
+    color: var(--color-dark);
+}
+
+.mensaje-warning{
+    background-color: #FF9EA6FF;
+    border: 1px solid #b22626;
+    margin: 0 20px;
+}
+
+.mensaje-warning p{
+    color: var(--color-dark);
+    font-size: 15px;
+    margin: 5px;
+}
+
 .card-history,
 .detail-transaction {
     margin-top: 20px;
+}
+
+.card-history{
+     background: var(--color-white);
+     width: 100%;
+     border-radius: var(--card-border-radius);
+     padding: var(--card-padding);
+     box-shadow: var(--box-shadow);
+     transition: all 300ms ease;
+     margin-bottom: 20px;
+ }
+.card-history h3{
+    margin-bottom: 10px;
+    color: var(--color-dark-variant);
+}
+
+.card-history table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.card-history table th,
+.card-history table td {
+    text-align: center;
+    height: 2.8rem;
+    border-bottom: 1px solid var(--color-light);
+    color: var(--color-dark);
+    padding: 8px;
+}
+
+.card-history table tbody tr:last-child td {
+    border: none;
+}
+
+.card-history table tr:hover {
+    background-color: var(--color-primary-ligth);
 }
 
 .cuenta-container {

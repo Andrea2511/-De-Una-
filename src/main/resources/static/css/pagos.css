@@ -12,7 +12,7 @@
     --color-primary-variant: #677483;
     --color-dark-variant: #fe6c00;
     --color-background: #f6f6f9;
-    --color-primary-ligth: #f3d7bfff;
+    --color-primary-ligth: #eed9c7;
 
     --card-border-radius: 2rem;
     --border-radius-1: 0.4rem;
@@ -168,7 +168,7 @@ b{
     margin-top: 20px;
     width: 100%;
     overflow-y: auto;
-    max-height: 400px;
+    max-height: 300px;
 }
 
 #balance-info {
@@ -229,10 +229,15 @@ b{
     color: var(--color-white);
 }
 
+.order-wrapper .order-card{
+    border: 1px dashed var(--color-info-dark);
+    margin-bottom: 20px;
+}
+
 .order-wrapper .order-image {
     width: 200px;
-    height: auto;
-    margin-right: 20px;
+    height: 100px;
+    margin: 5px;
 }
 
 .order-wrapper .order-card {
@@ -304,3 +309,4 @@ b{
     margin-top: 20%;
     margin-left: -5%;
 }
+

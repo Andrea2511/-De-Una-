@@ -77,6 +77,7 @@ public class PedidoService {
                 .fechaInicio(LocalDateTime.now())
                 .estado(EstadoPedido.EN_PROCESO)
                 .user(usuarioEnSesion)
+                .domicilio(false)
                 .build();
 
         //agrega el pedido al usuario
@@ -111,5 +112,18 @@ public class PedidoService {
         }
 
         return new ArrayList<>();
+    }
+
+    public void completarDatos(boolean deseaDomicilio, LocalDateTime fechaRecogidaConvertida, Pedido pedido) {
+
+        pedido.setDomicilio(deseaDomicilio);
+        pedido.setFechaEntrega(fechaRecogidaConvertida);
+
+        pedidoRepository.save(pedido);
+    }
+
+
+    public void actualizarPedido(Pedido pedido) {
+        pedidoRepository.save(pedido);
     }
 }

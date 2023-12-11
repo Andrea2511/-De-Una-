@@ -20,9 +20,6 @@
                 <li class="nav-item">
                     <a id="pago" class="nav-link disabled" aria-current="page" >Pago</a>
                 </li>
-                <li class="nav-item">
-                    <a id="pedido"class="nav-link disabled" aria-disabled="true">Generación de pedido</a>
-                </li>
             </ul>
         </div>
 
@@ -30,7 +27,7 @@
             <div class="container text-center">
                 <div class="row align-items-start">
                     <div class="col-md-6">
-                        <form>
+                        <form id="deliveryForm">
                             <div class="form-check form-switch">
                                 <div class="col-md-2 text-start">
                                     <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked">
@@ -52,42 +49,10 @@
                                                 <div>
                                                     <div class="row align-items-center">
                                                         <div class="col-md-6 text-start">
-                                                            <label for="diaRecogida">Día de recogida:</label>
+                                                            <label>Día de recogida:</label>
                                                         </div>
                                                         <div class="col-md-6 mb-4 text-end">
-                                                            <select class="form-select" id="diaRecogida" aria-label="Default select diaRecogida" name="diaRecogida">
-                                                                <option value="lunes">Lunes</option>
-                                                                <option value="martes">Martes</option>
-                                                                <option value="miercoles">Miércoles</option>
-                                                                <option value="jueves">Jueves</option>
-                                                                <option value="viernes">Viernes</option>
-                                                                <option value="sabado">Sábado</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div>
-                                                    <div class="row align-items-center">
-                                                        <div class="col-md-6 text-start">
-                                                            <label for="horaRecogida">Hora de recogida:</label>
-                                                        </div>
-                                                        <div class="col-md-6 text-end">
-                                                            <select class="form-select" id="horaRecogida" aria-label="Default select horaRecogida" name="horaRecogida">
-                                                                <option value="07:00">7:00 AM</option>
-                                                                <option value="08:00">8:00 AM</option>
-                                                                <option value="09:00">9:00 AM</option>
-                                                                <option value="10:00">10:00 AM</option>
-                                                                <option value="11:00">11:00 AM</option>
-                                                                <option value="12:00">12:00 M</option>
-                                                                <option value="13:00">1:00 PM</option>
-                                                                <option value="14:00">2:00 PM</option>
-                                                                <option value="15:00">3:00 PM</option>
-                                                                <option value="16:00">4:00 PM</option>
-                                                                <option value="17:00">5:00 PM</option>
-                                                                <option value="18:00">6:00 PM</option>
-                                                                <option value="19:00">7:00 PM</option>
-                                                            </select>
+                                                            <input type="datetime-local" id="fechaRecogida" name="fechaRecogida" min="" max="" required>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -123,7 +88,7 @@
                                 <button type="button" id="btn-back1" class="btn btn-outline-warning">Volver</button>
                             </div>
                             <div class="col-md-3 align-self-end">
-                                <button type="button" id="btn-next" class="btn btn-outline-warning">Continuar</button>
+                                <button type="button" id="btn-next" class="btn btn-outline-warning" onclick="capturarDatos()">Continuar</button>
                             </div>
                         </div>
                     </div>
@@ -144,7 +109,7 @@
                                         <p>Saldo disponible: </p>
                                     </div>
                                     <div class="col-md-6 text-end">
-                                        <p class="text-muted">$500.00</p>
+                                        <p class="text-muted" th:text="${'$ ' + tarjeta.saldoT}"></p>
                                     </div>
                                 </div>
                                 <div class="row align-items-center">
@@ -152,7 +117,7 @@
                                         <p>Saldo restante: </p>
                                     </div>
                                     <div class="col-md-6 text-end">
-                                        <p class="text-muted">$500.00</p>
+                                        <p class="text-muted" th:text="${'$ ' + (tarjeta.saldoT - pedido.costoTotal)}"></p>
                                     </div>
                                 </div>
                             </div>
@@ -214,7 +179,10 @@
                                 <button type="button" id="btn-back" class="btn btn-outline-warning">Volver</button>
                             </div>
                             <div class="col-md-3">
-                                <button type="button" class="btn btn-outline-warning disabled">Pagar</button>
+                                <button type="button" th:if="${tarjeta.saldoT - pedido.costoTotal < 0}"
+                                        class="btn btn-outline-warning disabled" disabled>Pagar</button>
+                                <button type="button" th:unless="${tarjeta.saldoT - pedido.costoTotal < 0}"
+                                        class="btn btn-outline-warning" id="btn-pay">Pagar</button>
                             </div>
                         </div>
                     </div>

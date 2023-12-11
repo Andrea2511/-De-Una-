@@ -24,7 +24,16 @@ public class PromocionService {
     }
 
     public void crearPromocion(String nombre, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin, String categoria, TipoDescuento tipoDescuento, Double descuento){
-        Promocion promocion = new Promocion(nombre,descripcion,fechaInicio,fechaFin,categoria,tipoDescuento,descuento);
+        Promocion promocion = new Promocion();
+        promocion.setNombre(nombre);
+        promocion.setDescripcion(descripcion);
+        promocion.setFechaInicio(fechaInicio);
+        promocion.setFechaFin(fechaFin);
+        promocion.setCategoria(categoria);
+        promocion.setTipoDescuento(tipoDescuento);
+        promocion.setDescuento(descuento);
+
+
         promocionRepository.save(promocion);
         configurarPromocion(promocion);
 
